@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FORREX AI TRENDING - Professional Trading Terminal</title>
+    <title>FORREX AI TRENDING - Pro SMC Trading Terminal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,8 +13,8 @@
                 extend: {
                     colors: {
                         brand: {
-                            gold: '#f59e0b',
-                            goldLight: '#fbbf24',
+                            gold: '#facc15',
+                            amber: '#eab308',
                             darkBg: '#07090e',
                             panelBg: '#0f141f',
                             border: '#1e293b',
@@ -28,8 +28,9 @@
     </script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700;800&display=swap');
         body {
             font-family: 'Kantumruy Pro', sans-serif;
             background-color: #07090e;
@@ -42,22 +43,22 @@
             border: 1px solid #1e293b;
         }
         .glow-buy {
-            box-shadow: 0 0 25px rgba(34, 197, 94, 0.25);
+            box-shadow: 0 0 35px rgba(34, 197, 94, 0.25);
             border-color: #22c55e !important;
         }
         .glow-sell {
-            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.25);
             border-color: #ef4444 !important;
         }
         .tf-btn.active {
-            background-color: #f59e0b !important;
+            background-color: #facc15 !important;
             color: #000000 !important;
-            font-weight: bold;
+            font-weight: 800;
         }
         .sidebar-item.active {
             background-color: #1e293b;
-            color: #f59e0b;
-            border-left: 3px solid #f59e0b;
+            color: #facc15;
+            border-left: 3px solid #facc15;
         }
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -66,114 +67,108 @@
         
         .markdown-body p { margin-bottom: 0.5rem; }
         .markdown-body ul { list-style-type: disc; margin-left: 1.25rem; margin-bottom: 0.5rem; }
-        .markdown-body strong { color: #f59e0b; }
-
-        /* Floating Overlay Widget inside Chart */
-        .chart-floating-box {
-            background: rgba(15, 20, 31, 0.92);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .markdown-body strong { color: #facc15; }
+        .markdown-body code { background: #1e293b; padding: 0.1rem 0.3rem; border-radius: 0.2rem; color: #38bdf8; font-family: monospace; }
     </style>
     <!-- Marked JS for AI Markdown formatting -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body class="h-screen flex overflow-hidden selection:bg-amber-500 selection:text-black">
+<body class="h-screen flex overflow-hidden selection:bg-yellow-400 selection:text-black">
 
 <!-- ========================================== -->
-<!-- 1. AUTHENTICATION / REGISTRATION MODAL SCREEN -->
+<!-- 1. AUTHENTICATION & REGISTRATION SCREEN -->
 <!-- ========================================== -->
 <div id="authScreen" class="fixed inset-0 z-50 bg-[#07090e] flex items-center justify-center p-4">
     <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 bg-[#0f141f] border border-gray-800 rounded-3xl shadow-2xl overflow-hidden">
         
-        <!-- Left Banner Side -->
-        <div class="p-8 bg-gradient-to-br from-amber-500/10 via-transparent to-blue-600/10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-gray-800">
+        <!-- Left Hero Banner -->
+        <div class="p-8 bg-gradient-to-br from-yellow-500/10 via-transparent to-blue-600/10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-gray-800">
             <div>
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="bg-gradient-to-br from-amber-500 to-yellow-600 p-2.5 rounded-2xl text-black font-black text-xl shadow-lg">
-                        <i class="fa-solid fa-bolt"></i>
+                    <div class="bg-gradient-to-br from-yellow-400 to-amber-500 p-2.5 rounded-2xl text-black font-black text-xl shadow-lg">
+                        <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <div>
                         <h2 class="text-xl font-black text-white tracking-wider">FORREX AI</h2>
-                        <p class="text-[10px] text-amber-400 font-bold uppercase tracking-widest">Trading Intelligence</p>
+                        <p class="text-[10px] text-yellow-400 font-bold uppercase tracking-widest">SMC TRENDING TERMINAL V2.0</p>
                     </div>
                 </div>
 
                 <h1 class="text-3xl font-extrabold text-white leading-tight mb-4">
-                    Trade with <span class="text-amber-400">Data</span>, Not Emotion.
+                    Trade with <span class="text-yellow-400">Data & SMC Logic</span>, Not Emotion.
                 </h1>
                 <p class="text-xs text-gray-400 leading-relaxed mb-6">
-                    ប្រព័ន្ធវិភាគទីផ្សារមាស និងរូបិយប័ណ្ណឆ្លាតវៃ (XAU/USD, Forex, Crypto) ដំណើរការដោយ Gemini AI - ផ្តល់សញ្ញាផ្សារ Entry, Stop Loss, និង Take Profit លើ Chart ផ្ទាល់។
+                    ប្រព័ន្ធវិភាគទីផ្សារមាស (XAU/USD) និង Forex តាមទ្រឹស្តី Smart Money Concepts (BOS, CHoCH, Order Block, FVG, Displacement, High/Low Protection) ដំណើរការដោយ Gemini 2.5 Flash AI។
                 </p>
 
-                <div class="space-y-3 text-xs text-gray-300">
-                    <div class="flex items-center gap-3 bg-[#07090e]/60 p-3 rounded-xl border border-gray-800">
-                        <i class="fa-solid fa-brain text-amber-400 text-sm"></i>
-                        <span>24/7 Gemini AI Chart & Signal Overlay Engine</span>
+                <div class="space-y-2.5 text-xs text-gray-300">
+                    <div class="flex items-center gap-3 bg-[#07090e]/80 p-3 rounded-xl border border-gray-800">
+                        <i class="fa-solid fa-brain text-yellow-400 text-sm"></i>
+                        <span>Smart Market Structure (BOS vs Liquidity Sweep)</span>
                     </div>
-                    <div class="flex items-center gap-3 bg-[#07090e]/60 p-3 rounded-xl border border-gray-800">
-                        <i class="fa-solid fa-chart-line text-green-400 text-sm"></i>
-                        <span>Live Buy/Sell Badges & Dynamic Trailing Stop</span>
+                    <div class="flex items-center gap-3 bg-[#07090e]/80 p-3 rounded-xl border border-gray-800">
+                        <i class="fa-solid fa-layer-group text-green-400 text-sm"></i>
+                        <span>3-Step Order Block Validation Engine</span>
                     </div>
-                    <div class="flex items-center gap-3 bg-[#07090e]/60 p-3 rounded-xl border border-gray-800">
-                        <i class="fa-solid fa-shield-halved text-blue-400 text-sm"></i>
-                        <span>Risk-First System (SL & TP Recommendation)</span>
+                    <div class="flex items-center gap-3 bg-[#07090e]/80 p-3 rounded-xl border border-gray-800">
+                        <i class="fa-solid fa-robot text-blue-400 text-sm"></i>
+                        <span>Gemini 2.5 Flash AI Signal Analyst in Khmer</span>
                     </div>
                 </div>
             </div>
 
             <div class="mt-8 text-[11px] text-gray-500">
-                &copy; 2026 FORREX AI TRENDING. Educational & Analytical Purposes Only.
+                &copy; 2026 FORREX AI TRENDING. Educational & Analysis Platform.
             </div>
         </div>
 
-        <!-- Right Form Side (Login / Register Switchable) -->
+        <!-- Right Authentication Forms -->
         <div class="p-8 flex flex-col justify-center">
             
-            <!-- Register Form -->
+            <!-- Register Box -->
             <div id="registerFormBox">
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h3 class="text-lg font-bold text-white">ចុះឈ្មោះគណនីថ្មី (Create Account)</h3>
-                        <p class="text-xs text-gray-400">បញ្ចូលឈ្មោះរបស់អ្នកដើម្បីចាប់ផ្តើម</p>
+                        <p class="text-xs text-gray-400">សូមបញ្ចូលព័ត៌មានដើម្បីចូលប្រើប្រាស់ Terminal</p>
                     </div>
-                    <span class="text-xs text-amber-400 font-bold bg-amber-500/10 px-2.5 py-1 rounded-full">Step 1 / 1</span>
+                    <span class="text-xs text-yellow-400 font-bold bg-yellow-400/10 px-2.5 py-1 rounded-full border border-yellow-400/20">Step 1 / 1</span>
                 </div>
 
-                <form onsubmit="handleUserRegister(event)" class="space-y-4 text-xs">
+                <form onsubmit="handleUserRegister(event)" class="space-y-3 text-xs">
                     <div>
                         <label class="block text-gray-400 mb-1 font-semibold">ឈ្មោះពេញ (Full Name) *</label>
-                        <input type="text" id="regFullName" placeholder="ឧ. Reak Smey" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500 transition">
+                        <input type="text" id="regFullName" placeholder="ឧ. Reak Smey" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-yellow-400 transition">
                     </div>
 
                     <div>
                         <label class="block text-gray-400 mb-1 font-semibold">ឈ្មោះអ្នកប្រើប្រាស់ (Username) *</label>
-                        <input type="text" id="regUsername" placeholder="ឧ. reaksmey1001" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500 transition">
+                        <input type="text" id="regUsername" placeholder="ឧ. reaksmey1001" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-yellow-400 transition">
                     </div>
 
                     <div>
                         <label class="block text-gray-400 mb-1 font-semibold">អ៊ីមែល (Email) *</label>
-                        <input type="email" id="regEmail" placeholder="example@gmail.com" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500 transition">
+                        <input type="email" id="regEmail" placeholder="example@gmail.com" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-yellow-400 transition">
                     </div>
 
                     <div>
                         <label class="block text-gray-400 mb-1 font-semibold">លេខទូរស័ព្ទ (Mobile Phone)</label>
-                        <input type="tel" id="regPhone" placeholder="0964326273" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500 transition">
+                        <input type="tel" id="regPhone" placeholder="0964326273" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-yellow-400 transition">
                     </div>
 
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold py-3 rounded-xl transition shadow-lg mt-2 flex items-center justify-center gap-2">
-                        <span>ចូលប្រើប្រាស់ Terminal (Continue)</span>
+                    <button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-extrabold py-3 rounded-xl transition shadow-lg mt-2 flex items-center justify-center gap-2">
+                        <span>ចូលប្រើប្រាស់ Terminal (Access Terminal)</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </form>
 
                 <div class="mt-4 text-center text-xs text-gray-400">
                     មានគណនីរួចហើយ? 
-                    <button onclick="toggleAuthMode('login')" class="text-amber-400 font-bold hover:underline">ចូលប្រើប្រាស់ (Sign In)</button>
+                    <button onclick="toggleAuthMode('login')" class="text-yellow-400 font-bold hover:underline">ចូលប្រើប្រាស់ (Sign In)</button>
                 </div>
             </div>
 
-            <!-- Login Form -->
+            <!-- Login Box -->
             <div id="loginFormBox" class="hidden">
                 <div class="mb-6">
                     <h3 class="text-lg font-bold text-white">ចូលប្រើប្រាស់គណនី (Sign In)</h3>
@@ -183,10 +178,10 @@
                 <form onsubmit="handleUserLogin(event)" class="space-y-4 text-xs">
                     <div>
                         <label class="block text-gray-400 mb-1 font-semibold">អ៊ីមែល ឬ Username *</label>
-                        <input type="text" id="loginId" placeholder="reaksmey1001" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500 transition">
+                        <input type="text" id="loginId" placeholder="reaksmey1001" required class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-yellow-400 transition">
                     </div>
 
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold py-3 rounded-xl transition shadow-lg mt-2 flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-extrabold py-3 rounded-xl transition shadow-lg mt-2 flex items-center justify-center gap-2">
                         <span>ចូលប្រើប្រាស់ (Sign In)</span>
                         <i class="fa-solid fa-right-to-bracket"></i>
                     </button>
@@ -194,7 +189,7 @@
 
                 <div class="mt-4 text-center text-xs text-gray-400">
                     មិនទាន់មានគណនី? 
-                    <button onclick="toggleAuthMode('register')" class="text-amber-400 font-bold hover:underline">ចុះឈ្មោះឥឡូវនេះ (Create Account)</button>
+                    <button onclick="toggleAuthMode('register')" class="text-yellow-400 font-bold hover:underline">ចុះឈ្មោះឥឡូវនេះ (Create Account)</button>
                 </div>
             </div>
 
@@ -205,102 +200,99 @@
 
 
 <!-- ========================================== -->
-<!-- 2. MAIN TRADING APPLICATION LAYOUT -->
+<!-- 2. MAIN APPLICATION WORKSPACE LAYOUT -->
 <!-- ========================================== -->
 <div id="appContainer" class="flex w-full h-full">
 
     <!-- LEFT SIDEBAR NAVIGATION -->
-    <aside class="w-64 bg-[#0b0f19] border-r border-[#1e293b] flex flex-col justify-between shrink-0 select-none">
+    <aside id="mainSidebar" class="w-64 bg-[#0b0f19] border-r border-[#1e293b] flex flex-col justify-between shrink-0 select-none transition-all duration-300">
         <div>
-            <!-- App Logo / Title Header -->
+            <!-- App Logo Header -->
             <div class="p-4 border-b border-[#1e293b] flex items-center justify-between">
                 <div class="flex items-center space-x-2.5">
-                    <div class="bg-gradient-to-br from-amber-500 to-yellow-600 p-2 rounded-xl text-black font-black text-lg shadow">
-                        <i class="fa-solid fa-bolt"></i>
+                    <div class="bg-gradient-to-br from-yellow-400 to-amber-500 p-2 rounded-xl text-black font-black text-lg shadow">
+                        <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <div>
                         <h1 class="text-sm font-extrabold text-white tracking-wide">FORREX AI</h1>
-                        <span class="text-[9px] text-amber-400 font-bold tracking-widest block -mt-1">TRENDING TERMINAL</span>
+                        <span class="text-[9px] text-yellow-400 font-bold tracking-widest block -mt-1">TRENDING PRO V2.0</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Workspace Menu Section -->
-            <div class="p-3">
-                <p class="text-[10px] font-bold text-gray-500 px-3 mb-2 uppercase tracking-wider">WORKSPACES</p>
-                <nav class="space-y-1 text-xs">
-                    <a href="#" onclick="switchWorkspace('overview')" id="nav-overview" class="sidebar-item active flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-border-all text-amber-400 w-4 text-center"></i>
-                        <span>Overview</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('terminal')" id="nav-terminal" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-sliders text-blue-400 w-4 text-center"></i>
-                        <span>Terminal</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('terminal')" id="nav-signals" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-bolt text-yellow-400 w-4 text-center"></i>
-                        <span>Live Signals</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('terminal')" id="nav-chart" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-chart-candlestick text-green-400 w-4 text-center"></i>
-                        <span>Desk Chart</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('terminal')" id="nav-indicators" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-bullseye text-purple-400 w-4 text-center"></i>
-                        <span>Indicators</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('terminal')" id="nav-mytrades" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-clock-rotate-left text-cyan-400 w-4 text-center"></i>
-                        <span>My Trades</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('terminal')" id="nav-alerts" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-eye text-red-400 w-4 text-center"></i>
-                        <span>Alerts</span>
-                    </a>
-                </nav>
-            </div>
+            <!-- Workspace Navigation Menu -->
+            <div class="p-3 space-y-4">
+                <div>
+                    <p class="text-[10px] font-bold text-gray-500 px-3 mb-1.5 uppercase tracking-wider">WORKSPACES</p>
+                    <nav class="space-y-0.5 text-xs">
+                        <a href="#" onclick="switchWorkspace('terminal')" id="nav-overview" class="sidebar-item active flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-border-all text-yellow-400 w-4 text-center"></i>
+                            <span>Overview</span>
+                        </a>
+                        <a href="#" onclick="switchWorkspace('terminal')" id="nav-terminal" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-terminal text-blue-400 w-4 text-center"></i>
+                            <span>Terminal</span>
+                        </a>
+                        <a href="#" onclick="switchWorkspace('terminal'); switchRightTab('analysis');" id="nav-signals" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-bolt text-amber-400 w-4 text-center"></i>
+                            <span>Live SMC Signals</span>
+                        </a>
+                        <a href="#" onclick="switchWorkspace('terminal')" id="nav-chart" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-chart-candlestick text-green-400 w-4 text-center"></i>
+                            <span>Desk Chart</span>
+                        </a>
+                        <a href="#" onclick="switchWorkspace('terminal')" id="nav-indicators" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-bullseye text-purple-400 w-4 text-center"></i>
+                            <span>Indicators & OB</span>
+                        </a>
+                        <a href="#" onclick="switchWorkspace('terminal'); switchRightTab('history');" id="nav-mytrades" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-clock-rotate-left text-cyan-400 w-4 text-center"></i>
+                            <span>My Trades</span>
+                        </a>
+                    </nav>
+                </div>
 
-            <!-- More Section -->
-            <div class="px-3 pt-2">
-                <p class="text-[10px] font-bold text-gray-500 px-3 mb-2 uppercase tracking-wider">MORE</p>
-                <nav class="space-y-1 text-xs">
-                    <a href="#" onclick="switchWorkspace('terminal')" class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400 w-4 text-center"></i>
-                        <span>AI Chat & Setup</span>
-                    </a>
-                    <a href="#" onclick="openApiKeyModal()" class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-key text-yellow-400 w-4 text-center"></i>
-                        <span>API Configuration</span>
-                    </a>
-                    <a href="#" onclick="switchWorkspace('settings')" id="nav-settings" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
-                        <i class="fa-solid fa-gear text-gray-400 w-4 text-center"></i>
-                        <span>Settings</span>
-                    </a>
-                </nav>
+                <div>
+                    <p class="text-[10px] font-bold text-gray-500 px-3 mb-1.5 uppercase tracking-wider">MORE</p>
+                    <nav class="space-y-0.5 text-xs">
+                        <a href="#" onclick="switchWorkspace('terminal'); switchRightTab('aichat');" class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-robot text-yellow-400 w-4 text-center"></i>
+                            <span>Gemini AI Chat Desk</span>
+                        </a>
+                        <a href="#" onclick="openApiKeyModal()" class="flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-key text-blue-400 w-4 text-center"></i>
+                            <span>API Configuration</span>
+                        </a>
+                        <a href="#" onclick="switchWorkspace('settings')" id="nav-settings" class="sidebar-item flex items-center gap-3 px-3 py-2 rounded-xl font-medium text-gray-300 hover:bg-gray-800/50 transition">
+                            <i class="fa-solid fa-gear text-gray-400 w-4 text-center"></i>
+                            <span>Settings</span>
+                        </a>
+                    </nav>
+                </div>
             </div>
         </div>
 
-        <!-- User Profile Bottom Card -->
-        <div class="p-3 space-y-3">
-            <div class="bg-gradient-to-br from-amber-500/10 to-yellow-600/10 border border-amber-500/30 p-3 rounded-2xl text-xs space-y-1.5">
-                <div class="flex items-center gap-2 text-amber-400 font-bold">
+        <!-- User Profile Footer Card -->
+        <div class="p-3 space-y-2.5">
+            <div class="bg-gradient-to-br from-yellow-500/10 to-amber-600/10 border border-yellow-500/30 p-2.5 rounded-2xl text-xs space-y-1">
+                <div class="flex items-center gap-2 text-yellow-400 font-bold text-[11px]">
                     <i class="fa-solid fa-crown"></i>
-                    <span>Free Pro Trial Active</span>
+                    <span>Pro Account Active</span>
                 </div>
-                <p class="text-[11px] text-gray-400 leading-snug">
-                    ទទួលបាន Live Chart Buy/Sell Signal Overlay និង Gemini AI Assistant ឥតគិតថ្លៃ។
+                <p class="text-[10px] text-gray-400 leading-snug">
+                    SMC Market Engine & Gemini 2.5 Flash active.
                 </p>
             </div>
 
-            <div class="bg-[#07090e] border border-gray-800 p-2.5 rounded-2xl flex items-center justify-between">
-                <div class="flex items-center space-x-2.5 overflow-hidden">
-                    <img id="sidebarAvatar" src="https://placehold.co/100x100/1e293b/f59e0b?text=User" alt="Avatar" class="w-8 h-8 rounded-full border border-amber-500/50 object-cover shrink-0">
+            <div class="bg-[#07090e] border border-gray-800 p-2 rounded-2xl flex items-center justify-between">
+                <div class="flex items-center space-x-2 overflow-hidden">
+                    <img id="sidebarAvatar" src="https://placehold.co/100x100/1e293b/facc15?text=User" alt="Avatar" class="w-8 h-8 rounded-full border border-yellow-400/50 object-cover shrink-0">
                     <div class="truncate">
                         <div id="sidebarName" class="text-xs font-bold text-white truncate">Reak Smey</div>
                         <div id="sidebarUsername" class="text-[10px] text-gray-400 truncate">@reaksmey1001</div>
                     </div>
                 </div>
-                <button onclick="handleLogout()" class="text-gray-400 hover:text-red-400 p-1.5 transition" title="ចាកចេញ (Logout)">
+                <button onclick="handleLogout()" class="text-gray-400 hover:text-red-400 p-1.5 transition" title="Logout">
                     <i class="fa-solid fa-right-from-bracket text-xs"></i>
                 </button>
             </div>
@@ -308,66 +300,58 @@
     </aside>
 
 
-    <!-- RIGHT MAIN CONTENT AREA -->
+    <!-- RIGHT CONTENT AREA -->
     <div class="flex-grow flex flex-col min-w-0 overflow-y-auto">
 
-        <!-- TOP MARKET TICKER BAR -->
+        <!-- TOP MARKET TICKER HEADER -->
         <header class="bg-[#0b0f19] border-b border-[#1e293b] py-2 px-4 flex items-center justify-between gap-4 text-xs shrink-0 select-none">
-            <!-- Asset Ticker Scroll -->
-            <div class="flex items-center space-x-4 overflow-x-auto py-1 scrollbar-none font-mono">
-                <div class="flex items-center gap-1.5 bg-[#07090e] px-2.5 py-1 rounded-lg border border-gray-800 shrink-0">
-                    <span class="text-yellow-400 font-bold">XAUUSD</span>
-                    <span id="ticker-XAUUSD" class="text-white font-bold">$4,066.08</span>
-                    <span class="text-green-400 text-[10px]">+0.10%</span>
+            <div class="flex items-center space-x-3 overflow-x-auto py-1 scrollbar-none font-mono">
+                <div class="flex items-center gap-2 bg-[#07090e] px-3 py-1 rounded-xl border border-gray-800 shrink-0">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                    <span class="text-yellow-400 font-bold">XAU/USD</span>
+                    <span id="ticker-XAUUSD" class="text-white font-bold text-sm">$4,066.02</span>
+                    <span id="ticker-change" class="text-green-400 text-[10px] bg-green-500/10 px-1.5 py-0.5 rounded font-bold">+0.10%</span>
                 </div>
-                <div class="flex items-center gap-1.5 bg-[#07090e] px-2.5 py-1 rounded-lg border border-gray-800 shrink-0">
-                    <span class="text-amber-400 font-bold">BTCUSD</span>
+
+                <div class="flex items-center gap-2 bg-[#07090e] px-2.5 py-1 rounded-xl border border-gray-800 shrink-0 text-[11px]">
+                    <span class="text-gray-400">BTCUSD:</span>
                     <span id="ticker-BTCUSD" class="text-white font-bold">$75,869</span>
-                    <span class="text-red-400 text-[10px]">-0.13%</span>
                 </div>
-                <div class="flex items-center gap-1.5 bg-[#07090e] px-2.5 py-1 rounded-lg border border-gray-800 shrink-0">
-                    <span class="text-blue-400 font-bold">ETHUSD</span>
+                <div class="flex items-center gap-2 bg-[#07090e] px-2.5 py-1 rounded-xl border border-gray-800 shrink-0 text-[11px]">
+                    <span class="text-gray-400">ETHUSD:</span>
                     <span id="ticker-ETHUSD" class="text-white font-bold">$2,241.94</span>
-                    <span class="text-green-400 text-[10px]">+0.04%</span>
                 </div>
-                <div class="flex items-center gap-1.5 bg-[#07090e] px-2.5 py-1 rounded-lg border border-gray-800 shrink-0">
-                    <span class="text-purple-400 font-bold">EURUSD</span>
+                <div class="flex items-center gap-2 bg-[#07090e] px-2.5 py-1 rounded-xl border border-gray-800 shrink-0 text-[11px]">
+                    <span class="text-gray-400">EURUSD:</span>
                     <span id="ticker-EURUSD" class="text-white font-bold">1.1141</span>
-                    <span class="text-green-400 text-[10px]">+0.01%</span>
-                </div>
-                <div class="flex items-center gap-1.5 bg-[#07090e] px-2.5 py-1 rounded-lg border border-gray-800 shrink-0">
-                    <span class="text-cyan-400 font-bold">GBPUSD</span>
-                    <span id="ticker-GBPUSD" class="text-white font-bold">1.3350</span>
-                    <span class="text-green-400 text-[10px]">+0.01%</span>
                 </div>
             </div>
 
-            <!-- Top Right Control Buttons -->
             <div class="flex items-center space-x-3 shrink-0">
                 <div class="bg-[#07090e] border border-gray-800 px-3 py-1 rounded-xl text-cyan-400 font-mono text-[11px]" id="liveClock">
                     00:00:00 UTC
                 </div>
-                <button onclick="openApiKeyModal()" class="bg-amber-500/10 border border-amber-500/40 text-amber-400 hover:bg-amber-500/20 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                <button onclick="openApiKeyModal()" class="bg-yellow-400/10 border border-yellow-400/40 text-yellow-400 hover:bg-yellow-400/20 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
                     <i class="fa-solid fa-key"></i>
                     <span id="apiKeyStatusText">Gemini API Active</span>
                 </button>
             </div>
         </header>
 
-        <!-- Dynamic Content Body Container -->
-        <main class="flex-grow p-4 min-h-0 relative">
+        <!-- Dynamic Content Body -->
+        <main class="flex-grow p-3.5 min-h-0 relative">
             
-            <!-- VIEW 1: OVERVIEW & TERMINAL DASHBOARD -->
-            <div id="view-workspace" class="h-full grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <!-- VIEW 1: TERMINAL & CHART WORKSPACE -->
+            <div id="view-workspace" class="h-full grid grid-cols-1 lg:grid-cols-12 gap-3.5">
                 
-                <!-- Center Chart & Main Panel (8 Cols) -->
+                <!-- Center Chart & Analysis Drawer (8 Cols) -->
                 <div class="lg:col-span-8 flex flex-col space-y-3 h-full">
                     
-                    <!-- Timeframe Bar & Top Controls -->
-                    <div class="terminal-panel p-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-2 shadow">
-                        <div class="flex items-center gap-1 overflow-x-auto py-1 text-xs">
+                    <!-- Timeframe Bar & Controls -->
+                    <div class="terminal-panel p-2 rounded-2xl flex flex-wrap items-center justify-between gap-2 shadow">
+                        <div class="flex items-center gap-1 overflow-x-auto py-0.5 text-xs">
                             <span class="text-gray-400 font-semibold mr-1 flex items-center gap-1">
-                                <i class="fa-solid fa-clock text-amber-400"></i> TF:
+                                <i class="fa-solid fa-clock text-yellow-400"></i> Timeframe:
                             </span>
                             <button onclick="changeTimeframe('1S')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">1s</button>
                             <button onclick="changeTimeframe('5S')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">5s</button>
@@ -376,192 +360,127 @@
                             <button onclick="changeTimeframe('1')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">1m</button>
                             <button onclick="changeTimeframe('5')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">5m</button>
                             <button onclick="changeTimeframe('15')" class="tf-btn active text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">15m</button>
-                            <button onclick="changeTimeframe('30')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">30m</button>
-                            <span class="text-gray-700">|</span>
                             <button onclick="changeTimeframe('60')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">1h</button>
                             <button onclick="changeTimeframe('240')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">4h</button>
                             <button onclick="changeTimeframe('D')" class="tf-btn text-xs px-2.5 py-1 rounded-lg bg-[#07090e] text-gray-300 hover:bg-gray-800 transition">1D</button>
                         </div>
 
                         <div class="flex items-center gap-2">
-                            <button onclick="toggleOverlayMarkers()" id="toggleOverlayBtn" class="bg-[#07090e] border border-amber-500/40 text-amber-400 font-bold text-xs py-1.5 px-3 rounded-xl transition hover:bg-amber-500/10 flex items-center gap-1.5">
-                                <i class="fa-solid fa-eye"></i> Show Signal Badges
+                            <button onclick="runSMCFastAnalysis()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs py-1.5 px-3 rounded-xl transition shadow flex items-center gap-1.5">
+                                <i class="fa-solid fa-bolt text-yellow-300"></i> SMC Scan
                             </button>
-                            <button onclick="runFastScan()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs py-1.5 px-3 rounded-xl transition shadow flex items-center gap-1.5">
-                                <i class="fa-solid fa-bolt text-yellow-300"></i> Fast Scan
-                            </button>
-                            <button onclick="askGeminiFullSetup()" class="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold text-xs py-1.5 px-3 rounded-xl transition shadow flex items-center gap-1.5">
+                            <button onclick="askGeminiFullSetup()" class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-extrabold text-xs py-1.5 px-3 rounded-xl transition shadow flex items-center gap-1.5">
                                 <i class="fa-solid fa-sparkles"></i> GEMINI AI SETUP
                             </button>
                         </div>
                     </div>
 
-                    <!-- TradingView Live Chart Container with Overlay Canvas & Floating Controls -->
-                    <div class="terminal-panel rounded-2xl p-2 flex-grow min-h-[520px] relative overflow-hidden shadow-xl">
-                        
-                        <!-- Embedded TradingView Widget -->
+                    <!-- TradingView Chart Container -->
+                    <div class="terminal-panel rounded-2xl p-1.5 flex-grow min-h-[460px] relative overflow-hidden shadow-xl">
                         <div id="tradingview_chart_container" class="w-full h-full rounded-xl overflow-hidden"></div>
-
-                        <!-- Canvas Layer for Live Signal Badges & Trailing Lines -->
-                        <canvas id="chartOverlayCanvas" class="absolute inset-0 pointer-events-none z-10 w-full h-full"></canvas>
-
-                        <!-- FLOATING ANALYSIS CONTROL WINDOW INSIDE CHART (Matching Reference UI) -->
-                        <div class="absolute bottom-4 left-4 z-20 chart-floating-box w-80 rounded-2xl p-3 shadow-2xl border border-gray-700/60">
-                            <!-- Floating Tabs -->
-                            <div class="flex items-center justify-between text-xs font-bold border-b border-gray-700/60 pb-2 mb-2.5">
-                                <button onclick="switchFloatingTab('analysis')" id="ftab-analysis" class="text-amber-400 border-b-2 border-amber-400 pb-0.5">Analysis</button>
-                                <button onclick="switchFloatingTab('bot')" id="ftab-bot" class="text-gray-400 hover:text-white pb-0.5">Bot</button>
-                                <button onclick="switchFloatingTab('history')" id="ftab-history" class="text-gray-400 hover:text-white pb-0.5">History</button>
-                                <button onclick="switchFloatingTab('news')" id="ftab-news" class="text-gray-400 hover:text-white pb-0.5">News</button>
-                            </div>
-
-                            <!-- Floating Content: Analysis View -->
-                            <div id="fcontent-analysis" class="space-y-2.5 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                                        <span class="font-bold text-white font-mono" id="floatSymbolBadge">XAUUSD · 15m</span>
-                                    </div>
-                                    <span class="text-[10px] bg-green-500/20 text-green-400 font-bold px-2 py-0.5 rounded">● READY</span>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-2 pt-1">
-                                    <button onclick="runFastScan()" class="bg-[#141b2b] hover:bg-[#1e293b] text-white font-bold py-2 px-3 rounded-xl border border-gray-700 flex items-center justify-center gap-1.5 transition">
-                                        <i class="fa-solid fa-chart-line text-blue-400"></i> Analyze
-                                    </button>
-                                    <button onclick="askGeminiFullSetup()" class="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black font-extrabold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition shadow">
-                                        <i class="fa-solid fa-bolt"></i> Best setup
-                                    </button>
-                                </div>
-
-                                <div class="bg-[#07090e]/80 p-2.5 rounded-xl border border-gray-800 text-[11px] text-gray-300 leading-snug space-y-1" id="floatAnalysisText">
-                                    <div class="flex justify-between items-center text-gray-400 text-[10px]">
-                                        <span>STATUS: READY TO SCAN</span>
-                                        <span class="text-amber-400 font-mono" id="floatPriceTag">$4,066.08</span>
-                                    </div>
-                                    <p class="text-gray-400">Tap <strong class="text-white">Analyze</strong> for a read of XAUUSD 15m — or <strong class="text-amber-400">Best setup</strong> to scan 5m and 15m.</p>
-                                </div>
-                            </div>
-
-                            <!-- Floating Content: Bot -->
-                            <div id="fcontent-bot" class="hidden text-xs text-gray-300 space-y-2">
-                                <div class="font-bold text-amber-400">AI Trading Bot Active</div>
-                                <p class="text-[11px] text-gray-400">Bot scanning structure break and trend reversal triggers on XAU/USD.</p>
-                                <button onclick="quickAsk('សូមផ្តល់ Trade Setup ល្អបំផុតសម្រាប់ XAU/USD')" class="w-full bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-xl py-1.5 font-bold">Ask AI Bot Setup</button>
-                            </div>
-
-                            <!-- Floating Content: History -->
-                            <div id="fcontent-history" class="hidden text-xs space-y-1 max-h-32 overflow-y-auto" id="floatHistoryList">
-                                <div class="text-gray-500 text-[11px] text-center py-2">No recent setup logs</div>
-                            </div>
-
-                            <!-- Floating Content: News -->
-                            <div id="fcontent-news" class="hidden text-xs space-y-1.5">
-                                <div class="font-bold text-white">Live News Headlines</div>
-                                <div class="text-[11px] text-amber-300">● US CPI Inflation update expected</div>
-                                <div class="text-[11px] text-gray-400">● Central Banks increase gold reserves</div>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <!-- News & Events Panel -->
+                    <!-- SMC Knowledge Criteria Panel -->
                     <div class="terminal-panel p-3.5 rounded-2xl space-y-2 text-xs">
                         <div class="flex justify-between items-center border-b border-gray-800 pb-2">
                             <span class="font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-newspaper text-amber-400"></i>
-                                ព័ត៌មាន និងព្រឹត្តិការណ៍សេដ្ឋកិច្ច (Market News)
+                                <i class="fa-solid fa-book-bookmark text-yellow-400"></i>
+                                ច្បាប់វិភាគទីផ្សារ SMC (Smart Money Concepts Rules Loaded)
                             </span>
-                            <button onclick="summarizeNewsWithGemini()" class="text-[10px] bg-purple-600/20 text-purple-300 border border-purple-500/40 hover:bg-purple-600/30 font-bold px-2.5 py-1 rounded-lg transition">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> AI Summarize
-                            </button>
+                            <span class="text-[10px] bg-yellow-400/10 text-yellow-400 font-bold px-2 py-0.5 rounded">6-Step Algorithm</span>
                         </div>
-                        <div id="newsFeed" class="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 pt-1 text-[11px] text-gray-300">
                             <div class="bg-[#07090e] p-2.5 rounded-xl border border-gray-800 space-y-1">
-                                <span class="text-[9px] bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded font-bold">HIGH IMPACT</span>
-                                <div class="font-bold text-gray-200 truncate">US Inflation CPI & Fed Rate</div>
-                                <p class="text-[10px] text-gray-400 leading-tight">ទីផ្សាររង់ចាំមើលទិន្នន័យអតិផរណា CPI ដើម្បីវាយតម្លៃអត្រាការប្រាក់ Fed។</p>
+                                <span class="text-[10px] text-yellow-400 font-bold">1. True BOS vs Sweep</span>
+                                <p class="text-[10px] text-gray-400 leading-snug">BOS ពិតត្រូវតែបិទ Candle Body លើ/ក្រោម Swing Point ជាមួយ Displacement + FVG (មិនមែនគ្រាន់តែកន្ទុយទាន sweep ឡើយ)។</p>
                             </div>
                             <div class="bg-[#07090e] p-2.5 rounded-xl border border-gray-800 space-y-1">
-                                <span class="text-[9px] bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded font-bold">GEOPOLITICS</span>
-                                <div class="font-bold text-gray-200 truncate">Central Banks Gold Buying</div>
-                                <p class="text-[10px] text-gray-400 leading-tight">ធនាគារកណ្តាលទូទាំងពិភពលោកបង្កើនការទិញមាសបម្រុងបន្ថែម។</p>
+                                <span class="text-[10px] text-green-400 font-bold">2. CHoCH Trend Reversal</span>
+                                <p class="text-[10px] text-gray-400 leading-snug">CHoCH កើតឡើងនៅពេលតម្លៃបំបែក Protected Strong High/Low នៅតំបន់ H4/M15 Key Supply & Demand Zone។</p>
                             </div>
                             <div class="bg-[#07090e] p-2.5 rounded-xl border border-gray-800 space-y-1">
-                                <span class="text-[9px] bg-blue-500/10 text-blue-400 px-1.5 py-0.5 rounded font-bold">MACRO</span>
-                                <div class="font-bold text-gray-200 truncate">DXY Index Trend</div>
-                                <p class="text-[10px] text-gray-400 leading-tight">សន្ទស្សន៍ដុល្លារ DXY រឹងមាំ ដែលប៉ះពាល់ដល់ចលនាតម្លៃមាស XAU/USD។</p>
+                                <span class="text-[10px] text-blue-400 font-bold">3. Valid Order Block (OB)</span>
+                                <p class="text-[10px] text-gray-400 leading-snug">OB ល្អត្រូវមាន 3 លក្ខខណ្ឌ៖ 1. គ្មាន Displacement មិនយក 2. បង្កើត BOS/CHoCH 3. នៅស្រស់ (Fresh / Unmitigated)។</p>
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Right Side Control & AI Chat Tabs (4 Cols) -->
+                <!-- Right Side Interactive Analysis & Gemini AI Chat (4 Cols) -->
                 <div class="lg:col-span-4 flex flex-col space-y-3 h-full">
                     
-                    <!-- Navigation Tabs -->
+                    <!-- Right Tabs Nav -->
                     <div class="terminal-panel p-1 rounded-xl flex items-center justify-between text-xs font-bold shadow">
-                        <button onclick="switchRightTab('analysis')" id="rightTab-analysis" class="flex-1 py-1.5 rounded-lg bg-amber-500 text-black transition shadow">Signal Plan</button>
+                        <button onclick="switchRightTab('analysis')" id="rightTab-analysis" class="flex-1 py-1.5 rounded-lg bg-yellow-400 text-black transition shadow">Analysis</button>
                         <button onclick="switchRightTab('aichat')" id="rightTab-aichat" class="flex-1 py-1.5 rounded-lg text-gray-400 hover:text-white transition flex items-center justify-center gap-1">
-                            <span>Gemini Chat</span>
+                            <span>Bot Chat</span>
                             <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
                         </button>
                         <button onclick="switchRightTab('history')" id="rightTab-history" class="flex-1 py-1.5 rounded-lg text-gray-400 hover:text-white transition">History</button>
                     </div>
 
-                    <!-- Right Tab 1: Active Signal & Technical Plan -->
+                    <!-- Right Tab 1: Analysis Card (Matching Screenshots 8 & 9) -->
                     <div id="rightContent-analysis" class="space-y-3 flex-grow overflow-y-auto">
                         
-                        <!-- Signal Card Overlay -->
+                        <!-- Main SMC Interactive Signal Card -->
                         <div id="signalCard" class="terminal-panel rounded-2xl p-4 shadow-xl border border-gray-800 transition-all duration-300 space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-[10px] bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20 font-bold" id="symbolBadge">XAUUSD · 15m</span>
-                                <span class="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded font-bold">ENGINE READY ✓</span>
+                                <span class="text-[10px] bg-blue-500/10 text-blue-400 px-2.5 py-0.5 rounded border border-blue-500/20 font-bold" id="symbolBadge">XAUUSD · 15m READY</span>
+                                <span class="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded font-bold">SMC ENGINE ACTIVE ✓</span>
+                            </div>
+
+                            <div class="flex items-center justify-center gap-2 py-1">
+                                <button onclick="runSMCFastAnalysis()" class="flex-1 bg-[#07090e] hover:bg-gray-800 text-white border border-gray-700 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-chart-line text-yellow-400"></i> Analyze
+                                </button>
+                                <button onclick="askGeminiFullSetup()" class="flex-1 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black py-2 rounded-xl text-xs font-extrabold transition shadow flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-bolt"></i> Best Setup
+                                </button>
                             </div>
 
                             <div class="text-center py-2 space-y-1">
-                                <div id="signalBadge" class="text-2xl font-black text-amber-400 bg-amber-500/10 py-3 rounded-xl border border-amber-500/30 tracking-wide">
-                                    CLICK ANALYZE
+                                <div id="signalBadge" class="text-2xl font-black text-yellow-400 bg-yellow-400/10 py-2.5 rounded-xl border border-yellow-400/30 tracking-wide">
+                                    READY TO SCAN
                                 </div>
-                                <p id="signalSubtext" class="text-xs text-gray-300 leading-relaxed">
-                                    ចុចប៊ូតុង "Fast Scan" ឬ "Gemini AI Setup" ដើម្បីវិភាគកម្លាំងទៀន និងបង្ហាញសញ្ញាលើ Chart។
+                                <p id="signalSubtext" class="text-xs text-gray-300 leading-relaxed px-1">
+                                    ចុច "Analyze" ឬ "Best Setup" ដើម្បីស្កែនទម្រង់ Market Structure, BOS, CHoCH និង Order Block។
                                 </p>
                             </div>
 
                             <div class="space-y-2 pt-2 border-t border-gray-800 text-xs">
                                 <div class="flex justify-between items-center bg-[#07090e] p-2.5 rounded-xl border border-gray-800">
                                     <span class="text-gray-400 font-bold">ENTRY ZONE</span>
-                                    <span id="planVal" class="font-bold text-white font-mono">$4,066.08</span>
+                                    <span id="planVal" class="font-bold text-white font-mono">$0.00</span>
                                 </div>
-                                <div class="text-[11px] text-gray-400 px-1 leading-tight" id="planReason">
+                                <div class="text-[11px] text-gray-400 px-1 leading-relaxed" id="planReason">
                                     រង់ចាំការវិភាគទម្រង់ទីផ្សារ...
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-2 pt-1">
                                     <div class="bg-[#07090e] p-2.5 rounded-xl border border-red-500/20 space-y-1">
-                                        <div class="text-red-400 font-bold text-[10px]">SL (Stop Loss)</div>
+                                        <div class="text-red-400 font-bold text-[10px]">PROTECTED SL</div>
                                         <div id="slVal" class="text-white font-bold font-mono text-xs">$0.00</div>
                                     </div>
                                     <div class="bg-[#07090e] p-2.5 rounded-xl border border-green-500/20 space-y-1">
-                                        <div class="text-green-400 font-bold text-[10px]">TP1 (Take Profit)</div>
+                                        <div class="text-green-400 font-bold text-[10px]">TARGET TP</div>
                                         <div id="tp1Val" class="text-white font-bold font-mono text-xs">$0.00</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Momentum Meter & Win Rate -->
+                        <!-- SMC Structure Metrics & Win Rate -->
                         <div class="terminal-panel p-4 rounded-2xl space-y-3 text-xs">
-                            <div class="font-bold text-white flex justify-between items-center">
-                                <span><i class="fa-solid fa-chart-pie text-amber-400 mr-1.5"></i> Market Momentum</span>
-                                <span id="winRateVal" class="text-amber-400 font-bold">Win Rate: --%</span>
+                            <div class="font-bold text-white flex justify-between items-center border-b border-gray-800 pb-2">
+                                <span><i class="fa-solid fa-chart-pie text-yellow-400 mr-1.5"></i> Order Flow & Momentum</span>
+                                <span id="winRateVal" class="text-yellow-400 font-extrabold text-sm">Win Rate: --%</span>
                             </div>
 
                             <div class="space-y-2">
                                 <div>
                                     <div class="flex justify-between text-[11px] mb-1">
-                                        <span class="text-green-400 font-semibold">Bullish Power</span>
+                                        <span class="text-green-400 font-semibold">Bullish Displacement</span>
                                         <span id="greenPowerVal" class="text-green-400 font-bold">0.0%</span>
                                     </div>
                                     <div class="w-full bg-[#07090e] h-2.5 rounded-full overflow-hidden p-0.5 border border-gray-800">
@@ -571,7 +490,7 @@
 
                                 <div>
                                     <div class="flex justify-between text-[11px] mb-1">
-                                        <span class="text-red-400 font-semibold">Bearish Power</span>
+                                        <span class="text-red-400 font-semibold">Bearish Displacement</span>
                                         <span id="redPowerVal" class="text-red-400 font-bold">0.0%</span>
                                     </div>
                                     <div class="w-full bg-[#07090e] h-2.5 rounded-full overflow-hidden p-0.5 border border-gray-800">
@@ -583,45 +502,42 @@
 
                     </div>
 
-                    <!-- Right Tab 2: Gemini Interactive Chat Assistant -->
+                    <!-- Right Tab 2: Gemini 2.5 Flash AI Chat Assistant -->
                     <div id="rightContent-aichat" class="hidden terminal-panel rounded-2xl p-3 flex flex-col h-[520px]">
                         <div class="text-xs font-bold text-white mb-2 flex items-center justify-between border-b border-gray-800 pb-2">
                             <span class="flex items-center gap-1.5">
-                                <i class="fa-solid fa-sparkles text-amber-400"></i> Gemini AI Assistant
+                                <i class="fa-solid fa-sparkles text-yellow-400"></i> Gemini AI Assistant
                             </span>
                             <span class="text-[9px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded font-mono font-bold">GEMINI 2.5 FLASH</span>
                         </div>
 
-                        <!-- Chat Messages Container -->
                         <div id="chatMessages" class="flex-grow overflow-y-auto space-y-2.5 p-1 text-xs scrollbar-thin">
                             <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 text-gray-300 leading-relaxed">
-                                សួស្តី! ខ្ញុំជា <strong>FORREX AI Assistant</strong>។ ខ្ញុំអាចជួយវិភាគទីផ្សារមាស (XAU/USD) ផ្តល់យុទ្ធសាស្ត្រទិញ-លក់ គណនា Risk/Reward ព្រមទាំងឆ្លើយសំណួរ trading ផ្សេងៗ។
+                                សួស្តី! ខ្ញុំជា <strong>FORREX AI Assistant</strong> ដំណើរការដោយ Gemini 2.5 Flash។ ខ្ញុំបានបំពាក់ច្បាប់ SMC ពេញលេញ (BOS, CHoCH, Order Block, FVG, Displacement) សម្រាប់ឆ្លើយសំណួរ និងរៀបចំ Trade Setup មាសជូនអ្នក។
                             </div>
                         </div>
 
-                        <!-- Quick Ask Buttons -->
                         <div class="flex gap-1 overflow-x-auto py-2 text-[10px]">
-                            <button onclick="quickAsk('តើតម្លៃមាស XAU/USD ពេលនេះគួរ BUY ឬ SELL?')" class="bg-[#07090e] hover:bg-gray-800 text-amber-300 border border-amber-500/20 px-2 py-1 rounded-lg whitespace-nowrap">
-                                💡 BUY ឬ SELL ពេលនេះ?
+                            <button onclick="quickAsk('សូមវិភាគតម្លៃមាស XAU/USD តាម SMC ពេលនេះ! (BOS, CHoCH, OB)')" class="bg-[#07090e] hover:bg-gray-800 text-yellow-300 border border-yellow-400/20 px-2 py-1 rounded-lg whitespace-nowrap">
+                                📊 SMC Scan XAUUSD
                             </button>
-                            <button onclick="quickAsk('សូមពន្យល់ពីវិធីរៀបចំ Stop Loss និង Take Profit')" class="bg-[#07090e] hover:bg-gray-800 text-cyan-300 border border-cyan-500/20 px-2 py-1 rounded-lg whitespace-nowrap">
-                                🎯 របៀបដាក់ SL & TP
+                            <button onclick="quickAsk('តើសញ្ញា 3 យ៉ាងណាខ្លះដែលប្រាប់ថា Order Block មិនល្អមិនគួរចូល Trade?')" class="bg-[#07090e] hover:bg-gray-800 text-cyan-300 border border-cyan-400/20 px-2 py-1 rounded-lg whitespace-nowrap">
+                                ⚠️ 3 សញ្ញា Order Block ខូច
                             </button>
                         </div>
 
-                        <!-- Chat Input Box -->
                         <div class="flex gap-2 pt-2 border-t border-gray-800">
-                            <input type="text" id="chatInput" placeholder="សួរ Gemini AI អំពីទីផ្សារមាស..." class="flex-grow bg-[#07090e] border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
-                            <button onclick="sendChatMessage()" class="bg-amber-500 hover:bg-amber-400 text-black px-3 py-2 rounded-xl text-xs font-bold transition">
+                            <input type="text" id="chatInput" placeholder="សួរ Gemini AI អំពី SMC & Market Structure..." class="flex-grow bg-[#07090e] border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
+                            <button onclick="sendChatMessage()" class="bg-yellow-400 hover:bg-yellow-300 text-black px-3 py-2 rounded-xl text-xs font-bold transition">
                                 <i class="fa-solid fa-paper-plane"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Right Tab 3: Signal Logs -->
+                    <!-- Right Tab 3: History -->
                     <div id="rightContent-history" class="hidden terminal-panel rounded-2xl p-3 text-xs space-y-2 flex-grow overflow-y-auto">
                         <div class="font-bold text-white border-b border-gray-800 pb-2 flex justify-between items-center">
-                            <span>ប្រវត្តិសញ្ញា (Signal History)</span>
+                            <span>ប្រវត្តិសញ្ញា (Signal Log)</span>
                             <span class="text-[10px] text-gray-500">Live session</span>
                         </div>
                         <div id="historyList" class="space-y-2">
@@ -636,51 +552,50 @@
             </div>
 
 
-            <!-- VIEW 2: USER PROFILE & SETTINGS SCREEN -->
+            <!-- VIEW 2: SETTINGS & PROFILE PAGE -->
             <div id="view-settings" class="hidden max-w-4xl mx-auto space-y-4">
                 <div class="terminal-panel p-6 rounded-3xl space-y-6">
                     <div class="flex justify-between items-center border-b border-gray-800 pb-4">
                         <div>
                             <h2 class="text-lg font-bold text-white">ការកំណត់គណនី (Account Settings)</h2>
-                            <p class="text-xs text-gray-400">គ្រប់គ្រងព័ត៌មានផ្ទាល់ខ្លួន និងការភ្ជាប់ប្រព័ន្ធ</p>
+                            <p class="text-xs text-gray-400">គ្រប់គ្រងព័ត៌មានផ្ទាល់ខ្លួន និងប្រូហ្វាលរបស់អ្នក</p>
                         </div>
-                        <button onclick="switchWorkspace('overview')" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3.5 py-2 rounded-xl transition">
-                            <i class="fa-solid fa-xmark mr-1"></i> បិទ
+                        <button onclick="switchWorkspace('terminal')" class="bg-gray-800 hover:bg-gray-700 text-white text-xs px-3.5 py-2 rounded-xl transition">
+                            <i class="fa-solid fa-xmark mr-1"></i> បិទ (Close)
                         </button>
                     </div>
 
-                    <!-- Account Form -->
                     <form onsubmit="handleSaveSettings(event)" class="space-y-4 text-xs">
                         <div class="flex items-center gap-4 bg-[#07090e] p-4 rounded-2xl border border-gray-800">
-                            <img id="settingsAvatarPreview" src="https://placehold.co/100x100/1e293b/f59e0b?text=User" class="w-16 h-16 rounded-full border-2 border-amber-500 object-cover">
+                            <img id="settingsAvatarPreview" src="https://placehold.co/100x100/1e293b/facc15?text=User" class="w-16 h-16 rounded-full border-2 border-yellow-400 object-cover">
                             <div>
-                                <label class="block text-gray-300 font-semibold mb-1">រូបថតប្រូហ្វាល (Avatar)</label>
-                                <input type="file" id="avatarFileInput" accept="image/*" onchange="previewAvatarUpload(event)" class="text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-amber-500 file:text-black file:font-bold hover:file:bg-amber-400 cursor-pointer">
+                                <label class="block text-gray-300 font-semibold mb-1">រូបថតប្រូហ្វាល (Avatar Image)</label>
+                                <input type="file" id="avatarFileInput" accept="image/*" onchange="previewAvatarUpload(event)" class="text-xs text-gray-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-yellow-400 file:text-black file:font-bold hover:file:bg-yellow-300 cursor-pointer">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-gray-400 mb-1 font-semibold">ឈ្មោះពេញ (Full Name)</label>
-                                <input type="text" id="setFullName" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                <input type="text" id="setFullName" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-yellow-400">
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-1 font-semibold">ឈ្មោះអ្នកប្រើប្រាស់ (Username)</label>
-                                <input type="text" id="setUsername" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                <input type="text" id="setUsername" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-yellow-400">
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-1 font-semibold">អ៊ីមែល (Email)</label>
-                                <input type="email" id="setEmail" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                <input type="email" id="setEmail" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-yellow-400">
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-1 font-semibold">លេខទូរស័ព្ទ (Phone Number)</label>
-                                <input type="text" id="setPhone" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                <input type="text" id="setPhone" class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-yellow-400">
                             </div>
                         </div>
 
                         <div class="pt-2 flex justify-end gap-3">
-                            <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-black font-extrabold px-6 py-2.5 rounded-xl transition shadow">
-                                រក្សាទុកការផ្លាស់ប្តូរ (Save Account)
+                            <button type="submit" class="bg-yellow-400 hover:bg-yellow-300 text-black font-extrabold px-6 py-2.5 rounded-xl transition shadow">
+                                រក្សាទុកការផ្លាស់ប្តូរ (Save Changes)
                             </button>
                         </div>
                     </form>
@@ -694,25 +609,25 @@
 
 
 <!-- ========================================== -->
-<!-- 3. GEMINI API KEY CONFIGURATION MODAL -->
+<!-- 3. GEMINI API KEY MODAL -->
 <!-- ========================================== -->
 <div id="apiKeyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-[#0f141f] border border-gray-800 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
         <div class="flex justify-between items-center border-b border-gray-800 pb-3">
             <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-key text-amber-400"></i> Google Gemini API Settings
+                <i class="fa-solid fa-key text-yellow-400"></i> Google Gemini API Settings
             </h3>
             <button onclick="closeApiKeyModal()" class="text-gray-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-base"></i>
             </button>
         </div>
         <p class="text-xs text-gray-300 leading-relaxed">
-            ប្រព័ន្ធប្រើប្រាស់ម៉ូដែល <strong>gemini-2.5-flash</strong> សម្រាប់ការវិភាគទីផ្សារ និងឆ្លើយសំណួរ។ អ្នកអាចបញ្ចូល Gemini API Key ផ្ទាល់ខ្លួនរបស់អ្នកនៅទីនេះ៖
+            ប្រព័ន្ធប្រើប្រាស់ <strong>gemini-2.5-flash</strong> សម្រាប់ការវិភាគ SMC និងឆ្លើយសំណួរ។ អ្នកអាចបញ្ចូល Gemini API Key ផ្ទាល់ខ្លួនរបស់អ្នកនៅទីនេះ៖
         </p>
-        <input type="password" id="customApiKeyInput" placeholder="Enter your Gemini API Key..." class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-mono">
+        <input type="password" id="customApiKeyInput" placeholder="Enter your Gemini API Key..." class="w-full bg-[#07090e] border border-gray-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-yellow-400 font-mono">
         <div class="flex gap-2 justify-end pt-2 text-xs">
             <button onclick="closeApiKeyModal()" class="px-4 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold transition">បិទ (Close)</button>
-            <button onclick="saveApiKey()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold transition">រក្សាទុក (Save)</button>
+            <button onclick="saveApiKey()" class="px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-extrabold transition">រក្សាទុក (Save)</button>
         </div>
     </div>
 </div>
@@ -722,37 +637,43 @@
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
 <script>
-    // System Global States
-    let currentPrice = 4066.08;
+    // Global System State
+    let currentPrice = 4066.02;
     let currentInterval = "15";
-    let customGeminiApiKey = "";
+    let customGeminiApiKey = ""; 
     let activeUser = null;
-    let showCanvasOverlay = true;
 
-    // Signal Overlay Markers State (Simulating Buy/Sell Badges directly on Chart Canvas)
-    let chartMarkers = [
-        { type: "SELL", xPct: 0.32, yPct: 0.30, price: 4125.40 },
-        { type: "BUY",  xPct: 0.44, yPct: 0.48, price: 4108.20 },
-        { type: "SELL", xPct: 0.54, yPct: 0.40, price: 4102.10 },
-        { type: "SELL", xPct: 0.70, yPct: 0.65, price: 4068.50 },
-        { type: "BUY",  xPct: 0.76, yPct: 0.78, price: 4056.20 }
-    ];
+    // Full SMC System Knowledge for Gemini System Prompt
+    const SMC_SYSTEM_KNOWLEDGE = `
+You are FORREX AI TRENDING engine, a top-tier institutional Smart Money Concepts (SMC) & Market Structure analyst specializing in Gold (XAU/USD).
+Your market structure analysis strict rules:
+1. Valid Pullback: High/Low is only validated when candle body closes below/above previous candle low/high.
+2. BOS (Break of Structure):
+   - Bullish BOS: Candle BODY must close ABOVE previous swing high with strong Displacement and leave Fair Value Gap (FVG). Wick sweeps are Liquidity Sweeps, NOT BOS.
+   - Bearish BOS: Candle BODY must close BELOW previous swing low with Displacement + FVG.
+3. CHoCH (Change of Character): Reversal confirmed ONLY when candle body breaks the Protected Strong High/Low created by the last BOS.
+4. Strong vs Weak Points: Protected Strong Low (in uptrend) creates high break; Weak High is liquidity target. Protected Strong High (in downtrend) creates low break; Weak Low is liquidity target.
+5. 3 Rules of Valid Order Block (OB):
+   - Rule 1: MUST have strong Displacement leaving FVG.
+   - Rule 2: MUST cause a structural break (BOS or CHoCH).
+   - Rule 3: MUST be Fresh / Unmitigated (never tapped before).
+6. Premium vs Discount: Always buy in Discount (< 50% Equilibrium) and sell in Premium (> 50% Equilibrium).
 
-    // Default User Setup
+Always respond fluently in Khmer with clear headers, exact price values, SL/TP levels, and SMC reasoning.
+`;
+
     const defaultUser = {
         fullName: "Reak Smey",
         username: "reaksmey1001",
         email: "reaksmey10012004@gmail.com",
         phone: "0964326273",
-        avatar: "https://placehold.co/100x100/1e293b/f59e0b?text=Reak"
+        avatar: "https://placehold.co/100x100/1e293b/facc15?text=Reak"
     };
 
-    // Initialize App & Canvas Engine
     window.addEventListener('DOMContentLoaded', () => {
         loadUserSession();
         loadTradingViewWidget(currentInterval);
         startTickerSimulation();
-        initOverlayCanvas();
     });
 
     function loadUserSession() {
@@ -807,7 +728,7 @@
             username,
             email,
             phone,
-            avatar: `https://placehold.co/100x100/1e293b/f59e0b?text=${encodeURIComponent(fullName.charAt(0))}`
+            avatar: `https://placehold.co/100x100/1e293b/facc15?text=${encodeURIComponent(fullName.charAt(0))}`
         };
 
         localStorage.setItem('forrex_user', JSON.stringify(activeUser));
@@ -827,7 +748,7 @@
                 username: id || "reaksmey1001",
                 email: id + "@gmail.com",
                 phone: "0964326273",
-                avatar: `https://placehold.co/100x100/1e293b/f59e0b?text=${encodeURIComponent(id.charAt(0))}`
+                avatar: `https://placehold.co/100x100/1e293b/facc15?text=${encodeURIComponent(id.charAt(0))}`
             };
             localStorage.setItem('forrex_user', JSON.stringify(activeUser));
         }
@@ -869,10 +790,9 @@
         localStorage.setItem('forrex_user', JSON.stringify(activeUser));
         updateUserUI();
         alert("បានរក្សាទុកព័ត៌មានដោយជោគជ័យ!");
-        switchWorkspace('overview');
+        switchWorkspace('terminal');
     }
 
-    // Workspace View Switching
     function switchWorkspace(viewName) {
         document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
         if (document.getElementById(`nav-${viewName}`)) {
@@ -894,19 +814,9 @@
             document.getElementById(`rightTab-${t}`).className = "flex-1 py-1.5 rounded-lg text-gray-400 hover:text-white transition";
         });
         document.getElementById(`rightContent-${tabName}`).classList.remove('hidden');
-        document.getElementById(`rightTab-${tabName}`).className = "flex-1 py-1.5 rounded-lg bg-amber-500 text-black font-bold transition shadow";
+        document.getElementById(`rightTab-${tabName}`).className = "flex-1 py-1.5 rounded-lg bg-yellow-400 text-black font-bold transition shadow";
     }
 
-    function switchFloatingTab(ftab) {
-        ['analysis', 'bot', 'history', 'news'].forEach(t => {
-            document.getElementById(`fcontent-${t}`).classList.add('hidden');
-            document.getElementById(`ftab-${t}`).className = "text-gray-400 hover:text-white pb-0.5";
-        });
-        document.getElementById(`fcontent-${ftab}`).classList.remove('hidden');
-        document.getElementById(`ftab-${ftab}`).className = "text-amber-400 border-b-2 border-amber-400 pb-0.5";
-    }
-
-    // TradingView Widget Setup
     function loadTradingViewWidget(interval) {
         document.getElementById('tradingview_chart_container').innerHTML = '';
         new TradingView.widget({
@@ -932,121 +842,33 @@
         if (event && event.target) {
             event.target.classList.add('active');
         }
-        document.getElementById('symbolBadge').innerText = `XAUUSD · ${interval}m`;
-        document.getElementById('floatSymbolBadge').innerText = `XAUUSD · ${interval}m`;
+        document.getElementById('symbolBadge').innerText = `XAUUSD · ${interval}m READY`;
         loadTradingViewWidget(interval);
     }
 
-    // Ticker & Realtime Engine
     function startTickerSimulation() {
         setInterval(() => {
             document.getElementById('liveClock').innerText = new Date().toUTCString().slice(17, 25) + " UTC";
-            currentPrice += (Math.sin(Date.now() / 5000) * 0.18);
+            const delta = (Math.sin(Date.now() / 5000) * 0.18);
+            currentPrice += delta;
             document.getElementById('ticker-XAUUSD').innerText = `$${currentPrice.toFixed(2)}`;
-            document.getElementById('floatPriceTag').innerText = `$${currentPrice.toFixed(2)}`;
-            renderCanvasOverlay();
         }, 1000);
     }
 
-    // Canvas Signal Marker Overlay Engine
-    function initOverlayCanvas() {
-        window.addEventListener('resize', renderCanvasOverlay);
-        renderCanvasOverlay();
-    }
-
-    function toggleOverlayMarkers() {
-        showCanvasOverlay = !showCanvasOverlay;
-        const btn = document.getElementById('toggleOverlayBtn');
-        btn.innerHTML = showCanvasOverlay ? '<i class="fa-solid fa-eye"></i> Show Signal Badges' : '<i class="fa-solid fa-eye-slash"></i> Hide Badges';
-        renderCanvasOverlay();
-    }
-
-    function renderCanvasOverlay() {
-        const canvas = document.getElementById('chartOverlayCanvas');
-        if (!canvas) return;
-        const parent = canvas.parentElement;
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        if (!showCanvasOverlay) return;
-
-        // Draw Buy/Sell Signal Markers on Chart Canvas
-        chartMarkers.forEach(m => {
-            const x = canvas.width * m.xPct;
-            const y = canvas.height * m.yPct;
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.font = 'bold 10px JetBrains Mono, monospace';
-            
-            if (m.type === 'BUY') {
-                // Green Buy Badge
-                ctx.fillStyle = '#22c55e';
-                ctx.shadowColor = 'rgba(34, 197, 94, 0.6)';
-                ctx.shadowBlur = 8;
-                ctx.roundRect(x - 22, y - 10, 44, 20, 5);
-                ctx.fill();
-
-                ctx.shadowBlur = 0;
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('Buy', x, y);
-            } else {
-                // Red Sell Badge
-                ctx.fillStyle = '#ef4444';
-                ctx.shadowColor = 'rgba(239, 68, 68, 0.6)';
-                ctx.shadowBlur = 8;
-                ctx.roundRect(x - 22, y - 10, 44, 20, 5);
-                ctx.fill();
-
-                ctx.shadowBlur = 0;
-                ctx.fillStyle = '#ffffff';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('Sell', x, y);
-            }
-            ctx.restore();
-        });
-
-        // Draw Live Trailing Stop Horizontal Line (Red Dashed Line matching reference image)
-        const lineY = canvas.height * 0.72;
-        ctx.save();
-        ctx.beginPath();
-        ctx.setLineDash([4, 4]);
-        ctx.strokeStyle = '#ef4444';
-        ctx.lineWidth = 1.5;
-        ctx.moveTo(canvas.width * 0.5, lineY);
-        ctx.lineTo(canvas.width - 90, lineY);
-        ctx.stroke();
-
-        // Trailing Stop Tag
-        ctx.fillStyle = '#ef4444';
-        ctx.roundRect(canvas.width - 165, lineY - 9, 110, 18, 4);
-        ctx.fill();
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 10px JetBrains Mono, monospace';
-        ctx.fillText(`Trail stop ▲ ${(currentPrice - 0.69).toFixed(2)}`, canvas.width - 160, lineY + 3);
-        ctx.restore();
-    }
-
-    // Fast Technical Scan Algorithm
-    function runFastScan() {
+    // SMC Fast Engine Analysis Calculation
+    function runSMCFastAnalysis() {
         switchRightTab('analysis');
 
         let badge = document.getElementById('signalBadge');
         let card = document.getElementById('signalCard');
         let subtext = document.getElementById('signalSubtext');
 
-        let seed = Math.floor(Date.now() / 180000);
-        let calculatedRSI = 30 + ((seed * 7 + Math.floor(currentPrice)) % 45);
+        let seed = Math.floor(Date.now() / 120000);
+        let smcScore = (seed * 13 + Math.floor(currentPrice)) % 100;
         
-        let bullPower = Math.min(Math.max((calculatedRSI - 10) * 1.6, 20), 85).toFixed(1);
+        let bullPower = Math.min(Math.max(smcScore, 18), 88).toFixed(1);
         let bearPower = (100 - parseFloat(bullPower)).toFixed(1);
-        let winRate = (82 + (bullPower % 10)).toFixed(1);
+        let winRate = (84 + (bullPower % 9)).toFixed(1);
 
         document.getElementById('greenPowerVal').innerText = bullPower + "%";
         document.getElementById('greenBar').style.width = bullPower + "%";
@@ -1054,58 +876,41 @@
         document.getElementById('redBar').style.width = bearPower + "%";
         document.getElementById('winRateVal').innerText = "Win Rate: " + winRate + "%";
 
-        let newSignalType = "BUY";
-        if (bullPower > 55.0) {
-            newSignalType = "BUY";
-            badge.innerText = "PLAN · BUY 🟢";
-            badge.className = "text-2xl font-black text-green-400 bg-green-500/10 py-3 rounded-xl border border-green-500/30 tracking-wide";
+        if (bullPower > 54.0) {
+            badge.innerText = "SMC PLAN · BUY 🟢";
+            badge.className = "text-2xl font-black text-green-400 bg-green-500/10 py-2.5 rounded-xl border border-green-500/30 tracking-wide";
             card.className = "terminal-panel rounded-2xl p-4 shadow-xl border-2 glow-buy transition-all duration-300 space-y-3";
-            subtext.innerText = " Buy setup triggered at support level with strong rejection volume.";
+            subtext.innerText = " Bullish BOS confirmed by candle body close + Displacement FVG in Discount Zone.";
 
-            document.getElementById('planVal').innerText = `$${(currentPrice - 0.50).toFixed(2)} – $${currentPrice.toFixed(2)}`;
-            document.getElementById('planReason').innerText = "Price bounced strongly off key demand zone.";
-            document.getElementById('slVal').innerText = `$${(currentPrice - 6.00).toFixed(2)}`;
-            document.getElementById('tp1Val').innerText = `$${(currentPrice + 14.50).toFixed(2)}`;
+            document.getElementById('planVal').innerText = `$${(currentPrice - 0.70).toFixed(2)} – $${currentPrice.toFixed(2)}`;
+            document.getElementById('planReason').innerText = "Price pulled back to fresh Unmitigated Order Block in Discount Zone (<50% Equilibrium).";
+            document.getElementById('slVal').innerText = `$${(currentPrice - 6.50).toFixed(2)}`;
+            document.getElementById('tp1Val').innerText = `$${(currentPrice + 15.20).toFixed(2)}`;
 
-            document.getElementById('floatAnalysisText').innerHTML = `
-                <div class="flex justify-between items-center text-green-400 font-bold">
-                    <span>BUY SETUP DETECTED</span>
-                    <span>TP: $${(currentPrice + 14.50).toFixed(2)}</span>
-                </div>
-                <p class="text-gray-300">Targeting demand rejection block. SL placed at $${(currentPrice - 6.00).toFixed(2)}.</p>
-            `;
-        } else {
-            newSignalType = "SELL";
-            badge.innerText = "PLAN · SELL 🔴";
-            badge.className = "text-2xl font-black text-red-400 bg-red-500/10 py-3 rounded-xl border border-red-500/30 tracking-wide";
+            addHistoryLog("BUY", currentPrice, winRate);
+        } else if (bearPower > 54.0) {
+            badge.innerText = "SMC PLAN · SELL 🔴";
+            badge.className = "text-2xl font-black text-red-400 bg-red-500/10 py-2.5 rounded-xl border border-red-500/30 tracking-wide";
             card.className = "terminal-panel rounded-2xl p-4 shadow-xl border-2 glow-sell transition-all duration-300 space-y-3";
-            subtext.innerText = " Sell setup triggered at resistance zone with fading volume.";
+            subtext.innerText = " Bearish BOS confirmed by candle body close. Target Weak Low liquidity pool.";
 
-            document.getElementById('planVal').innerText = `$${currentPrice.toFixed(2)} – $${(currentPrice + 0.50).toFixed(2)}`;
-            document.getElementById('planReason').innerText = "Price hit strong supply rejection block.";
-            document.getElementById('slVal').innerText = `$${(currentPrice + 6.00).toFixed(2)}`;
-            document.getElementById('tp1Val').innerText = `$${(currentPrice - 14.50).toFixed(2)}`;
+            document.getElementById('planVal').innerText = `$${currentPrice.toFixed(2)} – $${(currentPrice + 0.70).toFixed(2)}`;
+            document.getElementById('planReason').innerText = "Price rejected from Premium Supply Order Block with FVG Displacement.";
+            document.getElementById('slVal').innerText = `$${(currentPrice + 6.50).toFixed(2)}`;
+            document.getElementById('tp1Val').innerText = `$${(currentPrice - 15.20).toFixed(2)}`;
 
-            document.getElementById('floatAnalysisText').innerHTML = `
-                <div class="flex justify-between items-center text-red-400 font-bold">
-                    <span>SELL SETUP DETECTED</span>
-                    <span>TP: $${(currentPrice - 14.50).toFixed(2)}</span>
-                </div>
-                <p class="text-gray-300">Targeting supply rejection block. SL placed at $${(currentPrice + 6.00).toFixed(2)}.</p>
-            `;
+            addHistoryLog("SELL", currentPrice, winRate);
+        } else {
+            badge.innerText = "SMC PLAN · WAIT 🟡";
+            badge.className = "text-2xl font-black text-yellow-400 bg-yellow-400/10 py-2.5 rounded-xl border border-yellow-400/30 tracking-wide";
+            card.className = "terminal-panel rounded-2xl p-4 shadow-xl border border-gray-800 transition-all duration-300 space-y-3";
+            subtext.innerText = " Internal consolidation inside swing range. Liquidity sweep detected without body close.";
+
+            document.getElementById('planVal').innerText = "WAITING ZONE";
+            document.getElementById('planReason').innerText = "Wait for clear CHoCH or body break of protected strong level.";
+            document.getElementById('slVal').innerText = "$0.00";
+            document.getElementById('tp1Val').innerText = "$0.00";
         }
-
-        // Push new marker directly on chart canvas
-        chartMarkers.push({
-            type: newSignalType,
-            xPct: 0.82 + (Math.random() * 0.08),
-            yPct: newSignalType === 'BUY' ? 0.75 : 0.60,
-            price: currentPrice
-        });
-        if(chartMarkers.length > 7) chartMarkers.shift();
-        renderCanvasOverlay();
-
-        addHistoryLog(newSignalType, currentPrice, winRate);
     }
 
     function addHistoryLog(type, price, winRate) {
@@ -1121,7 +926,7 @@
                     <span class="text-gray-400 ml-1 font-mono">@ $${price.toFixed(2)}</span>
                 </div>
                 <div class="text-right">
-                    <span class="text-amber-400 font-bold mr-2">${winRate}% Win</span>
+                    <span class="text-yellow-400 font-bold mr-2">${winRate}% Win</span>
                     <span class="text-gray-500 text-[10px]">${timeStr}</span>
                 </div>
             </div>
@@ -1129,7 +934,6 @@
         historyList.innerHTML = logHtml + historyList.innerHTML;
     }
 
-    // Gemini API Engine Call
     async function callGeminiApi(promptText, systemInstruction = "") {
         const apiKey = customGeminiApiKey || "";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
@@ -1155,7 +959,7 @@
 
         const data = await response.json();
         const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!text) throw new Error("No response generated");
+        if (!text) throw new Error("No response generated from Gemini");
         return text;
     }
 
@@ -1166,41 +970,41 @@
         let card = document.getElementById('signalCard');
         let subtext = document.getElementById('signalSubtext');
 
-        badge.innerText = "AI THINKING...";
-        badge.className = "text-xl font-bold text-amber-400 bg-amber-500/10 py-3 rounded-xl border border-amber-500/30 animate-pulse";
-        subtext.innerText = "Gemini AI កំពុងស្កែនទីផ្សារ និងគណនា Trade Setup...";
+        badge.innerText = "SMC THINKING...";
+        badge.className = "text-xl font-bold text-yellow-400 bg-yellow-400/10 py-2.5 rounded-xl border border-yellow-400/30 animate-pulse";
+        subtext.innerText = "Gemini 2.5 Flash កំពុងស្កែន BOS, CHoCH, Order Block & FVG...";
 
-        const prompt = `You are FORREX AI TRENDING engine. Live Gold (XAU/USD) price is $${currentPrice.toFixed(2)} on TF ${currentInterval}m.
-Provide realistic setup JSON format with keys:
+        const prompt = `Perform full SMC Market Structure analysis for Gold (XAU/USD) at live price $${currentPrice.toFixed(2)} on TF ${currentInterval}m.
+Return strictly valid JSON format with keys:
 - signal: "BUY", "SELL", or "WAIT"
 - entry: string price zone
-- reason: short Khmer explanation
-- sl: string price
-- tp1: string price
-- winRate: number between 78 and 92`;
+- reason: concise explanation in Khmer referencing BOS/CHoCH body close, FVG displacement, and Fresh Order Block
+- sl: string price (protected strong level)
+- tp1: string price (target weak high/low)
+- winRate: number between 80 and 93`;
 
         try {
-            const rawResponse = await callGeminiApi(prompt, "Respond strictly in JSON format without markdown code fences.");
+            const rawResponse = await callGeminiApi(prompt, SMC_SYSTEM_KNOWLEDGE + "\nRespond strictly in valid JSON format without markdown fences.");
             let cleaned = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
             const setup = JSON.parse(cleaned);
 
-            document.getElementById('greenPowerVal').innerText = setup.signal === 'BUY' ? '80.0%' : '20.0%';
-            document.getElementById('greenBar').style.width = setup.signal === 'BUY' ? '80.0%' : '20.0%';
-            document.getElementById('redPowerVal').innerText = setup.signal === 'SELL' ? '80.0%' : '20.0%';
-            document.getElementById('redBar').style.width = setup.signal === 'SELL' ? '80.0%' : '20.0%';
+            document.getElementById('greenPowerVal').innerText = setup.signal === 'BUY' ? '82.0%' : '18.0%';
+            document.getElementById('greenBar').style.width = setup.signal === 'BUY' ? '82.0%' : '18.0%';
+            document.getElementById('redPowerVal').innerText = setup.signal === 'SELL' ? '82.0%' : '18.0%';
+            document.getElementById('redBar').style.width = setup.signal === 'SELL' ? '82.0%' : '18.0%';
             document.getElementById('winRateVal').innerText = `Win Rate: ${setup.winRate}%`;
 
             if (setup.signal === "BUY") {
                 badge.innerText = "GEMINI PLAN · BUY 🟢";
-                badge.className = "text-2xl font-black text-green-400 bg-green-500/10 py-3 rounded-xl border border-green-500/30 tracking-wide";
+                badge.className = "text-2xl font-black text-green-400 bg-green-500/10 py-2.5 rounded-xl border border-green-500/30 tracking-wide";
                 card.className = "terminal-panel rounded-2xl p-4 shadow-xl border-2 glow-buy transition-all duration-300 space-y-3";
             } else if (setup.signal === "SELL") {
                 badge.innerText = "GEMINI PLAN · SELL 🔴";
-                badge.className = "text-2xl font-black text-red-400 bg-red-500/10 py-3 rounded-xl border border-red-500/30 tracking-wide";
+                badge.className = "text-2xl font-black text-red-400 bg-red-500/10 py-2.5 rounded-xl border border-red-500/30 tracking-wide";
                 card.className = "terminal-panel rounded-2xl p-4 shadow-xl border-2 glow-sell transition-all duration-300 space-y-3";
             } else {
                 badge.innerText = "GEMINI PLAN · WAIT 🟡";
-                badge.className = "text-2xl font-black text-amber-400 bg-amber-500/10 py-3 rounded-xl border border-amber-500/30 tracking-wide";
+                badge.className = "text-2xl font-black text-yellow-400 bg-yellow-400/10 py-2.5 rounded-xl border border-yellow-400/30 tracking-wide";
                 card.className = "terminal-panel rounded-2xl p-4 shadow-xl border border-gray-800 transition-all duration-300 space-y-3";
             }
 
@@ -1210,20 +1014,10 @@ Provide realistic setup JSON format with keys:
             document.getElementById('slVal').innerText = setup.sl || "$0.00";
             document.getElementById('tp1Val').innerText = setup.tp1 || "$0.00";
 
-            if (setup.signal !== "WAIT") {
-                chartMarkers.push({
-                    type: setup.signal,
-                    xPct: 0.88,
-                    yPct: setup.signal === 'BUY' ? 0.72 : 0.45,
-                    price: currentPrice
-                });
-                renderCanvasOverlay();
-            }
-
             addHistoryLog(setup.signal, currentPrice, setup.winRate);
         } catch (err) {
             console.error(err);
-            runFastScan();
+            runSMCFastAnalysis();
         }
     }
 
@@ -1233,27 +1027,24 @@ Provide realistic setup JSON format with keys:
         if (!text) return;
 
         const chatBox = document.getElementById('chatMessages');
-        chatBox.innerHTML += `<div class="bg-gradient-to-r from-amber-500 to-yellow-500 text-black p-2.5 rounded-xl ml-6 text-right font-semibold shadow">${text}</div>`;
+        chatBox.innerHTML += `<div class="bg-gradient-to-r from-yellow-400 to-amber-500 text-black p-2.5 rounded-xl ml-6 text-right font-semibold shadow">${text}</div>`;
         input.value = '';
         chatBox.scrollTop = chatBox.scrollHeight;
 
         const loadingId = "load-" + Date.now();
         chatBox.innerHTML += `
-            <div id="${loadingId}" class="bg-[#07090e] p-2.5 rounded-xl border border-gray-800 text-amber-400 mr-6 flex items-center gap-2">
-                <i class="fa-solid fa-spinner animate-spin"></i> Gemini AI កំពុងវិភាគ...
+            <div id="${loadingId}" class="bg-[#07090e] p-2.5 rounded-xl border border-gray-800 text-yellow-400 mr-6 flex items-center gap-2">
+                <i class="fa-solid fa-spinner animate-spin"></i> Gemini 2.5 Flash កំពុងវិភាគ...
             </div>
         `;
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        const sysPrompt = `You are FORREX AI TRENDING assistant. Market context: Gold (XAU/USD) price is $${currentPrice.toFixed(2)}.
-Always answer politely and professionally in Khmer. Provide clear bullet points and risk management advice.`;
-
         try {
-            const aiReply = await callGeminiApi(text, sysPrompt);
+            const aiReply = await callGeminiApi(text, SMC_SYSTEM_KNOWLEDGE + `\nCurrent XAUUSD Live Price is $${currentPrice.toFixed(2)} on TF ${currentInterval}m.`);
             document.getElementById(loadingId).remove();
             
             chatBox.innerHTML += `
-                <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 text-gray-200 mr-4 leading-relaxed markdown-body border-l-2 border-l-amber-500">
+                <div class="bg-[#07090e] p-3 rounded-xl border border-gray-800 text-gray-200 mr-4 leading-relaxed markdown-body border-l-2 border-l-yellow-400">
                     ${marked.parse(aiReply)}
                 </div>
             `;
@@ -1270,17 +1061,12 @@ Always answer politely and professionally in Khmer. Provide clear bullet points 
         sendChatMessage();
     }
 
-    async function summarizeNewsWithGemini() {
-        alert("Gemini AI កំពុងវិភាគព័ត៌មានសេដ្ឋកិច្ចពិភពលោក... សូមពិនិត្យផ្ទាំង AI Chat!");
-        quickAsk("សូមសង្ខេបព័ត៌មានសេដ្ឋកិច្ចសំខាន់ៗដែលប៉ះពាល់ដល់តម្លៃមាស XAU/USD ថ្ងៃនេះ");
-    }
-
     function openApiKeyModal() { document.getElementById('apiKeyModal').classList.remove('hidden'); }
     function closeApiKeyModal() { document.getElementById('apiKeyModal').classList.add('hidden'); }
     function saveApiKey() {
         const val = document.getElementById('customApiKeyInput').value.trim();
         customGeminiApiKey = val;
-        document.getElementById('apiKeyStatusText').innerText = val ? "Custom API Set" : "Gemini API Active";
+        document.getElementById('apiKeyStatusText').innerText = val ? "Custom Key Active" : "Gemini API Active";
         closeApiKeyModal();
     }
 

@@ -10,7 +10,7 @@ app.use(express.json({ limit: '1mb' }));
 const DATA_DIR = path.resolve('./data');
 const ALERTS_FILE = path.join(DATA_DIR, 'tv-alerts.json');
 const MAX_ALERTS = 300;
-const DEDUP_WINDOW_MS = 30000; // 30s cooldown for identical alert bursts
+const DEDUP_WINDOW_MS = 30000;
 
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -153,7 +153,6 @@ async function sendTelegramAlertIfConfigured(item) {
   }
 }
 
-// Spot Gold (XAU/USD) endpoint with multi-source fallback + cached last-good price
 app.get('/api/spot-gold', async (req, res) => {
   const brokerOffset = Number(process.env.BROKER_GOLD_OFFSET || 0);
 
@@ -201,7 +200,6 @@ app.get('/api/spot-gold', async (req, res) => {
       }
     }
 
-    // Fallback to Binance PAXGUSDT with explicit proxy disclosure
     const bRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=PAXGUSDT', { cache: 'no-store' });
     if (!bRes.ok) throw new Error('Binance PAXGUSDT unreachable');
     const bJson = await bRes.json();
@@ -254,7 +252,6 @@ app.post('/api/tv-webhook', async (req, res) => {
   const side = String(body.side || 'ALERT').toUpperCase();
   const event = String(body.event || 'TV_WEBHOOK_SIGNAL');
 
-  // Deduplicate burst alerts within DEDUP_WINDOW_MS
   const nowMs = Date.now();
   const duplicate = recentTvAlerts.find(a =>
     a.symbol === symbol &&
@@ -291,6 +288,8 @@ app.post('/api/tv-webhook', async (req, res) => {
     qualityScore: quality.score,
     qualityGrade: quality.grade,
     qualityReasons: quality.reasons,
+    outcome: null, // 'WIN' | 'LOSS' | 'BE' | null
+    pnlPct: null,
     note: String(body.note || '')
   };
 
@@ -313,7 +312,98 @@ app.get('/api/tv-alerts', (req, res) => {
   res.json({ ok: true, totalStored: recentTvAlerts.length, alerts: filtered.slice(0, 40) });
 });
 
+// Record WIN / LOSS / BE outcome for an existing alert
+app.post('/api/tv-alerts/:id/outcome', (req, res) => {
+  const { id } = req.params;
+  const outcome = String(req.body?.outcome || '').toUpperCase();
+  if (!['WIN', 'LOSS', 'BE'].includes(outcome)) {
+    return res.status(400).json({ ok: false, error: 'Outcome must be WIN, LOSS, or BE' });
+  }
+
+  const target = recentTvAlerts.find(a => a.id === id);
+  if (!target) {
+    return res.status(404).json({ ok: false, error: 'Alert ID not found' });
+  }
+
+  target.outcome = outcome;
+  if (req.body?.pnlPct !== undefined && Number.isFinite(Number(req.body.pnlPct))) {
+    target.pnlPct = Number(req.body.pnlPct);
+  }
+  target.closedAt = new Date().toISOString();
+  saveAlerts(recentTvAlerts);
+
+  res.json({ ok: true, alert: target });
+});
+
+// Performance & Session Analytics Summary
+app.get('/api/stats', (req, res) => {
+  const symbolFilter = req.query.symbol ? String(req.query.symbol).toUpperCase() : null;
+  const list = symbolFilter
+    ? recentTvAlerts.filter(a => a.symbol === symbolFilter)
+    : recentTvAlerts;
+
+  const bySession = {
+    LONDON_NY_OVERLAP: { total: 0, wins: 0, losses: 0, winRate: null },
+    LONDON: { total: 0, wins: 0, losses: 0, winRate: null },
+    NEW_YORK: { total: 0, wins: 0, losses: 0, winRate: null },
+    ASIAN_OFFPEAK: { total: 0, wins: 0, losses: 0, winRate: null }
+  };
+
+  const byGrade = { 'A+ HIGH CONVICTION': 0, 'B QUALIFIED': 0, 'C WATCH': 0 };
+  const bySymbol = {};
+  let totalWins = 0;
+  let totalLosses = 0;
+  let scoreSum = 0;
+
+  for (const a of list) {
+    const sess = a.session || getSessionInfo(new Date(a.receivedAt || Date.now())).session;
+    if (!bySession[sess]) {
+      bySession[sess] = { total: 0, wins: 0, losses: 0, winRate: null };
+    }
+    bySession[sess].total++;
+
+    if (a.outcome === 'WIN') {
+      totalWins++;
+      bySession[sess].wins++;
+    } else if (a.outcome === 'LOSS') {
+      totalLosses++;
+      bySession[sess].losses++;
+    }
+
+    const grade = a.qualityGrade || 'C WATCH';
+    byGrade[grade] = (byGrade[grade] || 0) + 1;
+
+    const sym = a.symbol || 'UNKNOWN';
+    bySymbol[sym] = (bySymbol[sym] || 0) + 1;
+    scoreSum += Number(a.qualityScore || 0);
+  }
+
+  for (const key of Object.keys(bySession)) {
+    const decided = bySession[key].wins + bySession[key].losses;
+    bySession[key].winRate = decided > 0
+      ? Number(((bySession[key].wins / decided) * 100).toFixed(1))
+      : null;
+  }
+
+  const totalDecided = totalWins + totalLosses;
+  res.json({
+    ok: true,
+    filter: symbolFilter || 'ALL',
+    totalAlerts: list.length,
+    averageQualityScore: list.length > 0 ? Number((scoreSum / list.length).toFixed(1)) : 0,
+    outcomes: {
+      wins: totalWins,
+      losses: totalLosses,
+      pending: list.length - totalDecided,
+      winRate: totalDecided > 0 ? Number(((totalWins / totalDecided) * 100).toFixed(1)) : null
+    },
+    bySession,
+    byGrade,
+    bySymbol
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`AURA TV Webhook & Spot Gold Brain v3 Server listening on port ${PORT} (stored: ${recentTvAlerts.length})`);
+  console.log(`AURA TV Webhook, Spot Gold & Analytics Server listening on port ${PORT} (stored: ${recentTvAlerts.length})`);
 });

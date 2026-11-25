@@ -112,11 +112,6 @@
     .plan-flash-active {
       animation: planHighlightFlash 1.4s ease-out;
     }
-    .one-h-plan-card {
-      background: linear-gradient(145deg, rgba(245, 158, 11, 0.14) 0%, rgba(16, 20, 29, 0.98) 55%, rgba(59, 130, 246, 0.12) 100%);
-      border: 1.5px solid rgba(245, 158, 11, 0.68);
-      box-shadow: 0 14px 36px -10px rgba(245, 158, 11, 0.28), inset 0 0 20px rgba(245, 158, 11, 0.06);
-    }
     canvas {
       touch-action: none;
       user-select: none;
@@ -154,7 +149,7 @@
               ផ្ទាំងវិភាគមាស & Price Action លំដាប់ប្រណិត
             </h1>
             <p class="text-xs sm:text-[13px] text-slate-300 mt-1.5 leading-relaxed font-khmer">
-              សូមចុះឈ្មោះចូល (Login) ជាមុនសិន ដើម្បីបើកប្រើប្រាស់ផ្ទាំងឆាតមាស Real OHLCV, SMC (BOS / CHoCH / Liquidity Sweep), Bull/Bear FVG, Key Levels, Multi-TF Confluence (M5/M15/1H/4H), Dedicated 1H PLAN Auto-Signal និងរក្សាប្រវត្តិ SL/TP ជារៀងរហូត។
+              សូមចុះឈ្មោះចូល (Login) ជាមុនសិន ដើម្បីបើកប្រើប្រាស់ផ្ទាំងឆាតមាស Real OHLCV, SMC (BOS / CHoCH / Liquidity Sweep), Bull/Bear FVG, Hourly Signal Cadence, Live % TP/SL Tracker, Historical Backtest, ប្រព័ន្ធគណនា Lot Size និង AI Trading Coach។
             </p>
           </div>
 
@@ -221,15 +216,15 @@
             </div>
             <div class="bg-aura-bg/90 border border-aura-border rounded-2xl p-3">
               <div class="text-[10px] font-mono text-slate-400 uppercase">SIGNAL ENGINE</div>
-              <div class="text-xs font-extrabold font-mono text-blue-400 mt-1">M5/M15/1H/4H + 1H PLAN</div>
-              <div class="text-[10px] text-slate-400 mt-0.5 font-khmer">Key Levels + Persistent History</div>
+              <div class="text-xs font-extrabold font-mono text-blue-400 mt-1">1H CADENCE + % TP/SL</div>
+              <div class="text-[10px] text-slate-400 mt-0.5 font-khmer">EMA + RSI + SMC + FVG</div>
             </div>
           </div>
         </div>
 
         <div class="flex items-center justify-between text-[11px] text-slate-400 border-t border-aura-border/80 pt-3 font-mono">
           <span>AURA TREND AI • CREATED BY REAKSMEY</span>
-          <span class="text-amber-400/90">REAL OHLCV + MTF + 1H PLAN DESK</span>
+          <span class="text-amber-400/90">REAL OHLCV + % TP/SL DESK</span>
         </div>
       </div>
 
@@ -346,7 +341,7 @@
           <div class="text-sm font-extrabold tracking-wider text-white flex items-center gap-1.5">
             AURA TREND <span class="text-amber-400">AI</span>
           </div>
-          <div class="text-[10px] text-slate-400 tracking-widest uppercase hidden sm:block">k</div>
+          <div class="text-[10px] text-slate-400 tracking-widest uppercase hidden sm:block">Gold & Price Action Desk</div>
         </div>
       </div>
 
@@ -458,12 +453,12 @@
         <div id="sidebarNewsGuardBox" class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/25">
           <div class="flex items-center justify-between mb-1">
             <span class="text-[10px] font-bold text-amber-400 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 pulse-dot"></span> 1H PLAN & PERSISTENT LOG
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 pulse-dot"></span> HOURLY SIGNAL & NEWS
             </span>
             <span id="sidebarNewsTime" class="text-[10px] font-mono text-slate-300">1H</span>
           </div>
           <p id="sidebarNewsText" class="text-[10px] text-slate-300 leading-snug font-khmer">
-            កំពុងស្កេន M5/M15/1H/4H, Key Levels, 1H PLAN និងរក្សាប្រវត្តិ SL/TP ក្នុង Live AI Signals ជារៀងរហូត...
+            កំពុងតាមដាន Signal រៀងរាល់ 1 ម៉ោង និង % TP/SL ផ្ទាល់...
           </p>
         </div>
       </div>
@@ -494,12 +489,12 @@
               </div>
 
               <div id="htfBiasBadge" class="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono">
-                <span class="text-slate-400">MTF CONFLUENCE:</span>
+                <span class="text-slate-400">TREND/EMA:</span>
                 <span id="htfBiasText" class="font-bold text-emerald-400">SCANNING</span>
               </div>
 
               <div id="marketPathBadge" class="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] font-mono">
-                <span class="text-amber-300 font-bold" id="marketPathText">M5/M15/1H/4H • 1H PLAN</span>
+                <span class="text-amber-300 font-bold" id="marketPathText">1H CADENCE • SMC+FVG</span>
               </div>
 
               <div id="ohlcReadout" class="hidden xl:flex items-center gap-2 font-mono text-[11px] text-slate-400 pl-1">
@@ -531,7 +526,7 @@
             <div class="flex items-center gap-2 truncate">
               <span id="bannerPlanBadge" class="px-2 py-0.5 rounded font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">SCANNING</span>
               <span id="bannerConditionSummary" class="text-slate-300 truncate font-khmer">
-                កំពុងវិភាគ Multi-Timeframe (M5, M15, 1H, 4H), Key Levels, SMC + FVG និង Dedicated 1H PLAN...
+                កំពុងវិភាគទៀនដែលបិទរួច EMA + RSI + SMC + FVG + 1H Signal Plan និងតាមដាន % TP/SL...
               </span>
             </div>
             <button onclick="openInstantAnalysisPlan()" class="shrink-0 text-amber-400 hover:underline font-bold">
@@ -557,7 +552,7 @@
               <div class="bg-aura-bg/90 rounded-lg p-2.5 border border-aura-border space-y-1.5 mb-2.5 text-[11px]">
                 <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">3-Rule Confirmation Engine (ច្បាប់ទាំង ៣ ចំណុច)</div>
                 <div class="flex items-center justify-between">
-                  <span class="text-slate-300 font-khmer">១. ទីតាំង (Location - FVG/KeyLevel):</span>
+                  <span class="text-slate-300 font-khmer">១. ទីតាំង (Location - FVG/Swing/Level):</span>
                   <span id="ruleLocation" class="font-mono font-bold text-emerald-400">--</span>
                 </div>
                 <div class="flex items-center justify-between">
@@ -581,9 +576,6 @@
               <button onclick="toggleOverlay('levels')" id="pill-levels" class="overlay-pill px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-medium flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Swing High/Low Levels
               </button>
-              <button onclick="toggleOverlay('keylevels')" id="pill-keylevels" class="overlay-pill px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/45 font-semibold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Key Levels (Major S/R)
-              </button>
               <button onclick="toggleOverlay('zones')" id="pill-zones" class="overlay-pill px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-medium flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Liquidity Sweeps
               </button>
@@ -598,7 +590,7 @@
               </button>
             </div>
             <div class="text-[10px] text-slate-400 hidden sm:block">
-              M5/M15/1H/4H Confluence • Key Levels • 1H PLAN Auto-Signal
+              1H Signal Cadence • TP/SL → Live Signals • Fresh Plan on Setup
             </div>
           </div>
         </div>
@@ -621,39 +613,22 @@
             </div>
 
             <div id="deskPlanCard" class="rounded-xl bg-aura-card border border-amber-500/35 p-3.5 shadow-lg space-y-3 transition-all">
-              <div class="flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2 flex-wrap">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
                   <span id="deskPlanDirection" class="text-base font-extrabold font-mono text-amber-400">SCANNING...</span>
                   <span id="deskFactorScore" class="text-xs font-mono text-slate-300 bg-aura-bg px-2 py-0.5 rounded border border-aura-border">0/6</span>
                 </div>
                 <span id="deskRRBadge" class="text-xs font-mono font-bold text-amber-400">R:R --</span>
               </div>
 
-              <!-- Multi-Timeframe Confluence Strip (5m, 15m, 1H, 4H) -->
-              <div class="bg-aura-bg/95 border border-aura-border rounded-lg p-2 space-y-1.5">
-                <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-amber-400 font-bold">MTF CONFLUENCE (5m • 15m • 1H • 4H)</span>
-                  <span id="deskMtfSummaryBadge" class="text-slate-300 font-bold">--</span>
-                </div>
-                <div id="deskMtfGrid" class="grid grid-cols-4 gap-1 text-center font-mono text-[10px]">
-                  <div class="bg-aura-card border border-aura-border rounded py-1 px-1"><span class="text-slate-400 block text-[9px]">5m</span><b id="mtf5mVal">--</b></div>
-                  <div class="bg-aura-card border border-aura-border rounded py-1 px-1"><span class="text-slate-400 block text-[9px]">15m</span><b id="mtf15mVal">--</b></div>
-                  <div class="bg-aura-card border border-aura-border rounded py-1 px-1"><span class="text-slate-400 block text-[9px]">1H</span><b id="mtf1hVal">--</b></div>
-                  <div class="bg-aura-card border border-aura-border rounded py-1 px-1"><span class="text-slate-400 block text-[9px]">4H</span><b id="mtf4hVal">--</b></div>
-                </div>
-              </div>
-
-              <!-- Key Level Proximity & Last Closed Zone -->
+              <!-- តំបន់ផ្សារបិទចុងក្រោយ និងតំបន់ចូល (Last Closed Market Zone & Entry Zone) -->
               <div id="deskLastCloseZoneBox" class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2.5 space-y-1">
                 <div class="flex items-center justify-between text-[10px] font-mono">
-                  <span class="text-blue-400 font-bold">🔑 KEY LEVEL & LAST CLOSED ZONE</span>
+                  <span class="text-blue-400 font-bold">📍 LAST CLOSED ZONE & ENTRY</span>
                   <span id="deskLastClosePriceBadge" class="text-white font-bold">CLOSE: --</span>
                 </div>
-                <div id="deskKeyLevelHighlight" class="text-[11px] font-mono font-bold text-amber-300">
-                  KEY LEVEL: --
-                </div>
-                <div id="deskLastCloseZoneTitle" class="text-xs font-bold text-white font-khmer">
-                  កំពុងស្កេន Key Level & តំបន់ផ្សារបិទចុងក្រោយ...
+                <div id="deskLastCloseZoneTitle" class="text-xs font-bold text-amber-300 font-khmer">
+                  កំពុងស្កេនតំបន់ផ្សារបិទចុងក្រោយ...
                 </div>
                 <div id="deskLastCloseEntryAdvice" class="text-[11px] text-slate-200 font-khmer leading-snug">
                   វិភាគទៀនបិទទាំងអស់ ដើម្បីរកចំណុចចូលច្បាស់លាស់។
@@ -676,7 +651,7 @@
                   <span id="deskLiquidityTarget" class="text-slate-300 font-bold">--</span>
                 </div>
                 <p id="deskMarketStoryKh" class="text-[11px] text-slate-200 font-khmer leading-relaxed">
-                  កំពុងគណនា M5/M15/1H/4H, Key Levels, EMA, RSI, BOS, CHoCH, Liquidity Sweep, Bull/Bear FVG និង 1H Trade Plan...
+                  កំពុងគណនា EMA, RSI, BOS, CHoCH, Liquidity Sweep, Bull/Bear FVG និង 1H Trade Plan...
                 </p>
               </div>
 
@@ -750,479 +725,454 @@
               <div id="confluencePillsGrid" class="grid grid-cols-2 gap-1.5 text-[11px] font-mono"></div>
             </div>
 
+            <div class="rounded-xl bg-aura-card border border-aura-border p-3 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Deep Closed-Candle Analysis</span>
+                <span class="text-[10px] text-slate-400 font-khmer">វិភាគទៀនបិទទាំងអស់</span>
+              </div>
+              <div id="deskReasoningKh" class="text-xs text-slate-200 leading-relaxed font-khmer bg-aura-bg/80 p-2.5 rounded-lg border border-aura-border"></div>
+              <div id="deskReasoningEn" class="text-[11px] text-slate-400 leading-relaxed px-1"></div>
+            </div>
 
+            <div class="rounded-xl bg-aura-card border border-aura-border p-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-300">Detected Candlestick Patterns</span>
+                <span id="detectedPatternCount" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">0</span>
+              </div>
+              <div id="detectedPatternsList" class="space-y-1.5 max-h-44 overflow-y-auto pr-1"></div>
+            </div>
 
-
-
-
-
-
-            
-
-           <div class="rounded-xl bg-aura-card border border-aura-border p-3 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider">Deep Closed-Candle Analysis</span>
-            <span class="text-[10px] text-slate-400 font-khmer">វិភាគទៀនបិទទាំងអស់</span>
           </div>
-          <div id="deskReasoningKh" class="text-xs text-slate-200 leading-relaxed font-khmer bg-aura-bg/80 p-2.5 rounded-lg border border-aura-border"></div>
-          <div id="deskReasoningEn" class="text-[11px] text-slate-400 leading-relaxed px-1"></div>
-        </div>
+        </aside>
+      </section>
 
-        <div class="rounded-xl bg-aura-card border border-aura-border p-3">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-300">Detected Candlestick Patterns</span>
-            <span id="detectedPatternCount" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">0</span>
-          </div>
-          <div id="detectedPatternsList" class="space-y-1.5 max-h-44 overflow-y-auto pr-1"></div>
-        </div>
-
-      </div>
-    </aside>
-  </section>
-
-  <section id="view-overview" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-amber-500/15 via-aura-card to-aura-card border border-amber-500/30 rounded-2xl p-5">
-      <div>
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[11px] font-bold mb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 pulse-dot"></span>
-          AURA TREND AI • STRICT 1H PLAN GATE & PERMANENT LOCKED SIGNALS
-        </div>
-        <h1 class="text-2xl font-extrabold text-white tracking-tight">Institutional Gold & Forex Terminal</h1>
-        <p class="text-xs text-slate-400 mt-1 font-khmer">
-          1H PLAN នឹងចេញលុះត្រាតែត្រូវគ្រប់ធាតុទាំង ៥ (Swing High/Low, Key Levels, Liquidity Sweeps, SMC BOS/CHoCH & FVG, Candlestick Patterns) ហើយចាក់សោរក្សាជាប់ក្នុង Live AI Signals មិនអាចលុបបាន។
-        </p>
-      </div>
-      <div class="flex items-center gap-2.5 flex-wrap">
-        <button onclick="runHistoricalBacktest()" class="px-4 py-2.5 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/40 text-blue-300 font-extrabold text-xs transition">
-          ▶ Run Real Backtest
-        </button>
-        <button onclick="openInstantAnalysisPlan()" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition shadow-lg shadow-amber-500/20">
-          ⚡ Instant Analysis & Plan Setup
-        </button>
-        <button onclick="switchView('terminal')" class="px-4 py-2.5 rounded-xl bg-aura-card hover:bg-aura-hover border border-aura-border text-white font-semibold text-xs transition">
-          Open Desk Chart →
-        </button>
-      </div>
-    </div>
-
-    <div class="creator-card-box rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div class="flex items-center gap-3.5">
-        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-yellow-600 p-0.5 shrink-0">
-          <div class="w-full h-full rounded-full bg-aura-card flex items-center justify-center text-base font-extrabold text-amber-300 font-mono">RK</div>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="text-sm font-extrabold text-white tracking-wide">REAKSMEY</span>
-            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold">✓ CREATOR</span>
-          </div>
-          <p class="text-xs text-slate-400 font-khmer mt-0.5">អ្នកបង្កើតប្រព័ន្ធ AURA TREND AI • ចុចប៊ូតុងខាងស្តាំដើម្បីចូល Facebook ឬ TikTok</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2.5">
-        <a href="#" data-social="reaksmey_facebook" target="_blank" rel="noopener noreferrer" class="social-pill-btn px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-200">
-          <span class="text-blue-400 font-mono">f</span>
-          <span>Facebook</span>
-        </a>
-        <a href="#" data-social="reaksmey_tiktok" target="_blank" rel="noopener noreferrer" class="social-pill-btn px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-200">
-          <span class="text-pink-400 font-mono">♪</span>
-          <span>TikTok</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-aura-card border border-aura-border rounded-xl p-4">
-        <div class="text-[11px] text-slate-400 font-semibold uppercase">PAXGUSDT (Gold Proxy)</div>
-        <div id="overviewGoldPrice" class="text-2xl font-extrabold font-mono text-amber-400 mt-1">--</div>
-        <div id="overviewGoldSub" class="text-[11px] text-slate-400 mt-1">Binance PAXG/USDT Real Feed</div>
-      </div>
-      <div class="bg-aura-card border border-aura-border rounded-xl p-4">
-        <div class="text-[11px] text-slate-400 font-semibold uppercase">Real Trade Win Rate</div>
-        <div id="overviewWinRate" class="text-2xl font-extrabold font-mono text-emerald-400 mt-1">N/A</div>
-        <div id="overviewWinRateSub" class="text-[11px] text-slate-500 mt-1">Computed from real closed trades</div>
-      </div>
-      <div class="bg-aura-card border border-aura-border rounded-xl p-4">
-        <div class="text-[11px] text-slate-400 font-semibold uppercase">Active SMC, FVG & Key S/R</div>
-        <div id="overviewSmcStat" class="text-2xl font-extrabold font-mono text-blue-400 mt-1">--</div>
-        <div id="overviewSmcSub" class="text-[11px] text-slate-500 mt-1">BOS / CHoCH / Sweep / FVG / Key S/R</div>
-      </div>
-      <div class="bg-aura-card border border-aura-border rounded-xl p-4">
-        <div class="text-[11px] text-slate-400 font-semibold uppercase">Economic Calendar News</div>
-        <div id="overviewNewsStat" class="text-sm font-extrabold text-amber-400 mt-1.5">CHECKING API</div>
-        <div id="overviewNewsSub" class="text-[11px] text-slate-400 mt-1">Real economic calendar events</div>
-      </div>
-    </div>
-
-    <div class="bg-aura-card border border-aura-border rounded-xl p-4 space-y-3">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-aura-border pb-2.5">
-        <div>
-          <h3 class="text-xs font-bold uppercase tracking-wider text-white">Real Historical Backtest Metrics (TP/SL Verified on Candles)</h3>
-          <p class="text-[11px] text-slate-400 font-khmer">ផ្ទៀងផ្ទាត់ការប៉ះ TP ឬ SL ពិតប្រាកដលើទៀនប្រវត្តិសាស្ត្រ (រាប់បញ្ចូល Spread & Cost)</p>
-        </div>
-        <button onclick="runHistoricalBacktest()" class="px-3 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-400 text-black font-extrabold text-xs">
-          Run Backtest Now
-        </button>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 font-mono">
-        <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
-          <div class="text-[10px] text-slate-400">BACKTEST WIN RATE</div>
-          <div id="btWinRate" class="text-base font-extrabold text-emerald-400 mt-0.5">N/A</div>
-        </div>
-        <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
-          <div class="text-[10px] text-slate-400">PROFIT FACTOR</div>
-          <div id="btProfitFactor" class="text-base font-extrabold text-amber-400 mt-0.5">N/A</div>
-        </div>
-        <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
-          <div class="text-[10px] text-slate-400">MAX DRAWDOWN</div>
-          <div id="btMaxDrawdown" class="text-base font-extrabold text-rose-400 mt-0.5">N/A</div>
-        </div>
-        <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
-          <div class="text-[10px] text-slate-400">TOTAL TRADES</div>
-          <div id="btTotalTrades" class="text-base font-extrabold text-white mt-0.5">0</div>
-        </div>
-        <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
-          <div class="text-[10px] text-slate-400">BUY / SELL COUNT</div>
-          <div id="btBuySell" class="text-sm font-extrabold text-blue-400 mt-1">0B / 0S</div>
-        </div>
-        <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
-          <div class="text-[10px] text-slate-400">NET BACKTEST P&L</div>
-          <div id="btNetPnl" class="text-base font-extrabold text-slate-200 mt-0.5">$0.00</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="bg-aura-card border border-aura-border rounded-xl p-4 space-y-3">
-        <div class="flex items-center justify-between border-b border-aura-border pb-2.5">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-amber-500 pulse-dot"></span>
-            Economic Calendar API Events
-          </h3>
-          <span class="text-[10px] font-mono text-amber-400">REAL NEWS</span>
-        </div>
-        <div id="overviewNewsList" class="space-y-3 text-xs">
-          <div class="text-slate-400 font-khmer">កំពុងទាញទិន្នន័យ Economic Calendar ពី API...</div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-2 bg-aura-card border border-aura-border rounded-xl p-4 space-y-3">
-        <div class="flex items-center justify-between border-b border-aura-border pb-2.5">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-white">🔒 Locked 1H PLAN & Persistent SL/TP Signals</h3>
-          <button onclick="switchView('signals')" class="text-xs text-amber-400 hover:underline">View All Signals →</button>
-        </div>
-        <div id="overviewSignalsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="view-signals" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-4">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <h2 class="text-xl font-extrabold text-white">Live AI Signals (🔒 Locked 1H PLAN & Persistent SL/TP Log)</h2>
-        <p class="text-xs text-slate-400 font-khmer">Signal <b>1H PLAN</b> ដែលត្រូវគ្រប់ធាតុទាំង ៥ ហើយលោតចូលទីនេះ ត្រូវបាន <b>ចាក់សោរក្សាជាប់ (LOCKED)</b> ក្នុង localStorage ជារៀងរហូត <b>មិនអាចលុបបានឡើយ</b>។</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="px-3 py-2 rounded-lg bg-amber-500/15 border border-amber-500/35 text-amber-300 text-xs font-mono font-bold">
-          🔒 1H PLAN LOCKED PERMANENTLY
-        </span>
-        <button onclick="openInstantAnalysisPlan()" class="px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs">
-          ⚡ Instant Analysis & Plan Setup
-        </button>
-      </div>
-    </div>
-    <div id="fullSignalsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-  </section>
-
-  <section id="view-academy" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
-    <div class="bg-gradient-to-r from-amber-500/15 via-aura-card to-aura-card border border-amber-500/30 rounded-2xl p-5">
-      <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[11px] font-bold">AURA TREND AI • STRICT 1H PLAN & PRICE ACTION</span>
-      <h2 class="text-xl lg:text-2xl font-extrabold text-white mt-2 font-khmer">
-        លក្ខខណ្ឌតឹងរឹងសម្រាប់ Signal Plan 1H (ត្រូវគ្រប់ ៥ ធាតុទើបចេញ)
-      </h2>
-      <p class="text-xs text-slate-300 mt-1.5 leading-relaxed font-khmer max-w-4xl">
-        ប្រព័ន្ធនឹងពិនិត្យលើទៀនបិទពិតនៃ <b>1H</b> ឱ្យត្រូវទាំង ៥៖ <b>Swing High/Low Levels</b>, <b>Key Levels (Major S/R)</b>, <b>Liquidity Sweeps</b>, <b>SMC (BOS/CHoCH & FVG)</b> និង <b>Candlestick Patterns</b>។ ពេលត្រូវគ្រប់ នឹងធ្លាក់ Signal 1H PLAN បើក Analysis / Plan Setup ហើយចាក់សោររក្សាជាប់ក្នុង Live AI Signals មិនអាចលុបបាន។
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="bg-aura-card border border-emerald-500/30 rounded-xl p-4">
-        <div class="text-emerald-400 font-extrabold text-sm mb-1 font-khmer">១. Swing High/Low & Key Levels</div>
-        <p class="text-xs text-slate-300 font-khmer leading-relaxed">
-          កំណត់ Swing High/Low និង Key Levels (Major S/R, PDH/PDL) ដើម្បីផ្ទៀងផ្ទាត់ទីតាំងតម្លៃសំខាន់ៗលើ 1H។
-        </p>
-      </div>
-      <div class="bg-aura-card border border-amber-500/30 rounded-xl p-4">
-        <div class="text-amber-400 font-extrabold text-sm mb-1 font-khmer">២. Liquidity Sweep + SMC (BOS/CHoCH & FVG)</div>
-        <p class="text-xs text-slate-300 font-khmer leading-relaxed">
-          ផ្ទៀងផ្ទាត់ការ Sweep សាច់ប្រាក់ រចនាសម្ព័ន្ធ BOS/CHoCH និងតំបន់ Bullish/Bearish FVG លើទៀនបិទពិត។
-        </p>
-      </div>
-      <div class="bg-aura-card border border-blue-500/30 rounded-xl p-4">
-        <div class="text-blue-400 font-extrabold text-sm mb-1 font-khmer">៣. Candlestick Pattern + Permanent Lock</div>
-        <p class="text-xs text-slate-300 font-khmer leading-relaxed">
-          ត្រូវមាន Candlestick Pattern បញ្ជាក់ទិសដៅច្បាស់លាស់។ ពេលត្រូវគ្រប់ វានឹងលោត Analysis/Plan Setup និងចាក់សោរជាប់ក្នុង Live AI Signals។
-        </p>
-      </div>
-    </div>
-
-    <div id="patternsGuideGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-  </section>
-
-  <section id="view-watchlist" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-4">
-    <div class="flex items-center justify-between">
-      <div>
-        <h2 class="text-xl font-extrabold text-white">Market Watchlist & Real API Scanner</h2>
-        <p class="text-xs text-slate-400">Real-time prices from configured market feeds (PAXGUSDT separated from Spot XAUUSD)</p>
-      </div>
-      <button onclick="refreshAllWatchlistPrices()" class="px-3 py-1.5 rounded-lg bg-aura-card hover:bg-aura-hover border border-aura-border text-xs font-bold text-amber-400">
-        ↻ Refresh All Feeds
-      </button>
-    </div>
-    <div id="watchlistGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-  </section>
-
-  <section id="view-trades" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-5">
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <h2 class="text-xl font-extrabold text-white">My Active Trades & Live % TP/SL Journal</h2>
-        <p class="text-xs text-slate-400 font-khmer">Trade ដែលប៉ះ TP1 ឬ SL នឹងផ្លាស់ទៅរក្សាទុកក្នុង Live AI Signals ក្នុង localStorage ជារៀងរហូត</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <button onclick="runHistoricalBacktest()" class="px-3 py-1.5 rounded-lg bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold hover:bg-blue-500/30">
-          ▶ Backtest Current Chart
-        </button>
-        <button onclick="clearTradeHistory()" class="px-3 py-1.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-semibold hover:bg-rose-500/25">
-          Clear Open Trades
-        </button>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
-        <div class="text-[11px] text-slate-400">ACTIVE OPEN TRADES</div>
-        <div id="statTotalTrades" class="text-xl font-extrabold font-mono text-white mt-1">0</div>
-      </div>
-      <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
-        <div class="text-[11px] text-slate-400">REAL WIN RATE (TP/SL)</div>
-        <div id="statWinRate" class="text-xl font-extrabold font-mono text-emerald-400 mt-1">N/A</div>
-      </div>
-      <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
-        <div class="text-[11px] text-slate-400">REALIZED P&L & % (IN SIGNALS)</div>
-        <div id="statNetPnl" class="text-xl font-extrabold font-mono text-amber-400 mt-1">$0.00 (0.00%)</div>
-      </div>
-      <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
-        <div class="text-[11px] text-slate-400">COMPLETED RECORD (W / L)</div>
-        <div id="statClosedRecord" class="text-xl font-extrabold font-mono text-blue-400 mt-1">0W / 0L</div>
-      </div>
-    </div>
-
-    <div class="bg-aura-card border border-aura-border rounded-xl overflow-hidden">
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs">
-          <thead>
-            <tr class="border-b border-aura-border bg-aura-panel text-slate-400 uppercase text-[10px]">
-              <th class="py-3 px-4">Symbol</th>
-              <th class="py-3 px-4">TF</th>
-              <th class="py-3 px-4">Direction</th>
-              <th class="py-3 px-4">Setup / 3-Rule</th>
-              <th class="py-3 px-4">Lot</th>
-              <th class="py-3 px-4">Entry</th>
-              <th class="py-3 px-4">Stop Loss (% SL)</th>
-              <th class="py-3 px-4">Target (% TP)</th>
-              <th class="py-3 px-4">Live Floating %</th>
-              <th class="py-3 px-4">Status</th>
-              <th class="py-3 px-4 text-right">TP / SL / Remove</th>
-            </tr>
-          </thead>
-          <tbody id="tradesTableBody" class="divide-y divide-aura-border font-mono"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <section id="view-aichat" class="view-section hidden flex-1 flex flex-col overflow-hidden p-4 lg:p-6">
-    <div class="max-w-4xl w-full mx-auto flex-1 flex flex-col bg-aura-card border border-aura-border rounded-2xl overflow-hidden shadow-2xl">
-      <div class="p-4 bg-aura-panel border-b border-aura-border flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold">AI</div>
+      <!-- ===================================================================== -->
+      <!-- VIEW 2: OVERVIEW DASHBOARD                                            -->
+      <!-- ===================================================================== -->
+      <section id="view-overview" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-amber-500/15 via-aura-card to-aura-card border border-amber-500/30 rounded-2xl p-5">
           <div>
-            <h3 class="text-sm font-bold text-white">AURA TREND AI — Real Price Action & Gold Coach</h3>
-            <p class="text-[11px] text-slate-400 font-khmer">វិភាគផ្អែកលើ Swing High/Low, Key Levels, Liquidity Sweeps, SMC (BOS/CHoCH & FVG), Candlestick Patterns និង Strict 1H PLAN</p>
+            <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[11px] font-bold mb-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 pulse-dot"></span>
+              AURA TREND AI • 1H CADENCE, LIVE % TP/SL & BACKTEST ENGINE
+            </div>
+            <h1 class="text-2xl font-extrabold text-white tracking-tight">Institutional Gold & Forex Terminal</h1>
+            <p class="text-xs text-slate-400 mt-1 font-khmer">
+              ភ្ជាប់ Real OHLCV Candles, Binance PAXG/USDT Proxy & BTC, Forex/Index API, SMC (BOS/CHoCH/Sweep), Bull/Bear FVG, 1H Signal Cadence, % TP/SL ផ្ទាល់ និង Re-Scan ក្រោយប៉ះ TP/SL។
+            </p>
+          </div>
+          <div class="flex items-center gap-2.5 flex-wrap">
+            <button onclick="runHistoricalBacktest()" class="px-4 py-2.5 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/40 text-blue-300 font-extrabold text-xs transition">
+              ▶ Run Real Backtest
+            </button>
+            <button onclick="openInstantAnalysisPlan()" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition shadow-lg shadow-amber-500/20">
+              ⚡ Instant Analysis & Plan Setup
+            </button>
+            <button onclick="switchView('terminal')" class="px-4 py-2.5 rounded-xl bg-aura-card hover:bg-aura-hover border border-aura-border text-white font-semibold text-xs transition">
+              Open Desk Chart →
+            </button>
           </div>
         </div>
-        <button onclick="analyzeCurrentChartWithAI()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition">
-          Analyze Current Chart
-        </button>
-      </div>
 
-      <div id="aiChatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
-        <div class="bg-aura-panel border border-aura-border rounded-xl p-3.5 max-w-[85%]">
-          <div class="text-[10px] font-bold text-amber-400 mb-1">AURA TREND AI</div>
-          <p class="text-slate-200 leading-relaxed font-khmer">
-            សួស្តី! ខ្ញុំផ្ទៀងផ្ទាត់ <b>Signal Plan 1H</b> យ៉ាងតឹងរឹងដោយផ្អែកលើ <b>Swing High/Low Levels</b>, <b>Key Levels (Major S/R)</b>, <b>Liquidity Sweeps</b>, <b>SMC (BOS/CHoCH & FVG)</b> និង <b>Candlestick Patterns</b> លើទៀនបិទពិត។ ពេលត្រូវគ្រប់ នឹងទម្លាក់ Signal 1H PLAN បើក Analysis/Plan Setup ហើយចាក់សោររក្សាជាប់ក្នុង Live AI Signals មិនអាចលុបបាន។
+        <div class="creator-card-box rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-yellow-600 p-0.5 shrink-0">
+              <div class="w-full h-full rounded-full bg-aura-card flex items-center justify-center text-base font-extrabold text-amber-300 font-mono">RK</div>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-extrabold text-white tracking-wide">REAKSMEY</span>
+                <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold">✓ CREATOR</span>
+              </div>
+              <p class="text-xs text-slate-400 font-khmer mt-0.5">អ្នកបង្កើតប្រព័ន្ធ AURA TREND AI • ចុចប៊ូតុងខាងស្តាំដើម្បីចូល Facebook ឬ TikTok</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <a href="#" data-social="reaksmey_facebook" target="_blank" rel="noopener noreferrer" class="social-pill-btn px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-200">
+              <span class="text-blue-400 font-mono">f</span>
+              <span>Facebook</span>
+            </a>
+            <a href="#" data-social="reaksmey_tiktok" target="_blank" rel="noopener noreferrer" class="social-pill-btn px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-200">
+              <span class="text-pink-400 font-mono">♪</span>
+              <span>TikTok</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-aura-card border border-aura-border rounded-xl p-4">
+            <div class="text-[11px] text-slate-400 font-semibold uppercase">PAXGUSDT (Gold Proxy)</div>
+            <div id="overviewGoldPrice" class="text-2xl font-extrabold font-mono text-amber-400 mt-1">--</div>
+            <div id="overviewGoldSub" class="text-[11px] text-slate-400 mt-1">Binance PAXG/USDT Real Feed</div>
+          </div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-4">
+            <div class="text-[11px] text-slate-400 font-semibold uppercase">Real Trade Win Rate</div>
+            <div id="overviewWinRate" class="text-2xl font-extrabold font-mono text-emerald-400 mt-1">N/A</div>
+            <div id="overviewWinRateSub" class="text-[11px] text-slate-500 mt-1">Computed from real closed trades</div>
+          </div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-4">
+            <div class="text-[11px] text-slate-400 font-semibold uppercase">Active SMC & FVG</div>
+            <div id="overviewSmcStat" class="text-2xl font-extrabold font-mono text-blue-400 mt-1">--</div>
+            <div id="overviewSmcSub" class="text-[11px] text-slate-500 mt-1">BOS / CHoCH / Sweep / FVG</div>
+          </div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-4">
+            <div class="text-[11px] text-slate-400 font-semibold uppercase">Economic Calendar News</div>
+            <div id="overviewNewsStat" class="text-sm font-extrabold text-amber-400 mt-1.5">CHECKING API</div>
+            <div id="overviewNewsSub" class="text-[11px] text-slate-400 mt-1">Real economic calendar events</div>
+          </div>
+        </div>
+
+        <div class="bg-aura-card border border-aura-border rounded-xl p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-aura-border pb-2.5">
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-white">Real Historical Backtest Metrics (TP/SL Verified on Candles)</h3>
+              <p class="text-[11px] text-slate-400 font-khmer">ផ្ទៀងផ្ទាត់ការប៉ះ TP ឬ SL ពិតប្រាកដលើទៀនប្រវត្តិសាស្ត្រ (រាប់បញ្ចូល Spread & Cost)</p>
+            </div>
+            <button onclick="runHistoricalBacktest()" class="px-3 py-1.5 rounded-lg bg-blue-500 hover:bg-blue-400 text-black font-extrabold text-xs">
+              Run Backtest Now
+            </button>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 font-mono">
+            <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
+              <div class="text-[10px] text-slate-400">BACKTEST WIN RATE</div>
+              <div id="btWinRate" class="text-base font-extrabold text-emerald-400 mt-0.5">N/A</div>
+            </div>
+            <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
+              <div class="text-[10px] text-slate-400">PROFIT FACTOR</div>
+              <div id="btProfitFactor" class="text-base font-extrabold text-amber-400 mt-0.5">N/A</div>
+            </div>
+            <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
+              <div class="text-[10px] text-slate-400">MAX DRAWDOWN</div>
+              <div id="btMaxDrawdown" class="text-base font-extrabold text-rose-400 mt-0.5">N/A</div>
+            </div>
+            <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
+              <div class="text-[10px] text-slate-400">TOTAL TRADES</div>
+              <div id="btTotalTrades" class="text-base font-extrabold text-white mt-0.5">0</div>
+            </div>
+            <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
+              <div class="text-[10px] text-slate-400">BUY / SELL COUNT</div>
+              <div id="btBuySell" class="text-sm font-extrabold text-blue-400 mt-1">0B / 0S</div>
+            </div>
+            <div class="bg-aura-bg border border-aura-border rounded-lg p-3">
+              <div class="text-[10px] text-slate-400">NET BACKTEST P&L</div>
+              <div id="btNetPnl" class="text-base font-extrabold text-slate-200 mt-0.5">$0.00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="bg-aura-card border border-aura-border rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between border-b border-aura-border pb-2.5">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-500 pulse-dot"></span>
+                Economic Calendar API Events
+              </h3>
+              <span class="text-[10px] font-mono text-amber-400">REAL NEWS</span>
+            </div>
+            <div id="overviewNewsList" class="space-y-3 text-xs">
+              <div class="text-slate-400 font-khmer">កំពុងទាញទិន្នន័យ Economic Calendar ពី API...</div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 bg-aura-card border border-aura-border rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between border-b border-aura-border pb-2.5">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-white">Active & TP/SL Archived AI Signals</h3>
+              <button onclick="switchView('signals')" class="text-xs text-amber-400 hover:underline">View All Signals →</button>
+            </div>
+            <div id="overviewSignalsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-signals" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-extrabold text-white">Live AI Signals (Active & TP/SL Completed Archive)</h2>
+            <p class="text-xs text-slate-400 font-khmer">កាលណា Signal ប៉ះ TP ឬ SL វានឹងបាត់ចេញពី Active Desk/Trade ហើយត្រូវបានរក្សាទុកក្នុង Live AI Signals វិញ ព្រមទាំងបង្កើត Signal ថ្មី</p>
+          </div>
+          <button onclick="openInstantAnalysisPlan()" class="px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs">
+            ⚡ Instant Analysis & Plan Setup
+          </button>
+        </div>
+        <div id="fullSignalsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+      </section>
+
+      <section id="view-academy" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+        <div class="bg-gradient-to-r from-amber-500/15 via-aura-card to-aura-card border border-amber-500/30 rounded-2xl p-5">
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[11px] font-bold">AURA TREND AI • REAL PRICE ACTION & SMC ENGINE</span>
+          <h2 class="text-xl lg:text-2xl font-extrabold text-white mt-2 font-khmer">
+            មូលដ្ឋានគ្រឹះ Candlestick, Liquidity Sweep → CHoCH/BOS → Bull/Bear FVG និងច្បាប់ផ្ទៀងផ្ទាត់ ៣ ចំណុច
+          </h2>
+          <p class="text-xs text-slate-300 mt-1.5 leading-relaxed font-khmer max-w-4xl">
+            ប្រព័ន្ធគណនាដោយផ្ទាល់ពីទៀន OHLCV ពិត៖ <b>Swing High/Low → Liquidity Sweep → BOS / CHoCH → Bullish / Bearish FVG → រង់ចាំ Retest & Closed Candle Confirmation</b>។
           </p>
         </div>
-      </div>
 
-      <div class="px-4 py-2 bg-aura-panel/60 border-t border-aura-border flex items-center gap-2 overflow-x-auto text-[11px]">
-        <button onclick="sendQuickPrompt('ពិនិត្យលក្ខខណ្ឌទាំង ៥ របស់ Signal plan 1h និងស្ថានភាពចាក់សោរក្នុង Live AI Signals')" class="shrink-0 px-2.5 py-1 rounded-full bg-aura-card hover:bg-aura-hover border border-aura-border text-slate-300 font-khmer">
-          ពិនិត្យ Gate 5 ធាតុ 1H PLAN
-        </button>
-        <button onclick="sendQuickPrompt('វិភាគទៀនបិទរួច Swing High/Low, Key Levels, Liquidity Sweeps, SMC & FVG លើ Chart បច្ចុប្បន្ន')" class="shrink-0 px-2.5 py-1 rounded-full bg-aura-card hover:bg-aura-hover border border-aura-border text-slate-300 font-khmer">
-          វិភាគ Swing, Key S/R, Sweep & SMC
-        </button>
-        <button onclick="sendQuickPrompt('តើ Signal plan 1h ត្រូវបានរក្សាយ៉ាងដូចម្តេចក្នុង Live AI Signals?')" class="shrink-0 px-2.5 py-1 rounded-full bg-aura-card hover:bg-aura-hover border border-aura-border text-slate-300 font-khmer">
-          ការចាក់សោររក្សាជាប់ 1H PLAN
-        </button>
-      </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-aura-card border border-emerald-500/30 rounded-xl p-4">
+            <div class="text-emerald-400 font-extrabold text-sm mb-1 font-khmer">១. ទីតាំង & Bull/Bear FVG (Location)</div>
+            <p class="text-xs text-slate-300 font-khmer leading-relaxed">
+              គណនា Bullish FVG (Gap ចន្លោះ High ទៀនទី១ និង Low ទៀនទី៣) និង Bearish FVG (Gap ចន្លោះ Low ទៀនទី១ និង High ទៀនទី៣) ព្រមទាំង Swing Levels ពិត។
+            </p>
+          </div>
+          <div class="bg-aura-card border border-amber-500/30 rounded-xl p-4">
+            <div class="text-amber-400 font-extrabold text-sm mb-1 font-khmer">២. ទំហំជួញដូរពិត (Real Volume Spike)</div>
+            <p class="text-xs text-slate-300 font-khmer leading-relaxed">
+              ប្រៀបធៀប Volume របស់ទៀនជាមួយមធ្យមភាគ Volume ពិតនៃទៀនមុនៗ (≥ 1.15x) ជាកត្តាចាំបាច់សម្រាប់ Strict Signal Gate។
+            </p>
+          </div>
+          <div class="bg-aura-card border border-blue-500/30 rounded-xl p-4">
+            <div class="text-blue-400 font-extrabold text-sm mb-1 font-khmer">៣. រង់ចាំទៀនបិទបញ្ជាក់ (Closed Candle)</div>
+            <p class="text-xs text-slate-300 font-khmer leading-relaxed">
+              ប្រើតែទៀនដែលបានបិទរួចរាល់ប៉ុណ្ណោះ ដោយមិនយកទៀនកំពុងដំណើរការមកកំណត់ជា confirmed signal ទេ។
+            </p>
+          </div>
+        </div>
 
-      <form onsubmit="handleChatSubmit(event)" class="p-3 bg-aura-panel border-t border-aura-border flex items-center gap-2">
-        <input id="aiChatInput" type="text" placeholder="សរសេរសំណួររបស់អ្នកនៅទីនេះ (Khmer or English)..." class="flex-1 bg-aura-bg border border-aura-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-khmer" />
-        <button type="submit" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition">
-          Send
-        </button>
-      </form>
-    </div>
-  </section>
+        <div id="patternsGuideGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+      </section>
 
-</main>
+     
+      <section id="view-watchlist" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-xl font-extrabold text-white">Market Watchlist & Real API Scanner</h2>
+            <p class="text-xs text-slate-400">Real-time prices from configured market feeds (PAXGUSDT separated from Spot XAUUSD)</p>
+          </div>
+          <button onclick="refreshAllWatchlistPrices()" class="px-3 py-1.5 rounded-lg bg-aura-card hover:bg-aura-hover border border-aura-border text-xs font-bold text-amber-400">
+            ↻ Refresh All Feeds
+          </button>
+        </div>
+        <div id="watchlistGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </section>
+
+      
+      <section id="view-trades" class="view-section hidden flex-1 overflow-y-auto p-4 lg:p-6 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-extrabold text-white">My Active Trades & Live % TP/SL Journal</h2>
+            <p class="text-xs text-slate-400 font-khmer">Trade ដែលប៉ះ TP ឬ SL នឹងបាត់ចេញពីតារាងនេះ ហើយផ្លាស់ទៅរក្សាទុកក្នុង Live AI Signals វិញដោយស្វ័យប្រវត្តិ</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="runHistoricalBacktest()" class="px-3 py-1.5 rounded-lg bg-blue-500/20 border border-blue-500/40 text-blue-300 text-xs font-bold hover:bg-blue-500/30">
+              ▶ Backtest Current Chart
+            </button>
+            <button onclick="clearTradeHistory()" class="px-3 py-1.5 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-400 text-xs font-semibold hover:bg-rose-500/25">
+              Clear All Trades
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
+            <div class="text-[11px] text-slate-400">ACTIVE OPEN TRADES</div>
+            <div id="statTotalTrades" class="text-xl font-extrabold font-mono text-white mt-1">0</div>
+          </div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
+            <div class="text-[11px] text-slate-400">REAL WIN RATE (TP/SL)</div>
+            <div id="statWinRate" class="text-xl font-extrabold font-mono text-emerald-400 mt-1">N/A</div>
+          </div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
+            <div class="text-[11px] text-slate-400">REALIZED P&L & % (IN SIGNALS)</div>
+            <div id="statNetPnl" class="text-xl font-extrabold font-mono text-amber-400 mt-1">$0.00 (0.00%)</div>
+          </div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-3.5">
+            <div class="text-[11px] text-slate-400">COMPLETED RECORD (W / L)</div>
+            <div id="statClosedRecord" class="text-xl font-extrabold font-mono text-blue-400 mt-1">0W / 0L</div>
+          </div>
+        </div>
+
+        <div class="bg-aura-card border border-aura-border rounded-xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-aura-border bg-aura-panel text-slate-400 uppercase text-[10px]">
+                  <th class="py-3 px-4">Symbol</th>
+                  <th class="py-3 px-4">TF</th>
+                  <th class="py-3 px-4">Direction</th>
+                  <th class="py-3 px-4">Setup / 3-Rule</th>
+                  <th class="py-3 px-4">Lot</th>
+                  <th class="py-3 px-4">Entry</th>
+                  <th class="py-3 px-4">Stop Loss (% SL)</th>
+                  <th class="py-3 px-4">Target (% TP)</th>
+                  <th class="py-3 px-4">Live Floating %</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">TP / SL / Remove</th>
+                </tr>
+              </thead>
+              <tbody id="tradesTableBody" class="divide-y divide-aura-border font-mono"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+     
+      <section id="view-aichat" class="view-section hidden flex-1 flex flex-col overflow-hidden p-4 lg:p-6">
+        <div class="max-w-4xl w-full mx-auto flex-1 flex flex-col bg-aura-card border border-aura-border rounded-2xl overflow-hidden shadow-2xl">
+          <div class="p-4 bg-aura-panel border-b border-aura-border flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold">AI</div>
+              <div>
+                <h3 class="text-sm font-bold text-white">AURA TREND AI — Real Price Action & Gold Coach</h3>
+                <p class="text-[11px] text-slate-400 font-khmer">វិភាគផ្អែកលើទៀនដែលបិទរួច (Closed Candles), EMA + RSI + BOS/CHoCH/Sweep, Bull/Bear FVG, 1H Signal Plan និង % TP/SL</p>
+              </div>
+            </div>
+            <button onclick="analyzeCurrentChartWithAI()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition">
+              Analyze Current Chart
+            </button>
+          </div>
+
+          <div id="aiChatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 text-xs">
+            <div class="bg-aura-panel border border-aura-border rounded-xl p-3.5 max-w-[85%]">
+              <div class="text-[10px] font-bold text-amber-400 mb-1">AURA TREND AI</div>
+              <p class="text-slate-200 leading-relaxed font-khmer">
+                សួស្តី! ខ្ញុំវិភាគទីផ្សារដោយផ្អែកលើ <b>Closed OHLCV Candles</b>, <b>EMA + RSI + SMC (BOS, CHoCH, Liquidity Sweep)</b>, <b>Bull/Bear FVG</b>, <b>តំបន់ផ្សារបិទចុងក្រោយ (Last Closed Zone)</b>, <b>1H Signal Cadence</b> និង <b>% TP/SL ផ្ទាល់</b>។ សូមសួរសំណួរ ឬចុច Analyze Current Chart ដើម្បីពិនិត្យស្ថានភាពពិតនៅលើ Chart របស់អ្នក។
+              </p>
+            </div>
+          </div>
+
+          <div class="px-4 py-2 bg-aura-panel/60 border-t border-aura-border flex items-center gap-2 overflow-x-auto text-[11px]">
+            <button onclick="sendQuickPrompt('ប្រាប់តំបន់ផ្សារបិទចុងក្រោយគេ និងចំណុចចូល BUY ឬ SELL ក្នុងរង្វង់ 1 ម៉ោងនេះ')" class="shrink-0 px-2.5 py-1 rounded-full bg-aura-card hover:bg-aura-hover border border-aura-border text-slate-300 font-khmer">
+              តំបន់ផ្សារបិទចុងក្រោយ & Entry
+            </button>
+            <button onclick="sendQuickPrompt('វិភាគទៀនបិទរួច EMA + RSI + SMC (BOS, CHoCH, Sweep) និង Bull/Bear FVG លើ Chart បច្ចុប្បន្ន')" class="shrink-0 px-2.5 py-1 rounded-full bg-aura-card hover:bg-aura-hover border border-aura-border text-slate-300 font-khmer">
+              វិភាគ EMA, RSI, SMC & FVG
+            </button>
+            <button onclick="sendQuickPrompt('តើប្រព័ន្ធដំណើរការយ៉ាងដូចម្តេចពេលផ្សារប៉ះ TP ឬ SL?')" class="shrink-0 px-2.5 py-1 rounded-full bg-aura-card hover:bg-aura-hover border border-aura-border text-slate-300 font-khmer">
+              ដំណើរការពេលប៉ះ TP / SL
+            </button>
+          </div>
+
+          <form onsubmit="handleChatSubmit(event)" class="p-3 bg-aura-panel border-t border-aura-border flex items-center gap-2">
+            <input id="aiChatInput" type="text" placeholder="សរសេរសំណួររបស់អ្នកនៅទីនេះ (Khmer or English)..." class="flex-1 bg-aura-bg border border-aura-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-khmer" />
+            <button type="submit" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition">
+              Send
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
   </div>
 
-  <!-- ========================================================================= -->
-  <!-- INSTANT AI ANALYSIS & PLAN SETUP MODAL (TRIGGERED ON CLICKING ANALYSIS)   -->
-  <!-- ========================================================================= -->
+ 
   <div id="instantPlanModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
     <div class="bg-aura-panel border border-amber-500/40 rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden my-auto">
 
-
-
-
-
-
-   <div class="px-5 py-4 bg-gradient-to-r from-amber-500/15 via-aura-card to-aura-panel border-b border-aura-border flex items-center justify-between">
-    <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-lg bg-amber-500 text-black font-extrabold flex items-center justify-center shadow-lg shadow-amber-500/30">
-        ⚡
-      </div>
-      <div>
-        <h3 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
-          <span>AURA AI INSTANT ANALYSIS & PLAN SETUP</span>
-        </h3>
-        <p id="modalSubTitle" class="text-[11px] font-mono text-amber-400">XAUUSD • 1H • Strict 5-Factor 1H Plan Scan</p>
-      </div>
-    </div>
-    <button onclick="closeInstantPlanModal()" class="p-1.5 rounded-lg bg-aura-card hover:bg-aura-hover text-slate-400 hover:text-white">✕</button>
-  </div>
-
-  <div id="modalScanningState" class="p-8 text-center space-y-4">
-    <div class="w-12 h-12 rounded-full border-2 border-amber-500 border-t-transparent animate-spin mx-auto"></div>
-    <div class="text-sm font-bold text-white font-khmer">កំពុងផ្ទៀងផ្ទាត់ Swing High/Low, Key Levels, Liquidity Sweeps, SMC (BOS/CHoCH & FVG) និង Candlestick Patterns លើ 1H...</div>
-    <div class="max-w-xs mx-auto h-1.5 bg-aura-card rounded-full overflow-hidden">
-      <div class="h-full bg-amber-400 w-1/2 scan-bar"></div>
-    </div>
-    <div class="text-[11px] font-mono text-slate-400">Verifying 5/5 Mandatory 1H Confluence Factors...</div>
-  </div>
-
-  <div id="modalResultContent" class="hidden p-5 space-y-4 max-h-[82vh] overflow-y-auto">
-
-    <div id="modalDecisionBanner" class="rounded-xl p-4 bg-amber-500/10 border border-amber-500/35 flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400">STRICT 1H PLAN EVALUATION</div>
-        <div id="modalPlanDirection" class="text-xl font-extrabold font-mono text-amber-400 mt-0.5">--</div>
-        <div id="modalPatternTag" class="text-xs font-semibold text-white mt-0.5">--</div>
-      </div>
-      <div class="text-right font-mono">
-        <div class="text-[10px] text-slate-400">RISK : REWARD & %</div>
-        <div id="modalRR" class="text-lg font-extrabold text-amber-400">--</div>
-        <div id="modalConfidence" class="text-[10px] text-slate-300 font-bold">TP % / SL %: --</div>
-      </div>
-    </div>
-
-    <!-- 5-Factor Strict 1H Plan Checklist in Modal -->
-    <div class="bg-aura-card border border-amber-500/30 rounded-xl p-3.5 space-y-2">
-      <div class="flex items-center justify-between text-[11px] font-mono">
-        <span class="font-bold text-amber-400">📊 5 MANDATORY 1H CONFLUENCE ELEMENTS</span>
-        <span id="modalMtfScore" class="text-emerald-400 font-bold">--</span>
-      </div>
-      <div id="modalMtfList" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-khmer"></div>
-    </div>
-
-    <!-- Key Level & Last Closed Zone in Modal -->
-    <div class="bg-blue-500/10 border border-blue-500/35 rounded-xl p-3.5 space-y-1.5">
-      <div class="flex items-center justify-between text-[11px] font-mono">
-        <span class="font-bold text-blue-400">🔑 KEY LEVEL PROXIMITY & LAST CLOSED ZONE</span>
-        <span id="modalLastClosePrice" class="text-white font-bold">--</span>
-      </div>
-      <div id="modalKeyLevelSummary" class="text-xs font-mono font-bold text-amber-300">--</div>
-      <div id="modalLastCloseZoneTitle" class="text-xs font-extrabold text-white font-khmer">--</div>
-      <p id="modalLastCloseEntryDetail" class="text-xs text-slate-200 font-khmer leading-relaxed">--</p>
-    </div>
-
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center font-mono">
-      <div class="bg-aura-card p-3 rounded-xl border border-aura-border">
-        <div class="text-[10px] text-slate-400">ENTRY / PLAN</div>
-        <div id="modalEntry" class="text-sm font-extrabold text-white mt-1">--</div>
-      </div>
-      <div class="bg-aura-card p-3 rounded-xl border border-rose-500/35">
-        <div class="text-[10px] text-rose-400">STOP LOSS (SL)</div>
-        <div id="modalSL" class="text-sm font-extrabold text-rose-400 mt-1">--</div>
-      </div>
-      <div class="bg-aura-card p-3 rounded-xl border border-emerald-500/35">
-        <div class="text-[10px] text-emerald-400">TARGET TP1</div>
-        <div id="modalTP1" class="text-sm font-extrabold text-emerald-400 mt-1">--</div>
-      </div>
-      <div class="bg-aura-card p-3 rounded-xl border border-emerald-500/35">
-        <div class="text-[10px] text-emerald-400">EXTENDED TP2</div>
-        <div id="modalTP2" class="text-sm font-extrabold text-emerald-400 mt-1">--</div>
-      </div>
-    </div>
-
-    <div class="bg-aura-card border border-aura-border rounded-xl p-3.5 space-y-2 text-xs">
-      <div class="flex items-center justify-between border-b border-aura-border pb-1.5">
-        <span class="font-bold text-amber-400 uppercase text-[11px]">1H Strict Confluence Audit</span>
-        <span id="modalGateStatus" class="text-[10px] font-mono text-slate-300">--</span>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-khmer text-[11px]">
-        <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
-          <span class="text-slate-300">១. Swing High/Low & Key Level:</span>
-          <span id="modalRuleSmc" class="font-mono font-bold text-slate-300">--</span>
+      <div class="px-5 py-4 bg-gradient-to-r from-amber-500/15 via-aura-card to-aura-panel border-b border-aura-border flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-amber-500 text-black font-extrabold flex items-center justify-center shadow-lg shadow-amber-500/30">
+            ⚡
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+              <span>AURA AI INSTANT ANALYSIS & PLAN SETUP</span>
+            </h3>
+            <p id="modalSubTitle" class="text-[11px] font-mono text-amber-400">XAUUSD • 15m • Fresh Signal & Deep Scan</p>
+          </div>
         </div>
-        <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
-          <span class="text-slate-300">២. Liquidity Sweep & SMC/FVG:</span>
-          <span id="modalRuleFvg" class="font-mono font-bold text-slate-300">--</span>
+        <button onclick="closeInstantPlanModal()" class="p-1.5 rounded-lg bg-aura-card hover:bg-aura-hover text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div id="modalScanningState" class="p-8 text-center space-y-4">
+        <div class="w-12 h-12 rounded-full border-2 border-amber-500 border-t-transparent animate-spin mx-auto"></div>
+        <div class="text-sm font-bold text-white font-khmer">កំពុងវិភាគទៀនបិទទាំងអស់ + តំបន់ផ្សារបិទចុងក្រោយ + បង្កើត Signal ថ្មី...</div>
+        <div class="max-w-xs mx-auto h-1.5 bg-aura-card rounded-full overflow-hidden">
+          <div class="h-full bg-amber-400 w-1/2 scan-bar"></div>
         </div>
-        <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
-          <span class="text-slate-300">៣. Candlestick Pattern (1H):</span>
-          <span id="modalRuleVol" class="font-mono font-bold text-slate-300">--</span>
+        <div class="text-[11px] font-mono text-slate-400">Analyzing All Closed Candles • Last Market Close Zone • Entry • EMA • RSI • SMC • FVG</div>
+      </div>
+
+      <div id="modalResultContent" class="hidden p-5 space-y-4 max-h-[82vh] overflow-y-auto">
+
+        <div id="modalDecisionBanner" class="rounded-xl p-4 bg-amber-500/10 border border-amber-500/35 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400">FRESH 1H SIGNAL & DEEP PLAN EVALUATION</div>
+            <div id="modalPlanDirection" class="text-xl font-extrabold font-mono text-amber-400 mt-0.5">--</div>
+            <div id="modalPatternTag" class="text-xs font-semibold text-white mt-0.5">--</div>
+          </div>
+          <div class="text-right font-mono">
+            <div class="text-[10px] text-slate-400">RISK : REWARD & %</div>
+            <div id="modalRR" class="text-lg font-extrabold text-amber-400">--</div>
+            <div id="modalConfidence" class="text-[10px] text-slate-300 font-bold">TP % / SL %: --</div>
+          </div>
         </div>
-        <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
-          <span class="text-slate-300">៤. Live AI Signals Lock Status:</span>
-          <span id="modalRuleConf" class="font-mono font-bold text-slate-300">--</span>
+
+       
+        <div class="bg-blue-500/10 border border-blue-500/35 rounded-xl p-3.5 space-y-1.5">
+          <div class="flex items-center justify-between text-[11px] font-mono">
+            <span class="font-bold text-blue-400">📍 LAST CLOSED MARKET ZONE & ENTRY POINT</span>
+            <span id="modalLastClosePrice" class="text-white font-bold">--</span>
+          </div>
+          <div id="modalLastCloseZoneTitle" class="text-xs font-extrabold text-amber-300 font-khmer">--</div>
+          <p id="modalLastCloseEntryDetail" class="text-xs text-slate-200 font-khmer leading-relaxed">--</p>
         </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center font-mono">
+          <div class="bg-aura-card p-3 rounded-xl border border-aura-border">
+            <div class="text-[10px] text-slate-400">ENTRY / PLAN</div>
+            <div id="modalEntry" class="text-sm font-extrabold text-white mt-1">--</div>
+          </div>
+          <div class="bg-aura-card p-3 rounded-xl border border-rose-500/35">
+            <div class="text-[10px] text-rose-400">STOP LOSS (SL)</div>
+            <div id="modalSL" class="text-sm font-extrabold text-rose-400 mt-1">--</div>
+          </div>
+          <div class="bg-aura-card p-3 rounded-xl border border-emerald-500/35">
+            <div class="text-[10px] text-emerald-400">TARGET TP1</div>
+            <div id="modalTP1" class="text-sm font-extrabold text-emerald-400 mt-1">--</div>
+          </div>
+          <div class="bg-aura-card p-3 rounded-xl border border-emerald-500/35">
+            <div class="text-[10px] text-emerald-400">EXTENDED TP2</div>
+            <div id="modalTP2" class="text-sm font-extrabold text-emerald-400 mt-1">--</div>
+          </div>
+        </div>
+
+        <div class="bg-aura-card border border-aura-border rounded-xl p-3.5 space-y-2 text-xs">
+          <div class="flex items-center justify-between border-b border-aura-border pb-1.5">
+            <span class="font-bold text-amber-400 uppercase text-[11px]">Real SMC, RSI, FVG, Volume & 3-Rule Audit</span>
+            <span id="modalGateStatus" class="text-[10px] font-mono text-slate-300">--</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 font-khmer text-[11px]">
+            <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
+              <span class="text-slate-300">១. SMC Sweep / CHoCH / BOS:</span>
+              <span id="modalRuleSmc" class="font-mono font-bold text-slate-300">--</span>
+            </div>
+            <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
+              <span class="text-slate-300">២. តំបន់ Bull/Bear FVG:</span>
+              <span id="modalRuleFvg" class="font-mono font-bold text-slate-300">--</span>
+            </div>
+            <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
+              <span class="text-slate-300">៣. Real Volume Spike (≥ 1.15x):</span>
+              <span id="modalRuleVol" class="font-mono font-bold text-slate-300">--</span>
+            </div>
+            <div class="flex items-center justify-between bg-aura-bg px-2.5 py-1.5 rounded-lg border border-aura-border">
+              <span class="text-slate-300">៤. Closed Candle & R:R ≥ 1.5:</span>
+              <span id="modalRuleConf" class="font-mono font-bold text-slate-300">--</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-aura-bg border border-aura-border rounded-xl p-3.5 space-y-1.5">
+          <div class="text-[11px] font-bold text-amber-400 font-khmer">របាយការណ៍វិភាគទៀនបិទទាំងអស់ & ផែនការថ្មី (Deep Closed-Candle Report):</div>
+          <p id="modalKhmerSummary" class="text-xs text-slate-200 leading-relaxed font-khmer"></p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-aura-border">
+          <div class="text-xs font-mono text-slate-300">
+            Recommended Lot: <b id="modalLotBadge" class="text-amber-400">--</b> <span class="text-[10px] text-slate-500">(2% Risk)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="copyPlanToClipboard()" class="px-3.5 py-2 rounded-xl bg-aura-card hover:bg-aura-hover border border-aura-border text-white font-bold text-xs transition">
+              Copy Report
+            </button>
+            <button id="modalTakeBtn" onclick="executeSignalToJournal(); closeInstantPlanModal();" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs transition shadow-lg shadow-emerald-500/20">
+              Take & Track % TP/SL ✓
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div class="bg-aura-bg border border-aura-border rounded-xl p-3.5 space-y-1.5">
-      <div class="text-[11px] font-bold text-amber-400 font-khmer">របាយការណ៍វិភាគ Signal Plan 1H (Deep 1H Gate & Permanent Lock Report):</div>
-      <p id="modalKhmerSummary" class="text-xs text-slate-200 leading-relaxed font-khmer"></p>
-    </div>
-
-    <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-aura-border">
-      <div class="text-xs font-mono text-slate-300">
-        Recommended Lot: <b id="modalLotBadge" class="text-amber-400">--</b> <span class="text-[10px] text-slate-500">(2% Risk)</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <button onclick="copyPlanToClipboard()" class="px-3.5 py-2 rounded-xl bg-aura-card hover:bg-aura-hover border border-aura-border text-white font-bold text-xs transition">
-          Copy Report
-        </button>
-        <button id="modalTakeBtn" onclick="executeSignalToJournal(); closeInstantPlanModal();" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs transition shadow-lg shadow-emerald-500/20">
-          Take & Track % TP/SL ✓
-        </button>
-      </div>
-    </div>
-
-  </div>
-</div>
   </div>
 
   <div id="toastContainer" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
@@ -1232,36 +1182,6 @@
       reaksmey_facebook: '#',
       reaksmey_tiktok: '#'
     };
-
-    const PERSISTENT_SIGNALS_KEY = 'aura_trend_live_signals_archive_v1';
-
-    function loadPersistentCompletedSignals() {
-      try {
-        const raw = localStorage.getItem(PERSISTENT_SIGNALS_KEY);
-        if (!raw) return [];
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function savePersistentCompletedSignals(list) {
-      try {
-        localStorage.setItem(PERSISTENT_SIGNALS_KEY, JSON.stringify(list.slice(0, 60)));
-      } catch (e) {}
-    }
-
-    function clearPersistentSignalHistory() {
-      STATE.archivedCompletedSignals = [];
-      try {
-        localStorage.removeItem(PERSISTENT_SIGNALS_KEY);
-      } catch (e) {}
-      rebuildQualifiedSignalsList();
-      updateDeskUI();
-      renderTradesTable();
-      showToast('បានលុបប្រវត្តិ Signal ដែលរក្សាទុកក្នុង localStorage', 'amber');
-    }
 
     function bindSocialLinks() {
       document.querySelectorAll('[data-social]').forEach(el => {
@@ -1277,9 +1197,7 @@
       });
     }
 
-    // =========================================================================
-    // 0. TRADER AUTHENTICATION & LOGIN GATE STATE
-    // =========================================================================
+    
     const AUTH_STORAGE_KEY = 'aura_trend_trader_session_v1';
 
     function getSavedSession() {
@@ -1522,29 +1440,23 @@
       symbol: 'XAUUSD',
       timeframe: '15m',
       candles: [],
-      mtfCache: {},
-      mtfConfluence: null,
-      dedicated1HPlan: null,
       feedError: null,
       patterns: [],
       smcMarkers: [],
       fvgZones: [],
       liquiditySweeps: [],
       swingLevels: [],
-      keyLevels: [],
       tradePlan: null,
       qualifiedSignals: [],
-      archivedCompletedSignals: loadPersistentCompletedSignals(),
+      archivedCompletedSignals: [],
       economicEvents: [],
       newsStatus: 'LOADING',
       soundAlertEnabled: true,
       lastAlertKey: '',
       lastHourlySignalAt: 0,
-      lastDedicated1HAutoId: '',
       freshSetupNonce: 0,
       overlays: {
         levels: true,
-        keylevels: true,
         zones: true,
         smc: true,
         patterns: true,
@@ -1617,7 +1529,7 @@
         const key = `${STATE.symbol}-${STATE.timeframe}-${matchedFvg ? matchedFvg.type : 'ENTRY'}-${lastClosed.time}`;
         if (STATE.lastAlertKey !== key) {
           STATE.lastAlertKey = key;
-          const label = matchedFvg ? matchedFvg.label : `1H PLAN ${STATE.tradePlan.direction} ENTRY`;
+          const label = matchedFvg ? matchedFvg.label : `1H ${STATE.tradePlan.direction} ENTRY`;
           showToast(`REAL ALERT: ${STATE.symbol} at ${label} (${lastClosed.close.toFixed(cfg.decimals)})`, 'amber');
           playAlertBeep();
         }
@@ -1625,7 +1537,7 @@
     }
 
     // =========================================================================
-    // 2. REAL OHLCV & MARKET API FETCHERS (SINGLE + MULTI-TIMEFRAME 5m/15m/1H/4H)
+    // 2. REAL OHLCV & MARKET API FETCHERS
     // =========================================================================
     async function fetchRealCandlesForSymbol(symbolKey, tf) {
       const cfg = SYMBOLS[symbolKey];
@@ -1650,11 +1562,9 @@
           volume: +parseFloat(k[5]).toFixed(2)
         }));
 
-        if (tf === STATE.timeframe || cfg.price === null) {
-          cfg.price = candles[candles.length - 1].close;
-          cfg.isLive = true;
-          cfg.sourceLabel = symbolKey === 'XAUUSD' ? 'Binance PAXGUSDT (Token Proxy)' : `Binance ${cfg.binanceSymbol}`;
-        }
+        cfg.price = candles[candles.length - 1].close;
+        cfg.isLive = true;
+        cfg.sourceLabel = symbolKey === 'XAUUSD' ? 'Binance PAXGUSDT (Token Proxy)' : `Binance ${cfg.binanceSymbol}`;
         return candles;
       }
 
@@ -1690,31 +1600,6 @@
       throw new Error(`ត្រូវការ API Key ពិត (twelveDataApiKey) ដើម្បីទាញទិន្នន័យ Real OHLCV សម្រាប់ ${symbolKey}`);
     }
 
-    async function fetchMultiTimeframePack(symbolKey, primaryCandles, primaryTf) {
-      const tfs = ['5m', '15m', '1H', '4H'];
-      const pack = {};
-      pack[primaryTf] = primaryCandles;
-
-      await Promise.allSettled(
-        tfs.filter(tf => tf !== primaryTf).map(async (tf) => {
-          try {
-            const cList = await fetchRealCandlesForSymbol(symbolKey, tf);
-            pack[tf] = cList;
-          } catch (e) {
-            if (STATE.mtfCache[`${symbolKey}_${tf}`]) {
-              pack[tf] = STATE.mtfCache[`${symbolKey}_${tf}`];
-            }
-          }
-        })
-      );
-
-      tfs.forEach(tf => {
-        if (pack[tf]) STATE.mtfCache[`${symbolKey}_${tf}`] = pack[tf];
-      });
-
-      return pack;
-    }
-
     async function refreshCurrentMarketData() {
       const sym = STATE.symbol;
       const tf = STATE.timeframe;
@@ -1724,16 +1609,12 @@
       try {
         const candles = await fetchRealCandlesForSymbol(sym, tf);
         STATE.candles = candles;
-        const mtfPack = await fetchMultiTimeframePack(sym, candles, tf);
         STATE.feedError = null;
         monitorLiveTpSlAndCycle();
-        analyzeRealMarketStructure(STATE.candles, false, mtfPack);
+        analyzeRealMarketStructure(STATE.candles);
         updateFeedStatusUI('LIVE', `${sym} ${SYMBOLS[sym].price.toFixed(SYMBOLS[sym].decimals)}`, 'emerald');
       } catch (err) {
         STATE.candles = [];
-        STATE.mtfConfluence = null;
-        STATE.dedicated1HPlan = null;
-        STATE.keyLevels = [];
         STATE.feedError = err.message || 'Failed to load real market data';
         STATE.patterns = [];
         STATE.smcMarkers = [];
@@ -1741,7 +1622,6 @@
         STATE.liquiditySweeps = [];
         STATE.swingLevels = [];
         STATE.tradePlan = buildNoSignalPlan(STATE.feedError);
-        rebuildQualifiedSignalsList();
         updateFeedStatusUI('NO FEED', `${sym} API Required`, 'rose');
       }
 
@@ -1788,9 +1668,7 @@
       updateOverviewStats();
     }
 
-    // =========================================================================
-    // 3. ECONOMIC CALENDAR REAL API FETCHER
-    // =========================================================================
+    
     async function fetchRealEconomicCalendar() {
       const now = new Date();
       const fromStr = now.toISOString().slice(0, 10);
@@ -1880,7 +1758,7 @@
         }
       } else {
         if (sideTime) sideTime.textContent = '1H LIVE';
-        if (sideText) sideText.textContent = 'M5/M15/1H/4H + Key Levels + 1H PLAN សកម្ម • SL/TP រក្សាក្នុង Live Signals ជារៀងរហូត។';
+        if (sideText) sideText.textContent = '1H Signal Cadence សកម្ម • TP/SL ចូល Live Signals ស្វ័យប្រវត្តិ។';
         if (ovStat) ovStat.textContent = 'API KEY NEEDED';
         if (ovSub) ovSub.textContent = 'Configure fmpApiKey or fcsApiKey for live calendar';
         if (ovList) {
@@ -1893,9 +1771,7 @@
       }
     }
 
-    // =========================================================================
-    // 4. KEY LEVELS (MAJOR S/R) + MTF CONFLUENCE (5m, 15m, 1H, 4H) + 1H PLAN
-    // =========================================================================
+    
     function getAverageCandleRange(candles) {
       if (!candles || candles.length === 0) return 1;
       const sample = candles.slice(-30);
@@ -1942,114 +1818,7 @@
       return isStillOpen ? candles.slice(0, -1) : candles;
     }
 
-    function computeKeyLevels(sliceCandles, symbolKey) {
-      const cfg = SYMBOLS[symbolKey];
-      const d = cfg.decimals;
-      const n = sliceCandles.length;
-      if (n < 10) return [];
-
-      const avgRange = getAverageCandleRange(sliceCandles);
-      const lastClose = sliceCandles[n - 1].close;
-      const minBandGap = Math.max(avgRange * 1.1, cfg.step * 8);
-
-      const rawLevels = [];
-
-      // 1. Previous Session / Day High & Low (from earlier window vs last 24 candles)
-      const prevWindow = sliceCandles.slice(Math.max(0, n - 48), Math.max(1, n - 24));
-      if (prevWindow.length > 0) {
-        const pdh = Math.max(...prevWindow.map(c => c.high));
-        const pdl = Math.min(...prevWindow.map(c => c.low));
-        rawLevels.push({ price: +pdh.toFixed(d), kind: 'PDH', label: 'KEY RES • PREV HIGH', color: '#f59e0b', strength: 92 });
-        rawLevels.push({ price: +pdl.toFixed(d), kind: 'PDL', label: 'KEY SUP • PREV LOW', color: '#38bdf8', strength: 92 });
-      }
-
-      // 2. Major Pivot Highs & Lows across closed candles (with touch/reaction count)
-      for (let i = 3; i < n - 2; i++) {
-        const h = sliceCandles[i].high;
-        const l = sliceCandles[i].low;
-        const isMajorH = h >= sliceCandles[i - 1].high && h >= sliceCandles[i - 2].high && h >= sliceCandles[i + 1].high && h >= sliceCandles[i + 2].high;
-        const isMajorL = l <= sliceCandles[i - 1].low && l <= sliceCandles[i - 2].low && l <= sliceCandles[i + 1].low && l <= sliceCandles[i + 2].low;
-
-        if (isMajorH) {
-          let touches = 1;
-          for (let j = 0; j < n; j++) {
-            if (j !== i && Math.abs(sliceCandles[j].high - h) <= avgRange * 0.25) touches++;
-          }
-          rawLevels.push({
-            price: +h.toFixed(d),
-            kind: 'KEY_RES',
-            label: touches >= 2 ? `KEY RES (${touches}x)` : 'KEY RESISTANCE',
-            color: '#fb923c',
-            strength: 70 + touches * 8
-          });
-        }
-
-        if (isMajorL) {
-          let touches = 1;
-          for (let j = 0; j < n; j++) {
-            if (j !== i && Math.abs(sliceCandles[j].low - l) <= avgRange * 0.25) touches++;
-          }
-          rawLevels.push({
-            price: +l.toFixed(d),
-            kind: 'KEY_SUP',
-            label: touches >= 2 ? `KEY SUP (${touches}x)` : 'KEY SUPPORT',
-            color: '#22d3ee',
-            strength: 70 + touches * 8
-          });
-        }
-      }
-
-      // 3. Psychological / Round Level nearest to current price
-      const roundStep = lastClose > 500 ? (lastClose > 10000 ? 500 : 25) : (lastClose > 50 ? 5 : 0.01);
-      const nearestRound = Math.round(lastClose / roundStep) * roundStep;
-      if (nearestRound > 0) {
-        rawLevels.push({
-          price: +nearestRound.toFixed(d),
-          kind: 'PSYCH',
-          label: 'PSYCH KEY LEVEL',
-          color: '#c084fc',
-          strength: 85
-        });
-      }
-
-      // Sort by strength and filter out crowded levels within minBandGap
-      rawLevels.sort((a, b) => b.strength - a.strength);
-      const selected = [];
-      for (const lvl of rawLevels) {
-        const tooClose = selected.some(s => Math.abs(s.price - lvl.price) < minBandGap);
-        if (!tooClose) {
-          selected.push(lvl);
-        }
-        if (selected.length >= 5) break;
-      }
-
-      return selected.sort((a, b) => b.price - a.price);
-    }
-
-    function getNearestKeyLevelInfo(keyLevels, price, decimals) {
-      if (!Array.isArray(keyLevels) || keyLevels.length === 0 || price === null || price === undefined) {
-        return {
-          nearest: null,
-          text: 'KEY LEVEL: --',
-          kh: 'មិនទាន់មាន Key Level នៅជិតតម្លៃបច្ចុប្បន្ន។'
-        };
-      }
-      let best = null;
-      for (const kl of keyLevels) {
-        const dist = Math.abs(price - kl.price);
-        if (!best || dist < best.dist) {
-          best = { ...kl, dist };
-        }
-      }
-      const sideKh = best.price >= price ? 'Resistance ខាងលើ' : 'Support ខាងក្រោម';
-      return {
-        nearest: best,
-        text: `${best.label} @ ${best.price.toFixed(decimals)}`,
-        kh: `Key Level ជិតបំផុតគឺ ${best.label} នៅតម្លៃ ${best.price.toFixed(decimals)} (${sideKh} • គម្លាត ${best.dist.toFixed(decimals)})។`
-      };
-    }
-
-    function analyzeLastClosedMarketZone(sliceCandles, symbolKey, fvgZones, swingLevels, keyLevels, lastEma20, lastEma50, candidateDir, entryPrice) {
+    function analyzeLastClosedMarketZone(sliceCandles, symbolKey, fvgZones, swingLevels, lastEma20, lastEma50, candidateDir, entryPrice) {
       const cfg = SYMBOLS[symbolKey];
       const d = cfg.decimals;
       const n = sliceCandles.length;
@@ -2071,7 +1840,6 @@
         else bearCount++;
       });
 
-      const klInfo = getNearestKeyLevelInfo(keyLevels, lastClosed.close, d);
       const activeFvg = fvgZones.find(f => !f.mitigated && lastClosed.close <= f.top + avgRange * 0.7 && lastClosed.close >= f.bottom - avgRange * 0.7);
       const nearestSwing = swingLevels.reduce((best, s) => {
         const dist = Math.abs(lastClosed.close - s.price);
@@ -2079,13 +1847,13 @@
         return best;
       }, null);
 
-      let locationDescKh = `${klInfo.kh} `;
+      let locationDescKh = '';
       if (activeFvg) {
-        locationDescKh += `ផ្សារបិទចុងក្រោយនៅក្នុងតំបន់ ${activeFvg.type === 'BULL_FVG' ? 'Bullish FVG (Demand)' : 'Bearish FVG (Supply)'} ចន្លោះ ${activeFvg.bottom.toFixed(d)} - ${activeFvg.top.toFixed(d)} និងស្ថិតក្នុង ${zoneSideKh}។`;
+        locationDescKh = `ផ្សារបិទចុងក្រោយនៅក្នុងតំបន់ ${activeFvg.type === 'BULL_FVG' ? 'Bullish FVG (Demand)' : 'Bearish FVG (Supply)'} ចន្លោះ ${activeFvg.bottom.toFixed(d)} - ${activeFvg.top.toFixed(d)} និងស្ថិតក្នុង ${zoneSideKh}។`;
       } else if (nearestSwing && nearestSwing.dist <= avgRange * 1.4) {
-        locationDescKh += `ផ្សារបិទចុងក្រោយក្បែរតំបន់ ${nearestSwing.label} (${nearestSwing.price.toFixed(d)}) និងស្ថិតក្នុង ${zoneSideKh}។`;
+        locationDescKh = `ផ្សារបិទចុងក្រោយក្បែរតំបន់ ${nearestSwing.label} (${nearestSwing.price.toFixed(d)}) និងស្ថិតក្នុង ${zoneSideKh}។`;
       } else {
-        locationDescKh += `ផ្សារបិទចុងក្រោយនៅតម្លៃ ${lastClosed.close.toFixed(d)} (${zoneSideKh}) ធៀបនឹង EMA20 (${lastEma20.toFixed(d)}) / EMA50 (${lastEma50.toFixed(d)})។`;
+        locationDescKh = `ផ្សារបិទចុងក្រោយនៅតម្លៃ ${lastClosed.close.toFixed(d)} (${zoneSideKh}) ធៀបនឹង EMA20 (${lastEma20.toFixed(d)}) / EMA50 (${lastEma50.toFixed(d)})។`;
       }
 
       const entryZoneLow = +(Math.min(entryPrice, lastClosed.close) - avgRange * 0.18).toFixed(d);
@@ -2103,7 +1871,6 @@
         rangeLow: +rangeLow.toFixed(d),
         equilibrium: +equilibrium.toFixed(d),
         isDiscount,
-        keyLevelInfo: klInfo,
         zoneTitleKh: `បិទចុងក្រោយ @ ${lastClosed.close.toFixed(d)} • ${isDiscount ? 'DISCOUNT ZONE (តំបន់ទាប)' : 'PREMIUM ZONE (តំបន់ខ្ពស់)'}`,
         locationDescKh,
         entryAdviceKh,
@@ -2133,7 +1900,7 @@
         pattern: null,
         factors: [
           { name: 'SMC Sweep/BOS/CHoCH', pass: false },
-          { name: 'Active FVG / Key Level', pass: false },
+          { name: 'Active FVG Zone', pass: false },
           { name: 'Candle Pattern', pass: false },
           { name: 'Closed Next Candle', pass: false },
           { name: 'Real Volume ≥ 1.15x', pass: false },
@@ -2142,80 +1909,7 @@
       };
     }
 
-    function summarizeSingleTimeframeBias(candles, symbolKey) {
-      const closed = getClosedCandles(candles);
-      if (!closed || closed.length < 15) {
-        return { bias: 'WAIT', dir: null, rsi: 50, structure: 'NEUTRAL', detailKh: 'ទៀនមិនគ្រប់គ្រាន់' };
-      }
-      const d = SYMBOLS[symbolKey].decimals;
-      const closes = closed.map(c => c.close);
-      const ema20 = computeEMA(closes, 20);
-      const ema50 = computeEMA(closes, 50);
-      const rsi = computeRSI(closes, 14);
-      const n = closed.length;
-      const e20 = ema20[n - 1];
-      const e50 = ema50[n - 1];
-      const lastC = closed[n - 1];
-
-      let structDir = e20 >= e50 ? 'BUY' : 'SELL';
-      const recentHigh = Math.max(...closed.slice(-12, -2).map(c => c.high));
-      const recentLow = Math.min(...closed.slice(-12, -2).map(c => c.low));
-      let structTag = 'RANGE';
-      if (lastC.close > recentHigh) {
-        structDir = 'BUY';
-        structTag = 'BOS UP';
-      } else if (lastC.close < recentLow) {
-        structDir = 'SELL';
-        structTag = 'BOS DN';
-      } else {
-        structTag = structDir === 'BUY' ? 'EMA BULL' : 'EMA BEAR';
-      }
-
-      const biasLabel = structDir === 'BUY' ? 'BULLISH' : 'BEARISH';
-      return {
-        bias: biasLabel,
-        dir: structDir,
-        rsi,
-        structure: structTag,
-        detailKh: `${structTag} • EMA20 ${e20.toFixed(d)} / RSI ${rsi}`
-      };
-    }
-
-    function evaluateMultiTimeframeConfluence(mtfPack, symbolKey, primaryDir) {
-      const tfs = ['5m', '15m', '1H', '4H'];
-      const breakdown = {};
-      let alignedCount = 0;
-      let bullVotes = 0;
-      let bearVotes = 0;
-
-      tfs.forEach(tf => {
-        const cArr = mtfPack && mtfPack[tf] ? mtfPack[tf] : (tf === STATE.timeframe ? STATE.candles : null);
-        const info = summarizeSingleTimeframeBias(cArr, symbolKey);
-        breakdown[tf] = info;
-        if (info.dir === 'BUY') bullVotes++;
-        else if (info.dir === 'SELL') bearVotes++;
-        if (primaryDir && info.dir === primaryDir) alignedCount++;
-      });
-
-      const consensusDir = bullVotes >= bearVotes ? 'BUY' : 'SELL';
-      const consensusCount = Math.max(bullVotes, bearVotes);
-      const htfAligned = breakdown['1H']?.dir === breakdown['4H']?.dir && breakdown['1H']?.dir !== null;
-      const strictConfluencePass = alignedCount >= 3 && htfAligned;
-
-      return {
-        breakdown,
-        alignedCount,
-        totalTfs: 4,
-        consensusDir,
-        consensusCount,
-        htfAligned,
-        strictConfluencePass,
-        summaryText: `${alignedCount}/4 TF (${primaryDir || consensusDir}) • 1H:${breakdown['1H']?.bias || '--'} / 4H:${breakdown['4H']?.bias || '--'}`,
-        khSummary: `ផ្ទៀងផ្ទាត់ 5m, 15m, 1H, 4H៖ ត្រូវទិស ${primaryDir || consensusDir} ចំនួន ${alignedCount}/4 Timeframes (1H: ${breakdown['1H']?.structure || '--'}, 4H: ${breakdown['4H']?.structure || '--'}) — ${strictConfluencePass ? 'Confluence រឹងមាំ!' : 'កំពុងផ្ទៀងផ្ទាត់ទិសដៅ MTF'}`
-      };
-    }
-
-    function evaluateStructureOnSlice(sliceCandles, symbolKey, deepMode = false, mtfPack = null) {
+    function evaluateStructureOnSlice(sliceCandles, symbolKey, deepMode = false) {
       const cfg = SYMBOLS[symbolKey];
       const d = cfg.decimals;
       const n = sliceCandles.length;
@@ -2226,9 +1920,7 @@
           smcMarkers: [],
           fvgZones: [],
           liquiditySweeps: [],
-          swingLevels: [],
-          keyLevels: [],
-          mtfConfluence: null
+          swingLevels: []
         };
       }
 
@@ -2240,8 +1932,6 @@
       const lastEma20 = ema20[n - 1];
       const lastEma50 = ema50[n - 1];
       const emaBias = lastEma20 > lastEma50 ? 'BULLISH' : (lastEma20 < lastEma50 ? 'BEARISH' : 'NEUTRAL');
-
-      const keyLevels = computeKeyLevels(sliceCandles, symbolKey);
 
       const swingHighs = [];
       const swingLows = [];
@@ -2369,8 +2059,7 @@
 
         const nearFvg = fvgZones.some(f => curr.low <= f.top + avgRange && curr.high >= f.bottom - avgRange);
         const nearSweep = sweeps.some(s => Math.abs(curr.low - s.price) <= avgRange * 1.5 || Math.abs(curr.high - s.price) <= avgRange * 1.5);
-        const nearKey = keyLevels.some(kl => Math.abs(curr.close - kl.price) <= avgRange * 1.3);
-        const locationOk = nearFvg || nearSweep || nearKey;
+        const locationOk = nearFvg || nearSweep;
 
         const hasVolData = avgVol > 0 && curr.volume > 0;
         const volRatio = hasVolData ? +(curr.volume / avgVol).toFixed(1) : null;
@@ -2390,7 +2079,7 @@
             storyKh: `ទៀនបៃតងគ្របដណ្តប់ទៀនក្រហមមុន។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបានបិទខ្ពស់ជាង (Confirmed)។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទខ្ពស់ជាង។'}`,
             storyEn: 'Real bullish engulfing evaluated on closed next candle.',
             rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'NO ZONE NEARBY',
+              location: locationOk ? 'AT FVG / SWEEP' : 'NO FVG/SWEEP NEARBY',
               locationOk,
               volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
               volumeOk,
@@ -2410,7 +2099,7 @@
             storyKh: `ទៀនក្រហមគ្របដណ្តប់ទៀនបៃតងមុន។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបានបិទទាបជាង (Confirmed)។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទទាបជាង។'}`,
             storyEn: 'Real bearish engulfing evaluated on closed next candle.',
             rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'NO ZONE NEARBY',
+              location: locationOk ? 'AT FVG / SWEEP' : 'NO FVG/SWEEP NEARBY',
               locationOk,
               volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
               volumeOk,
@@ -2430,7 +2119,7 @@
             storyKh: `Wick ខាងក្រោមវែង (${(lowerWick / range * 100).toFixed(0)}% នៃ range)។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបិទឡើងលើ។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទឡើងលើ។'}`,
             storyEn: 'Lower wick rejection evaluated on closed next candle.',
             rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'SWING / NO FVG',
+              location: locationOk ? 'AT FVG / SWEEP' : 'SWING / NO FVG',
               locationOk,
               volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
               volumeOk,
@@ -2450,7 +2139,7 @@
             storyKh: `Wick ខាងលើវែង (${(upperWick / range * 100).toFixed(0)}% នៃ range)។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបិទចុះក្រោម។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទចុះក្រោម។'}`,
             storyEn: 'Upper wick rejection evaluated on closed next candle.',
             rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'SWING / NO FVG',
+              location: locationOk ? 'AT FVG / SWEEP' : 'SWING / NO FVG',
               locationOk,
               volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
               volumeOk,
@@ -2469,7 +2158,7 @@
             storyKh: 'Open និង Close ស្ទើរស្មើគ្នា បង្ហាញពីការស្ទាក់ស្ទើររវាង Buyers និង Sellers។',
             storyEn: 'Indecision candle on closed OHLC data.',
             rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'MID RANGE',
+              location: locationOk ? 'AT FVG / SWEEP' : 'MID RANGE',
               locationOk,
               volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
               volumeOk,
@@ -2497,23 +2186,16 @@
         ? directionalPatterns[STATE.freshSetupNonce % directionalPatterns.length]
         : (directionalPatterns[0] || null);
 
-      const mtfConfluence = evaluateMultiTimeframeConfluence(mtfPack, symbolKey, null);
       const rsiBias = rsi14 < 42 ? 'BUY' : (rsi14 > 58 ? 'SELL' : null);
-
-      // Prioritize aligned 1H/4H direction when available so signals don't fire blindly against HTF structure
-      const htfDir = mtfConfluence.breakdown['1H']?.dir || mtfConfluence.breakdown['4H']?.dir || null;
-      const candidateDir = (latestPattern && (!htfDir || latestPattern.bias === htfDir || deepMode))
+      const candidateDir = latestPattern
         ? latestPattern.bias
-        : (htfDir || (latestSmc ? (latestSmc.dir === 'BULL' ? 'BUY' : 'SELL') : (rsiBias || (emaBias === 'BULLISH' ? 'BUY' : 'SELL'))));
-
-      const mtfFinal = evaluateMultiTimeframeConfluence(mtfPack, symbolKey, candidateDir);
+        : (latestSmc ? (latestSmc.dir === 'BULL' ? 'BUY' : 'SELL') : (rsiBias || (emaBias === 'BULLISH' ? 'BUY' : 'SELL')));
 
       const activeBullFvg = activeFvgs.find(f => f.type === 'BULL_FVG');
       const activeBearFvg = activeFvgs.find(f => f.type === 'BEAR_FVG');
 
       const hasSmc = Boolean(latestSmc || latestSweep);
-      const hasFvgOrKey = (candidateDir === 'BUY' ? Boolean(activeBullFvg) : Boolean(activeBearFvg)) ||
-        keyLevels.some(kl => Math.abs(lastClosed.close - kl.price) <= avgRange * 2.2);
+      const hasFvg = candidateDir === 'BUY' ? Boolean(activeBullFvg) : (candidateDir === 'SELL' ? Boolean(activeBearFvg) : false);
       const hasPattern = Boolean(latestPattern);
       const hasConfirm = Boolean(latestPattern && latestPattern.rules.confirmOk);
       const hasVolume = Boolean(latestPattern && latestPattern.rules.volumeOk);
@@ -2547,19 +2229,19 @@
 
       const factors = [
         { name: 'SMC Sweep/BOS/CHoCH', pass: hasSmc },
-        { name: 'Active FVG / Key Level', pass: hasFvgOrKey },
+        { name: candidateDir === 'SELL' ? 'Bearish FVG Active' : 'Bullish FVG Active', pass: hasFvg },
         { name: 'Candle Pattern', pass: hasPattern },
         { name: 'Closed Next Candle', pass: hasConfirm },
         { name: 'Real Volume ≥ 1.15x', pass: hasVolume },
-        { name: 'MTF (5m/15m/1H/4H)', pass: mtfFinal.alignedCount >= 2 && rrOk }
+        { name: 'Risk:Reward ≥ 1.5', pass: rrOk }
       ];
 
       const passedCount = factors.filter(f => f.pass).length;
-      const strictAllPassed = Boolean(candidateDir) && hasSmc && hasFvgOrKey && hasPattern && hasConfirm && hasVolume && rrOk && mtfFinal.strictConfluencePass;
+      const strictAllPassed = Boolean(candidateDir) && hasSmc && hasFvg && hasPattern && hasConfirm && hasVolume && rrOk;
 
       const nowMs = Date.now();
       const withinHourWindow = (nowMs - STATE.lastHourlySignalAt) <= API_CONFIG.hourlyCadenceMs;
-      const isHourlyPlan = Boolean(candidateDir) && rrOk && mtfFinal.alignedCount >= 2 && (strictAllPassed || withinHourWindow || STATE.lastHourlySignalAt === 0 || deepMode);
+      const isHourlyPlan = Boolean(candidateDir) && rrOk && (strictAllPassed || withinHourWindow || STATE.lastHourlySignalAt === 0 || deepMode);
 
       if (isHourlyPlan && (!STATE.lastHourlySignalAt || (nowMs - STATE.lastHourlySignalAt) > API_CONFIG.hourlyCadenceMs)) {
         STATE.lastHourlySignalAt = nowMs;
@@ -2576,7 +2258,6 @@
         symbolKey,
         fvgZones,
         swingLevels,
-        keyLevels,
         lastEma20,
         lastEma50,
         candidateDir,
@@ -2584,17 +2265,13 @@
       );
 
       const smcSummary = latestSmc ? `${latestSmc.type} (${latestSmc.dir})` : (latestSweep ? `${latestSweep.label}` : `EMA ${emaBias} • RSI ${rsi14}`);
-      const fvgSummary = hasFvgOrKey
-        ? (activeBullFvg && candidateDir === 'BUY'
-            ? `Bull FVG ${activeBullFvg.bottom.toFixed(d)}-${activeBullFvg.top.toFixed(d)}`
-            : (activeBearFvg && candidateDir === 'SELL'
-                ? `Bear FVG ${activeBearFvg.bottom.toFixed(d)}-${activeBearFvg.top.toFixed(d)}`
-                : lastCloseReport.keyLevelInfo.text))
+      const fvgSummary = hasFvg
+        ? (candidateDir === 'BUY' ? `Bull FVG ${activeBullFvg.bottom.toFixed(d)}-${activeBullFvg.top.toFixed(d)}` : `Bear FVG ${activeBearFvg.bottom.toFixed(d)}-${activeBearFvg.top.toFixed(d)}`)
         : `RSI ${rsi14} / EMA Zone`;
 
       const storyKh = isHourlyPlan
-        ? `1H PLAN ${candidateDir} • ចូល @ ${entry.toFixed(d)} (ផ្សារបិទចុងក្រោយ @ ${lastClosed.close.toFixed(d)}) | SL ${sl.toFixed(d)} (-${slPct.toFixed(2)}%) | TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%) • ${mtfFinal.summaryText} • ${fvgSummary} (${passedCount}/6)។`
-        : `កំពុងស្កេន Multi-Timeframe (5m/15m/1H/4H) និង Key Levels (${passedCount}/6)៖ ${smcSummary}, ${mtfFinal.summaryText}។`;
+        ? `1H PLAN ${candidateDir} • ចូល @ ${entry.toFixed(d)} (ផ្សារបិទចុងក្រោយ @ ${lastClosed.close.toFixed(d)}) | SL ${sl.toFixed(d)} (-${slPct.toFixed(2)}%) | TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%) • ${smcSummary} + ${fvgSummary} (${passedCount}/6)។`
+        : `កំពុងស្កេនរចនាសម្ព័ន្ធផ្សារ (${passedCount}/6)៖ ${smcSummary}, ${fvgSummary}។`;
 
       const plan = {
         isValidSignal: isHourlyPlan,
@@ -2611,7 +2288,6 @@
         structureBias: trendDir ? (trendDir === 'BULL' ? 'BULLISH' : 'BEARISH') : emaBias,
         rsi14,
         lastCloseReport,
-        mtfConfluence: mtfFinal,
         liqTarget: isHourlyPlan ? `${candidateDir === 'BUY' ? 'TP' : 'SL/TP'} ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%)` : 'NO QUALIFIED TARGET',
         storyKh,
         score: passedCount,
@@ -2626,143 +2302,62 @@
         smcMarkers: smcMarkers.slice(-8),
         fvgZones,
         liquiditySweeps: sweeps.slice(-5),
-        swingLevels,
-        keyLevels,
-        mtfConfluence: mtfFinal
+        swingLevels
       };
     }
 
-    function buildDedicated1HPlan(mtfPack, symbolKey, fallbackPlan) {
-      const c1h = mtfPack && mtfPack['1H'] ? mtfPack['1H'] : null;
-      const c4h = mtfPack && mtfPack['4H'] ? mtfPack['4H'] : null;
-      if (!c1h || c1h.length < 15) return null;
-
-      const closed1H = getClosedCandles(c1h);
-      const res1H = evaluateStructureOnSlice(closed1H, symbolKey, false, mtfPack);
-      const info1H = summarizeSingleTimeframeBias(c1h, symbolKey);
-      const info4H = c4h ? summarizeSingleTimeframeBias(c4h, symbolKey) : info1H;
-
-      const d = SYMBOLS[symbolKey].decimals;
-      const lastClosed1H = closed1H[closed1H.length - 1];
-      const avgRange1H = getAverageCandleRange(closed1H);
-
-      // Dedicated 1H PLAN requires clear 1H structure + alignment with 4H or strong 1H plan
-      const aligned1H4H = info1H.dir && (info1H.dir === info4H.dir || res1H.plan.isValidSignal);
-      if (!aligned1H4H || !info1H.dir) return null;
-
-      const dir = info1H.dir;
-      const entry = res1H.plan.isValidSignal && res1H.plan.direction === dir && res1H.plan.entry !== null
-        ? res1H.plan.entry
-        : +lastClosed1H.close.toFixed(d);
-
-      const sl = res1H.plan.isValidSignal && res1H.plan.direction === dir && res1H.plan.sl !== null
-        ? res1H.plan.sl
-        : +(dir === 'BUY' ? entry - avgRange1H * 1.45 : entry + avgRange1H * 1.45).toFixed(d);
-
-      const riskDist = Math.max(Math.abs(entry - sl), SYMBOLS[symbolKey].step);
-      const tp = res1H.plan.isValidSignal && res1H.plan.direction === dir && res1H.plan.tp !== null
-        ? res1H.plan.tp
-        : +(dir === 'BUY' ? entry + riskDist * 1.9 : entry - riskDist * 1.9).toFixed(d);
-
-      const rrVal = +(Math.abs(tp - entry) / riskDist).toFixed(1);
-      if (rrVal < 1.5) return null;
-
-      const tpPct = Math.abs(computeMovePercent(entry, tp, dir));
-      const slPct = Math.abs(computeMovePercent(entry, sl, dir));
-      const klInfo = getNearestKeyLevelInfo(res1H.keyLevels, lastClosed1H.close, d);
-
-      return {
-        id: `1HPLAN-${symbolKey}-${dir}-${entry.toFixed(d)}-${sl.toFixed(d)}`,
-        symbol: symbolKey,
-        timeframe: '1H',
-        isDedicated1H: true,
-        dir,
-        pattern: `1H PLAN • ${info1H.structure} + 4H ${info4H.structure} (${klInfo.nearest ? klInfo.nearest.label : '1H/4H'})`,
-        entry: entry.toFixed(d),
-        sl: sl.toFixed(d),
-        tp: tp.toFixed(d),
-        tpPct,
-        slPct,
-        rr: `1:${rrVal}`,
-        score: `1H+4H`,
-        kh: `⭐ 1H PLAN (${dir})៖ វិភាគ 1H (${info1H.detailKh}) និង 4H (${info4H.detailKh}) ច្បាស់លាស់ • ចូល @ ${entry.toFixed(d)} | SL ${sl.toFixed(d)} (-${slPct.toFixed(2)}%) | TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%) • ${klInfo.text}។`,
-        isCompleted: false
-      };
-    }
-
-    function rebuildQualifiedSignalsList() {
-      const combined = [];
-
-      if (STATE.dedicated1HPlan) {
-        combined.push(STATE.dedicated1HPlan);
-      }
-
-      if (STATE.tradePlan && STATE.tradePlan.isValidSignal && STATE.tradePlan.entry !== null) {
-        const d = SYMBOLS[STATE.symbol].decimals;
-        const activePlanSig = {
-          id: `SIG-${STATE.symbol}-${STATE.timeframe}-${STATE.tradePlan.direction}-${STATE.tradePlan.entry.toFixed(d)}`,
-          symbol: STATE.symbol,
-          timeframe: STATE.timeframe,
-          isDedicated1H: STATE.timeframe === '1H',
-          dir: STATE.tradePlan.direction,
-          pattern: `${STATE.tradePlan.pattern ? STATE.tradePlan.pattern.type : 'MTF+SMC+FVG'} (+${STATE.tradePlan.tpPct.toFixed(2)}% / -${STATE.tradePlan.slPct.toFixed(2)}%)`,
-          entry: STATE.tradePlan.entry.toFixed(d),
-          sl: STATE.tradePlan.sl.toFixed(d),
-          tp: STATE.tradePlan.tp.toFixed(d),
-          tpPct: STATE.tradePlan.tpPct,
-          slPct: STATE.tradePlan.slPct,
-          rr: STATE.tradePlan.rr,
-          score: `${STATE.tradePlan.score}/${STATE.tradePlan.total}`,
-          kh: STATE.tradePlan.storyKh,
-          isCompleted: false
-        };
-        if (!combined.some(x => x.id === activePlanSig.id)) {
-          combined.push(activePlanSig);
-        }
-      }
-
-      // Always keep all persistent completed SL / TP1 signals from localStorage
-      const persistentList = STATE.archivedCompletedSignals.slice(0, 20);
-      STATE.qualifiedSignals = [...combined, ...persistentList];
-    }
-
-    function analyzeRealMarketStructure(candles, deepMode = false, mtfPack = null) {
+    function analyzeRealMarketStructure(candles, deepMode = false) {
       const closedCandles = getClosedCandles(candles);
-      const effectiveMtf = mtfPack || { [STATE.timeframe]: candles };
-      const res = evaluateStructureOnSlice(closedCandles, STATE.symbol, deepMode, effectiveMtf);
+      const res = evaluateStructureOnSlice(closedCandles, STATE.symbol, deepMode);
       STATE.patterns = res.patterns;
       STATE.smcMarkers = res.smcMarkers;
       STATE.fvgZones = res.fvgZones;
       STATE.liquiditySweeps = res.liquiditySweeps;
       STATE.swingLevels = res.swingLevels;
-      STATE.keyLevels = res.keyLevels;
-      STATE.mtfConfluence = res.mtfConfluence;
       STATE.tradePlan = res.plan;
 
-      const plan1H = buildDedicated1HPlan(effectiveMtf, STATE.symbol, res.plan);
-      STATE.dedicated1HPlan = plan1H;
-      if (plan1H && STATE.lastDedicated1HAutoId !== plan1H.id) {
-        STATE.lastDedicated1HAutoId = plan1H.id;
-        showToast(`1H PLAN AUTO-SIGNAL (${plan1H.symbol} ${plan1H.dir}) ទម្លាក់ចូល Live AI Signals រួចរាល់!`, 'amber');
-        playAlertBeep();
+      const activeSignalsOnly = STATE.qualifiedSignals.filter(
+        s => !s.isCompleted && !(s.symbol === STATE.symbol && s.timeframe === STATE.timeframe)
+      );
+
+      if (res.plan.isValidSignal) {
+        const d = SYMBOLS[STATE.symbol].decimals;
+        activeSignalsOnly.unshift({
+          id: `SIG-${STATE.symbol}-${STATE.timeframe}-${Date.now().toString().slice(-4)}`,
+          symbol: STATE.symbol,
+          timeframe: STATE.timeframe,
+          dir: res.plan.direction,
+          pattern: `${res.plan.pattern ? res.plan.pattern.type : 'EMA+RSI+SMC+FVG'} (+${res.plan.tpPct.toFixed(2)}% / -${res.plan.slPct.toFixed(2)}%)`,
+          entry: res.plan.entry.toFixed(d),
+          sl: res.plan.sl.toFixed(d),
+          tp: res.plan.tp.toFixed(d),
+          tpPct: res.plan.tpPct,
+          slPct: res.plan.slPct,
+          rr: res.plan.rr,
+          score: `${res.plan.score}/${res.plan.total}`,
+          kh: res.plan.storyKh,
+          isCompleted: false
+        });
       }
 
-      rebuildQualifiedSignalsList();
+      STATE.qualifiedSignals = [
+        ...activeSignalsOnly.slice(0, 6),
+        ...STATE.archivedCompletedSignals.slice(0, 12)
+      ].slice(0, 15);
     }
 
     // =========================================================================
-    // 4B. WHEN TP OR SL IS HIT: MOVE TO LIVE AI SIGNALS & PERSIST IN LOCALSTORAGE
+    // 4B. WHEN TP OR SL IS HIT: MOVE TO LIVE AI SIGNALS & GENERATE FRESH SIGNAL
     // =========================================================================
     function archiveSignalToLiveFeed(tradeObj, outcomeType, signedPct, realizedPnl) {
       const tpPctVal = Math.abs(computeMovePercent(parseFloat(tradeObj.entry), parseFloat(tradeObj.tp), tradeObj.dir)).toFixed(2);
       const slPctVal = Math.abs(computeMovePercent(parseFloat(tradeObj.entry), parseFloat(tradeObj.sl), tradeObj.dir)).toFixed(2);
-      const hitTag = outcomeType === 'WIN' ? `TP1 HIT (+${Math.abs(signedPct).toFixed(2)}%)` : `SL HIT (-${Math.abs(signedPct).toFixed(2)}%)`;
+      const hitTag = outcomeType === 'WIN' ? `TP HIT (+${Math.abs(signedPct).toFixed(2)}%)` : `SL HIT (-${Math.abs(signedPct).toFixed(2)}%)`;
 
       const archivedItem = {
-        id: `ARCH-${Date.now().toString().slice(-5)}-${Math.floor(Math.random() * 90 + 10)}`,
+        id: `ARCH-${Date.now().toString().slice(-5)}`,
         symbol: tradeObj.symbol,
         timeframe: tradeObj.tf,
-        isDedicated1H: tradeObj.tf === '1H' || Boolean(tradeObj.isDedicated1H),
         dir: tradeObj.dir,
         pattern: `${hitTag} • ${tradeObj.pattern}`,
         entry: tradeObj.entry,
@@ -2770,19 +2365,17 @@
         tp: tradeObj.tp,
         tpPct: parseFloat(tpPctVal) || 0,
         slPct: parseFloat(slPctVal) || 0,
-        rr: outcomeType === 'WIN' ? 'TP1 REACHED' : 'SL REACHED',
+        rr: outcomeType === 'WIN' ? 'TP REACHED' : 'SL REACHED',
         score: outcomeType,
         realizedPct: signedPct,
         realizedPnl,
-        kh: `Signal ${tradeObj.symbol} ${tradeObj.dir} បានដល់ ${outcomeType === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) ហើយត្រូវបានរក្សាទុកក្នុង Signals & Price Action -> Live AI Signals ក្នុង localStorage ជារៀងរហូត។`,
+        kh: `Signal ${tradeObj.symbol} ${tradeObj.dir} បានដល់ ${outcomeType === 'WIN' ? 'TP' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) ហើយត្រូវបានយកចេញទៅរក្សាទុកក្នុង Signals & Price Action -> Live AI Signals វិញ។`,
         isCompleted: true,
-        completedAt: new Date().toLocaleString()
+        completedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
 
       STATE.archivedCompletedSignals.unshift(archivedItem);
-      STATE.archivedCompletedSignals = STATE.archivedCompletedSignals.slice(0, 60);
-      savePersistentCompletedSignals(STATE.archivedCompletedSignals);
-      rebuildQualifiedSignalsList();
+      STATE.archivedCompletedSignals = STATE.archivedCompletedSignals.slice(0, 15);
     }
 
     function monitorLiveTpSlAndCycle() {
@@ -2792,7 +2385,7 @@
       let anyHitNow = false;
       const remainingOpenTrades = [];
 
-      // 1. ពិនិត្យមើល Active Signal នៅលើ AURA DESK បច្ចុប្បន្ន ថាតើប៉ះ TP1 ឬ SL ឬនៅ
+      // 1. ពិនិត្យមើល Active Signal នៅលើ AURA DESK បច្ចុប្បន្ន ថាតើប៉ះ TP ឬ SL ឬនៅ
       const activeDeskPlan = STATE.tradePlan;
       if (activeDeskPlan && activeDeskPlan.isValidSignal && activeDeskPlan.entry !== null) {
         const d = SYMBOLS[STATE.symbol].decimals;
@@ -2811,7 +2404,6 @@
           archiveSignalToLiveFeed({
             symbol: STATE.symbol,
             tf: STATE.timeframe,
-            isDedicated1H: STATE.timeframe === '1H',
             dir: activeDeskPlan.direction,
             pattern: activeDeskPlan.pattern ? activeDeskPlan.pattern.type : '1H DESK PLAN',
             entry: activeDeskPlan.entry.toFixed(d),
@@ -2820,14 +2412,14 @@
           }, deskHit, signedDeskPct, 0);
 
           showToast(
-            `${STATE.symbol} ${activeDeskPlan.direction} ដល់ ${deskHit === 'WIN' ? 'TP1' : 'SL'} — រក្សាក្នុង Live AI Signals (localStorage) & ប្តូរ Signal ថ្មី!`,
+            `1H PLAN ${STATE.symbol} ${activeDeskPlan.direction} ដល់ ${deskHit === 'WIN' ? 'TP' : 'SL'} — រក្សាក្នុង Live AI Signals & ប្តូរ Signal ថ្មី!`,
             deskHit === 'WIN' ? 'emerald' : 'amber'
           );
           playAlertBeep();
         }
       }
 
-      // 2. ពិនិត្យមើល Open Trades ក្នុង Journal ថាតើប៉ះ TP1 ឬ SL ឬនៅ
+      // 2. ពិនិត្យមើល Open Trades ក្នុង Journal ថាតើប៉ះ TP ឬ SL ឬនៅ
       STATE.trades.forEach(t => {
         if (t.symbol !== STATE.symbol) {
           remainingOpenTrades.push(t);
@@ -2857,7 +2449,7 @@
 
           archiveSignalToLiveFeed(t, hitType, signedPct, pnlVal);
           showToast(
-            `${t.symbol} ${t.dir} ដល់ ${hitType === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals ជារៀងរហូត!`,
+            `${t.symbol} ${t.dir} ដល់ ${hitType === 'WIN' ? 'TP' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — យកចេញទៅ Live AI Signals វិញ!`,
             hitType === 'WIN' ? 'emerald' : 'amber'
           );
           playAlertBeep();
@@ -2871,7 +2463,7 @@
       if (anyHitNow) {
         STATE.freshSetupNonce++;
         STATE.lastHourlySignalAt = 0;
-        analyzeRealMarketStructure(STATE.candles, true, { ...STATE.mtfCache, [STATE.timeframe]: STATE.candles });
+        analyzeRealMarketStructure(STATE.candles, true);
         flashAuraDeskPlanCard();
       }
     }
@@ -2905,7 +2497,7 @@
 
       for (let i = 25; i < closedCandles.length - 1; i++) {
         const prefix = closedCandles.slice(0, i + 1);
-        const evalRes = evaluateStructureOnSlice(prefix, STATE.symbol, false, { [STATE.timeframe]: prefix });
+        const evalRes = evaluateStructureOnSlice(prefix, STATE.symbol, false);
         const p = evalRes.plan;
 
         if (!p || !p.isValidSignal || p.entry === null || p.sl === null || p.tp === null) continue;
@@ -3060,9 +2652,9 @@
     }
 
     // =========================================================================
-    // 6. INSTANT ANALYSIS & PLAN SETUP MODAL (MTF 5m/15m/1H/4H + KEY LEVELS + 1H PLAN)
+    // 6. INSTANT ANALYSIS & PLAN SETUP MODAL (ANALYZES ALL CLOSED CANDLES & UPDATES DESK)
     // =========================================================================
-    async function openInstantAnalysisPlan() {
+    function openInstantAnalysisPlan() {
       if (STATE.activeView !== 'terminal') {
         switchView('terminal');
       }
@@ -3076,15 +2668,15 @@
       resultDiv.classList.add('hidden');
 
       STATE.freshSetupNonce++;
-      document.getElementById('modalSubTitle').textContent = `${STATE.symbol} • ${STATE.timeframe} • M5/M15/1H/4H Deep Scan #${STATE.freshSetupNonce}`;
+      document.getElementById('modalSubTitle').textContent = `${STATE.symbol} • ${STATE.timeframe} • Deep Closed-Candle Scan #${STATE.freshSetupNonce}`;
 
       if (STATE.candles.length > 0) {
-        const mtfPack = await fetchMultiTimeframePack(STATE.symbol, STATE.candles, STATE.timeframe);
-        analyzeRealMarketStructure(STATE.candles, true, mtfPack);
+        analyzeRealMarketStructure(STATE.candles, true);
       }
       updateDeskUI();
       drawChart();
 
+      // រំកិល និងបង្ហាញភ្លាមៗនៅកន្លែង AURA DESK • AI ENGINE ថា BUY ឬ SELL
       const deskAside = document.getElementById('auraDeskSidebar');
       if (deskAside) {
         deskAside.scrollTop = 0;
@@ -3099,7 +2691,6 @@
         const isBuy = valid && plan.direction === 'BUY';
         const lot = recalculateLotSize();
         const lcr = plan ? plan.lastCloseReport : null;
-        const mtf = plan ? plan.mtfConfluence : null;
 
         scanDiv.classList.add('hidden');
         resultDiv.classList.remove('hidden');
@@ -3120,39 +2711,16 @@
           : (isBuy ? 'text-xl font-extrabold font-mono text-emerald-400 mt-0.5' : 'text-xl font-extrabold font-mono text-rose-400 mt-0.5');
 
         document.getElementById('modalPatternTag').textContent = valid
-          ? `Deep MTF Analysis #${STATE.freshSetupNonce}: ${plan.pattern ? plan.pattern.type : 'MTF+SMC+FVG'} • RSI ${plan.rsi14 || '--'}`
-          : 'កំពុងស្កេន Multi-Timeframe & រចនាសម្ព័ន្ធផ្សារ...';
+          ? `Deep Analysis #${STATE.freshSetupNonce}: ${plan.pattern ? plan.pattern.type : 'EMA+RSI+SMC+FVG'} • RSI ${plan.rsi14 || '--'}`
+          : 'កំពុងស្កេនរចនាសម្ព័ន្ធផ្សារ...';
 
         document.getElementById('modalRR').textContent = plan ? plan.rr : '--';
         document.getElementById('modalConfidence').textContent = valid
           ? `TP: +${plan.tpPct.toFixed(2)}% | SL: -${plan.slPct.toFixed(2)}%`
           : `CRITERIA: ${plan ? plan.score : 0}/6`;
 
-        // Render MTF breakdown in Modal
-        const mtfScoreEl = document.getElementById('modalMtfScore');
-        const mtfListEl = document.getElementById('modalMtfList');
-        if (mtf) {
-          if (mtfScoreEl) mtfScoreEl.textContent = `${mtf.alignedCount}/4 TF ALIGNED`;
-          if (mtfListEl) {
-            mtfListEl.innerHTML = ['5m', '15m', '1H', '4H'].map(tf => {
-              const info = mtf.breakdown[tf] || { bias: '--', detailKh: '--' };
-              const cCls = info.bias === 'BULLISH' ? 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10'
-                : (info.bias === 'BEARISH' ? 'text-rose-400 border-rose-500/30 bg-rose-500/10' : 'text-slate-300 border-aura-border bg-aura-bg');
-              return `
-                <div class="px-2.5 py-1.5 rounded-lg border ${cCls} flex items-center justify-between gap-2">
-                  <div>
-                    <span class="font-mono font-extrabold">${tf}</span>: <span class="font-bold">${info.bias}</span>
-                    <div class="text-[10px] text-slate-300 font-mono">${info.detailKh}</div>
-                  </div>
-                </div>
-              `;
-            }).join('');
-          }
-        }
-
-        // Render Key Level & Last Closed Zone in Modal
+        // បង្ហាញតំបន់ផ្សារបិទចុងក្រោយគេ និងចំណុចចូលក្នុង Modal
         document.getElementById('modalLastClosePrice').textContent = lcr ? `LAST CLOSE: ${lcr.lastClosePrice.toFixed(d)} (${lcr.closedCount} Closed Candles)` : '--';
-        document.getElementById('modalKeyLevelSummary').textContent = lcr && lcr.keyLevelInfo ? `🔑 ${lcr.keyLevelInfo.text} — ${lcr.keyLevelInfo.kh}` : '--';
         document.getElementById('modalLastCloseZoneTitle').textContent = lcr ? lcr.zoneTitleKh : '--';
         document.getElementById('modalLastCloseEntryDetail').textContent = lcr
           ? `${lcr.locationDescKh} ${lcr.entryAdviceKh}`
@@ -3170,9 +2738,9 @@
 
         document.getElementById('modalGateStatus').textContent = valid ? `1H PLAN ${plan.direction} ✓` : 'SCANNING';
         document.getElementById('modalRuleSmc').textContent = fMap[0] ? '✓ SMC DETECTED' : `• RSI ${plan?.rsi14 || '--'} / EMA`;
-        document.getElementById('modalRuleFvg').textContent = fMap[1] ? '✓ FVG / KEY LEVEL' : '• CHECK KEY S/R';
+        document.getElementById('modalRuleFvg').textContent = fMap[1] ? '✓ FVG ACTIVE' : '• ZONE LEVEL';
         document.getElementById('modalRuleVol').textContent = fMap[4] ? '✓ REAL VOL SPIKE' : '• NORMAL VOL';
-        document.getElementById('modalRuleConf').textContent = fMap[5] ? '✓ MTF & R:R OK' : '• CHECK MTF';
+        document.getElementById('modalRuleConf').textContent = fMap[5] ? '✓ R:R ≥ 1.5 OK' : '• CHECK R:R';
         document.getElementById('modalLotBadge').textContent = lot ? `${lot.toFixed(2)} Lot` : '--';
 
         const takeBtn = document.getElementById('modalTakeBtn');
@@ -3185,10 +2753,9 @@
 
         document.getElementById('modalKhmerSummary').innerHTML = `
           ផែនការ <b>1H PLAN • ${valid ? plan.direction : 'SCANNING'}</b> សម្រាប់ <b>${STATE.symbol} (${STATE.timeframe})</b> ពីទៀនបិទទាំងអស់ (${cfg.sourceLabel})：<br/>
-          • <b>Multi-Timeframe (5m, 15m, 1H, 4H):</b> ${mtf ? mtf.khSummary : '--'}<br/>
-          • <b>Key Level & ចំណុចចូល:</b> ${lcr ? `${lcr.keyLevelInfo.kh} ${lcr.entryAdviceKh}` : '--'}<br/>
+          • <b>តំបន់ផ្សារបិទចុងក្រោយ & ចំណុចចូល:</b> ${lcr ? lcr.entryAdviceKh : '--'}<br/>
           • <b>គោលដៅ TP / SL ផ្ទាល់:</b> ${plan ? plan.storyKh : 'មិនមានទិន្នន័យ'}<br/>
-          • <b>ប្រវត្តិ SL/TP ក្នុង Live AI Signals:</b> កាលណាដល់ SL ឬ TP1 ប្រព័ន្ធនឹងរក្សាទុកក្នុង <b>Live AI Signals</b> (localStorage) ជារៀងរហូត ទោះ Refresh ទំព័រក៏មិនបាត់ដែរ។
+          • <b>កាលណាដល់ TP ឬ SL:</b> ប្រព័ន្ធនឹងយក Signal នេះទៅរក្សាទុកក្នុង <b>Signals & Price Action -> Live AI Signals</b> វិញ និងប្តូរ Signal ថ្មីមកជំនួសភ្លាមៗ។
         `;
       }, 320);
     }
@@ -3204,10 +2771,9 @@
       const valid = Boolean(plan && plan.isValidSignal);
       const lot = recalculateLotSize();
       const lcr = plan ? plan.lastCloseReport : null;
-      const mtf = plan ? plan.mtfConfluence : null;
 
       const text = valid
-        ? `AURA TREND AI — 1H PLAN (${plan.direction})\nSymbol: ${STATE.symbol} (${STATE.timeframe})\nMTF: ${mtf ? mtf.summaryText : '--'}\nKey Level: ${lcr && lcr.keyLevelInfo ? lcr.keyLevelInfo.text : '--'}\nLast Closed Zone: ${lcr ? lcr.zoneTitleKh : '--'}\nEntry Zone: ${plan.entry.toFixed(d)} (${lcr ? lcr.entryZoneRange : ''})\nStop Loss: ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%)\nTP1: ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)\nR:R: ${plan.rr}\nLot: ${lot ? lot.toFixed(2) : '--'}`
+        ? `AURA TREND AI — 1H PLAN (${plan.direction})\nSymbol: ${STATE.symbol} (${STATE.timeframe})\nLast Closed Zone: ${lcr ? lcr.zoneTitleKh : '--'}\nEntry Zone: ${plan.entry.toFixed(d)} (${lcr ? lcr.entryZoneRange : ''})\nStop Loss: ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%)\nTP1: ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)\nR:R: ${plan.rr}\nLot: ${lot ? lot.toFixed(2) : '--'}`
         : `AURA TREND AI — SCANNING\nSymbol: ${STATE.symbol} (${STATE.timeframe})`;
 
       const textarea = document.createElement('textarea');
@@ -3220,7 +2786,7 @@
     }
 
     // =========================================================================
-    // 7. HTML5 CANVAS REAL OHLCV CHART RENDERER (INCLUDES KEY LEVELS OVERLAY)
+    // 7. HTML5 CANVAS REAL OHLCV CHART RENDERER
     // =========================================================================
     const canvas = document.getElementById('tradingCanvas');
     const ctx = canvas.getContext('2d');
@@ -3325,35 +2891,6 @@
         ctx.fillText(timeStr, x, H - 8);
       }
 
-      // Draw Key Levels (Major S/R, PDH/PDL, Psych)
-      if (STATE.overlays.keylevels && STATE.keyLevels.length > 0) {
-        STATE.keyLevels.forEach(kl => {
-          if (kl.price >= minP && kl.price <= maxP) {
-            const y = priceToY(kl.price);
-            ctx.save();
-            ctx.strokeStyle = kl.color;
-            ctx.globalAlpha = 0.72;
-            ctx.lineWidth = 1.4;
-            ctx.setLineDash([7, 3]);
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(plotW, y);
-            ctx.stroke();
-
-            // Subtle key level band highlight
-            ctx.fillStyle = kl.color;
-            ctx.globalAlpha = 0.06;
-            ctx.fillRect(0, y - 3, plotW, 6);
-            ctx.restore();
-
-            ctx.fillStyle = kl.color;
-            ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
-            ctx.textAlign = 'right';
-            ctx.fillText(`🔑 ${kl.label} (${kl.price.toFixed(d)})`, plotW - 8, y - 4);
-          }
-        });
-      }
-
       if (STATE.overlays.levels) {
         STATE.swingLevels.forEach(s => {
           if (s.price >= minP && s.price <= maxP) {
@@ -3441,13 +2978,13 @@
         ctx.font = 'bold 9px "JetBrains Mono", monospace';
         ctx.fillStyle = '#34d399';
         ctx.textAlign = 'left';
-        ctx.fillText(`TP1 ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)`, boxX + 6, yTP + (plan.direction === 'BUY' ? 12 : -5));
+        ctx.fillText(`TP ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)`, boxX + 6, yTP + (plan.direction === 'BUY' ? 12 : -5));
 
         ctx.fillStyle = '#f87171';
         ctx.fillText(`SL ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%)`, boxX + 6, ySL + (plan.direction === 'BUY' ? -5 : 12));
 
         ctx.fillStyle = '#fbbf24';
-        ctx.fillText(`1H PLAN ${plan.direction} @ ${plan.entry.toFixed(d)}`, boxX + 6, yEntry - 4);
+        ctx.fillText(`ENTRY ${plan.direction} @ ${plan.entry.toFixed(d)}`, boxX + 6, yEntry - 4);
       }
 
       visible.forEach((c, i) => {
@@ -3695,7 +3232,6 @@
       const valid = Boolean(plan.isValidSignal);
       const isBuy = valid && plan.direction === 'BUY';
       const lcr = plan.lastCloseReport;
-      const mtf = plan.mtfConfluence;
 
       document.getElementById('deskSymbolMeta').textContent = `${STATE.symbol} • ${STATE.timeframe} • ${cfg.sourceLabel}`;
 
@@ -3715,7 +3251,7 @@
 
       const htfText = document.getElementById('htfBiasText');
       if (htfText) {
-        htfText.textContent = mtf ? `${mtf.alignedCount}/4 TF • ${plan.structureBias}` : `${plan.structureBias} • RSI ${plan.rsi14 || '--'}`;
+        htfText.textContent = `${plan.structureBias} • RSI ${plan.rsi14 || '--'}`;
         htfText.className = plan.structureBias === 'BULLISH'
           ? 'font-bold text-emerald-400'
           : (plan.structureBias === 'BEARISH' ? 'font-bold text-rose-400' : 'font-bold text-slate-300');
@@ -3723,24 +3259,9 @@
 
       const pathText = document.getElementById('marketPathText');
       if (pathText) {
-        pathText.textContent = STATE.dedicated1HPlan
-          ? `1H PLAN ACTIVE • KL:${STATE.keyLevels.length}`
-          : `MTF SCAN • KL:${STATE.keyLevels.length} • FVG:${STATE.fvgZones.length}`;
-      }
-
-      // Render MTF 5m / 15m / 1H / 4H in Desk
-      const mtfSumBadge = document.getElementById('deskMtfSummaryBadge');
-      if (mtf && mtfSumBadge) {
-        mtfSumBadge.textContent = `${mtf.alignedCount}/4 ALIGNED`;
-        const mapIds = { '5m': 'mtf5mVal', '15m': 'mtf15mVal', '1H': 'mtf1hVal', '4H': 'mtf4hVal' };
-        Object.entries(mapIds).forEach(([tfKey, elId]) => {
-          const el = document.getElementById(elId);
-          const item = mtf.breakdown[tfKey];
-          if (el && item) {
-            el.textContent = item.dir || item.bias;
-            el.className = item.dir === 'BUY' ? 'text-emerald-400 font-bold' : (item.dir === 'SELL' ? 'text-rose-400 font-bold' : 'text-slate-300 font-bold');
-          }
-        });
+        pathText.textContent = STATE.freshSetupNonce > 0
+          ? `DEEP SCAN #${STATE.freshSetupNonce} • SMC+FVG`
+          : `1H CADENCE • FVG:${STATE.fvgZones.length}`;
       }
 
       const liqTargetEl = document.getElementById('deskLiquidityTarget');
@@ -3755,19 +3276,17 @@
         ? 'text-base font-extrabold font-mono text-amber-400'
         : (isBuy ? 'text-base font-extrabold font-mono text-emerald-400' : 'text-base font-extrabold font-mono text-rose-400');
 
+      // បង្ហាញតំបន់ផ្សារបិទចុងក្រោយគេ និងចំណុចចូលនៅកន្លែង AURA DESK • AI ENGINE
       const closeBadge = document.getElementById('deskLastClosePriceBadge');
-      const klHighlight = document.getElementById('deskKeyLevelHighlight');
       const closeTitle = document.getElementById('deskLastCloseZoneTitle');
       const closeAdvice = document.getElementById('deskLastCloseEntryAdvice');
       if (lcr) {
         if (closeBadge) closeBadge.textContent = `CLOSE: ${lcr.lastClosePrice.toFixed(d)}`;
-        if (klHighlight) klHighlight.textContent = lcr.keyLevelInfo ? `🔑 ${lcr.keyLevelInfo.text}` : '🔑 KEY LEVEL: --';
         if (closeTitle) closeTitle.textContent = lcr.zoneTitleKh;
         if (closeAdvice) closeAdvice.textContent = `${lcr.locationDescKh} ${lcr.entryAdviceKh}`;
       } else {
         if (closeBadge) closeBadge.textContent = 'CLOSE: --';
-        if (klHighlight) klHighlight.textContent = '🔑 KEY LEVEL: --';
-        if (closeTitle) closeTitle.textContent = 'កំពុងស្កេន Key Level & តំបន់ផ្សារបិទចុងក្រោយ...';
+        if (closeTitle) closeTitle.textContent = 'កំពុងស្កេនតំបន់ផ្សារបិទចុងក្រោយ...';
         if (closeAdvice) closeAdvice.textContent = 'វិភាគទៀនបិទទាំងអស់ ដើម្បីរកចំណុចចូលច្បាស់លាស់។';
       }
 
@@ -3824,8 +3343,8 @@
 
       document.getElementById('deskReasoningKh').innerHTML = `
         <b>លទ្ធផលវិភាគទៀនបិទទាំងអស់:</b> ${plan.storyKh}<br/>
-        <span class="text-blue-400">🔑 Key Level & ផ្សារបិទចុងក្រោយ:</span> ${lcr ? lcr.locationDescKh : '--'}<br/>
-        <span class="text-amber-400">✓ Persistent SL/TP Log:</span> ប៉ះ SL ឬ TP1 នឹងរក្សាទុកក្នុង Live AI Signals (localStorage) ជារៀងរហូត ទោះ Refresh ទំព័រក៏មិនបាត់។
+        <span class="text-blue-400">📍 តំបន់ផ្សារបិទចុងក្រោយ:</span> ${lcr ? lcr.locationDescKh : '--'}<br/>
+        <span class="text-amber-400">✓ TP/SL → Live Signals:</span> ប៉ះ TP ឬ SL នឹងយកទៅរក្សាក្នុង Live AI Signals វិញ និងប្តូរ Signal ថ្មីជំនួសភ្លាមៗ។
       `;
       document.getElementById('deskReasoningEn').textContent = valid
         ? `1H ${plan.direction} Plan: Entry ${plan.entry.toFixed(d)}, SL ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%), TP ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%) (${plan.rr}).`
@@ -3908,18 +3427,16 @@
     function toggleOverlay(key) {
       STATE.overlays[key] = !STATE.overlays[key];
       const pill = document.getElementById(`pill-${key}`);
-      if (pill) {
-        if (STATE.overlays[key]) {
-          pill.classList.remove('opacity-40');
-        } else {
-          pill.classList.add('opacity-40');
-        }
+      if (STATE.overlays[key]) {
+        pill.classList.remove('opacity-40');
+      } else {
+        pill.classList.add('opacity-40');
       }
       drawChart();
     }
 
     // =========================================================================
-    // 10. SECONDARY VIEWS, DEDICATED 1H PLAN CARD & PERSISTENT SIGNALS
+    // 10. SECONDARY VIEWS, SIGNALS, LIVE % TP/SL & NAVIGATION
     // =========================================================================
     function renderQualifiedSignalsGrids() {
       const ovGrid = document.getElementById('overviewSignalsGrid');
@@ -3928,9 +3445,9 @@
       if (STATE.qualifiedSignals.length === 0) {
         const emptyHtml = `
           <div class="col-span-full p-5 rounded-xl bg-aura-bg border border-amber-500/25 text-center space-y-1.5">
-            <div class="text-xs font-bold text-amber-400 font-khmer">កំពុងស្កេន Signal 1H PLAN បន្ទាប់...</div>
+            <div class="text-xs font-bold text-amber-400 font-khmer">កំពុងស្កេន Signal 1H Plan បន្ទាប់...</div>
             <p class="text-[11px] text-slate-400 font-khmer">
-              ប្រព័ន្ធកំពុងវិភាគ Multi-Timeframe (5m/15m/1H/4H), Key Levels, SMC + FVG ដើម្បីទម្លាក់ 1H PLAN និងរក្សាប្រវត្តិ SL/TP ក្នុង localStorage។
+              ប្រព័ន្ធកំពុងវិភាគទៀនដែលបិទរួច (EMA + RSI + SMC + FVG + Volume) ដើម្បីទម្លាក់ Plan BUY/SELL និង % TP/SL ផ្ទាល់។
             </p>
           </div>
         `;
@@ -3942,393 +3459,281 @@
       const cardHTML = (s) => {
         const isBuy = s.dir === 'BUY';
         const isCompleted = Boolean(s.isCompleted);
-        const isDedicated1H = Boolean(s.isDedicated1H) && !isCompleted;
         const isWin = isCompleted && Number(s.realizedPct) >= 0;
-
         const statusBadge = isCompleted
-          ? `<span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded ${isWin ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${isWin ? 'TP1 HIT' : 'SL HIT'} ${s.realizedPct !== undefined ? `${Number(s.realizedPct) >= 0 ? '+' : ''}${Number(s.realizedPct).toFixed(2)}%` : ''} • SAVED</span>`
-          : (isDedicated1H
-              ? `<span class="text-[10px] font-mono font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 text-black shadow">⭐ 1H PLAN AUTO</span>`
-              : `<span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded">ACTIVE PLAN</span>`);
-
-        const cardStyle = isDedicated1H
-          ? 'one-h-plan-card rounded-xl p-4 space-y-3'
-          : 'bg-aura-bg border border-aura-border rounded-xl p-4 space-y-3';
+          ? `<span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded ${isWin ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${isWin ? 'TP HIT' : 'SL HIT'} ${Number(s.realizedPct) >= 0 ? '+' : ''}${Number(s.realizedPct).toFixed(2)}%</span>`
+          : `<span class="text-xs font-mono font-bold text-amber-400">R:R ${s.rr} (${s.score})</span>`;
 
         return `
-          <div class="${cardStyle}">
-            <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="bg-aura-bg border ${isCompleted ? (isWin ? 'border-emerald-500/40' : 'border-rose-500/40') : (isBuy ? 'border-emerald-500/30' : 'border-rose-500/30')} rounded-xl p-4 space-y-3">
+            <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-2">
                 <span class="font-extrabold text-white text-sm">${s.symbol}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-aura-card text-amber-300 border border-amber-500/30">${s.timeframe}</span>
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isBuy ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${s.dir}</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-aura-card border border-aura-border text-slate-300">${s.timeframe}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isBuy ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${s.dir}</span>
               </div>
               ${statusBadge}
             </div>
-            <div class="text-xs font-semibold ${isDedicated1H ? 'text-amber-300' : 'text-slate-200'}">${s.pattern}</div>
+            <div class="flex items-center justify-between text-[11px] font-mono gap-2">
+              <span class="font-semibold text-amber-300 truncate">${s.pattern}</span>
+              <span class="text-emerald-400 font-bold shrink-0">+${Number(s.tpPct || 0).toFixed(2)}% / -${Number(s.slPct || 0).toFixed(2)}%</span>
+            </div>
             <div class="grid grid-cols-3 gap-2 text-center font-mono text-xs bg-aura-card p-2 rounded-lg border border-aura-border">
-              <div><span class="text-[9px] text-slate-500 block">ENTRY</span><b>${s.entry}</b></div>
-              <div><span class="text-[9px] text-slate-500 block">SL (-${(s.slPct || 0).toFixed(2)}%)</span><b class="text-rose-400">${s.sl}</b></div>
-              <div><span class="text-[9px] text-slate-500 block">TP1 (+${(s.tpPct || 0).toFixed(2)}%)</span><b class="text-emerald-400">${s.tp}</b></div>
+              <div><div class="text-[9px] text-slate-400">ENTRY</div><div class="text-white font-bold">${s.entry}</div></div>
+              <div><div class="text-[9px] text-rose-400">STOP (-%)</div><div class="text-rose-400 font-bold">${s.sl}</div></div>
+              <div><div class="text-[9px] text-emerald-400">TARGET (+%)</div><div class="text-emerald-400 font-bold">${s.tp}</div></div>
             </div>
             <p class="text-[11px] text-slate-300 font-khmer leading-relaxed">${s.kh}</p>
-            <div class="flex items-center justify-between pt-1 text-[10px] font-mono text-slate-400">
-              <span>${isCompleted ? `Saved: ${s.completedAt || 'localStorage'}` : `R:R ${s.rr}`}</span>
-              <button onclick="loadSignalToTerminal('${s.symbol}', '${s.timeframe}')" class="text-amber-400 hover:underline font-bold">Open on Chart →</button>
-            </div>
+            <button onclick="loadSymbolAndAnalyze('${s.symbol}')" class="w-full py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-xs font-bold text-amber-300 transition">
+              ⚡ Inspect Fresh Plan on Chart →
+            </button>
           </div>
         `;
       };
 
-      if (ovGrid) ovGrid.innerHTML = STATE.qualifiedSignals.slice(0, 4).map(cardHTML).join('');
+      if (ovGrid) ovGrid.innerHTML = STATE.qualifiedSignals.slice(0, 2).map(cardHTML).join('');
       if (fullGrid) fullGrid.innerHTML = STATE.qualifiedSignals.map(cardHTML).join('');
-    }
-
-    function loadSignalToTerminal(sym, tf) {
-      STATE.symbol = sym;
-      STATE.timeframe = tf;
-      document.getElementById('chartSymbolSelect').value = sym;
-      document.querySelectorAll('.tf-btn').forEach(btn => {
-        btn.className = btn.dataset.tf === tf
-          ? 'tf-btn px-2 py-0.5 rounded text-[11px] font-mono bg-amber-500 text-black font-bold'
-          : 'tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white';
-      });
-      switchView('terminal');
-      refreshCurrentMarketData();
-    }
-
-    function renderAcademyGuide() {
-      const items = [
-        {
-          name: 'Key Levels (Major S/R & PDH/PDL)',
-          bias: 'LOCATION',
-          kh: 'កម្រិតតម្លៃសំខាន់ៗ (Previous High/Low, Major Swing S/R, Round Numbers) ដែលស្ថាប័នធំៗរង់ចាំប្រតិកម្មតម្លៃ។',
-          en: 'High-impact horizontal support/resistance levels plotted directly on the chart.'
-        },
-        {
-          name: 'Multi-Timeframe (5m • 15m • 1H • 4H)',
-          bias: 'CONFLUENCE',
-          kh: 'ផ្ទៀងផ្ទាត់ទិន្នន័យពិតពី 5m, 15m, 1H និង 4H ដើម្បីកាត់បន្ថយ False Signal និងបង្កើនភាពច្បាស់លាស់។',
-          en: 'Cross-checks real candles across M5, M15, 1H, and 4H for directional alignment.'
-        },
-        {
-          name: 'Dedicated 1H PLAN Auto-Signal',
-          bias: '1H PLAN',
-          kh: 'វិភាគ 1H + 4H ដោយស្វ័យប្រវត្តិ ហើយទម្លាក់ Signal 1H PLAN ចូល Live AI Signals ដោយសម្គាល់ដាច់ដោយឡែក។',
-          en: 'Dedicated hourly-structure plan highlighted distinctly in Live AI Signals.'
-        },
-        {
-          name: 'Bullish / Bearish Engulfing',
-          bias: 'BUY / SELL',
-          kh: 'ទៀនបញ្ច្រាស់គ្របដណ្តប់តួទៀនមុនលើទៀនដែលបិទរួច រួមជាមួយ Real Volume Spike និង Closed Confirmation។',
-          en: 'Engulfing body on closed OHLCV candles with volume & next-candle confirmation.'
-        },
-        {
-          name: 'Hammer & Shooting Star',
-          bias: 'BUY / SELL',
-          kh: 'បដិសេធតម្លៃ (Wick Rejection ≥ 2x body) នៅក្បែរ Key Level, FVG ឬ Liquidity Sweep។',
-          en: 'Long wick rejection at key levels or FVGs confirmed by closed candles.'
-        },
-        {
-          name: 'Doji Indecision',
-          bias: 'NEUTRAL',
-          kh: 'បង្ហាញពីតុល្យភាព ឬការស្ទាក់ស្ទើរនៃទីផ្សារលើទៀនដែលបិទរួច — គួររង់ចាំទៀនបញ្ជាក់បន្ទាប់។',
-          en: 'Neutral doji candle signaling potential pause or transition.'
-        }
-      ];
-
-      document.getElementById('patternsGuideGrid').innerHTML = items.map(it => `
-        <div class="bg-aura-card border border-aura-border rounded-xl p-4 space-y-2.5">
-          <div class="flex items-center justify-between">
-            <h4 class="font-bold text-white text-sm">${it.name}</h4>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">${it.bias}</span>
-          </div>
-          <p class="text-xs text-slate-200 font-khmer leading-relaxed">${it.kh}</p>
-          <p class="text-[11px] text-slate-400 leading-relaxed">${it.en}</p>
-        </div>
-      `).join('');
     }
 
     function renderWatchlistGrid() {
       const grid = document.getElementById('watchlistGrid');
       if (!grid) return;
 
-      grid.innerHTML = Object.entries(SYMBOLS).map(([key, cfg]) => {
-        const hasPrice = cfg.price !== null && cfg.price !== undefined;
-        const priceStr = hasPrice ? cfg.price.toLocaleString('en-US', { minimumFractionDigits: cfg.decimals, maximumFractionDigits: cfg.decimals }) : 'NO FEED';
+      grid.innerHTML = Object.entries(SYMBOLS).map(([sym, info]) => {
+        const priceText = info.price !== null && info.price !== undefined
+          ? info.price.toFixed(info.decimals)
+          : 'API Key Required';
+        const badgeText = info.isLive ? (sym === 'XAUUSD' && !API_CONFIG.twelveDataApiKey ? 'PAXG PROXY' : 'REAL LIVE') : 'FEED REQUIRED';
+        const badgeClass = info.isLive
+          ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+          : 'bg-amber-500/15 text-amber-300 border-amber-500/30';
+
         return `
-          <div class="bg-aura-card border border-aura-border hover:border-amber-500/40 rounded-xl p-4 space-y-3 transition">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="font-extrabold text-white text-sm">${key}</div>
-                <div class="text-[11px] text-slate-400">${cfg.name}</div>
+          <div class="bg-aura-card border border-aura-border rounded-xl p-4 flex items-center justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-extrabold text-white text-sm">${sym}</span>
+                <span class="text-[9px] font-mono px-1.5 py-0.5 rounded border ${badgeClass}">${badgeText}</span>
               </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-mono ${cfg.isLive ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/15 text-rose-400 border border-rose-500/30'}">
-                ${cfg.isLive ? 'LIVE API' : 'API KEY NEEDED'}
-              </span>
+              <div class="text-xs text-slate-400 mt-0.5">${info.name}</div>
+              <div class="font-mono text-base font-bold text-amber-400 mt-1">${priceText}</div>
             </div>
-            <div class="flex items-baseline justify-between font-mono">
-              <span class="text-xl font-extrabold text-white">${hasPrice ? (key === 'EURUSD' || key === 'GBPUSD' ? priceStr : `$${priceStr}`) : 'NO FEED'}</span>
-              <span class="text-xs text-slate-400">${cfg.sourceLabel}</span>
-            </div>
-            <button onclick="loadSignalToTerminal('${key}', '${STATE.timeframe}')" class="w-full py-1.5 rounded-lg bg-aura-bg hover:bg-aura-hover border border-aura-border text-xs font-bold text-amber-400 transition">
-              Analyze ${key} on Chart →
+            <button onclick="loadSymbolAndAnalyze('${sym}')" class="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-extrabold shadow-md shadow-amber-500/20">
+              Analyze
             </button>
           </div>
         `;
       }).join('');
     }
 
-    function executeSignalToJournal() {
-      const plan = STATE.tradePlan;
-      if (!plan || !plan.isValidSignal || plan.entry === null || plan.sl === null || plan.tp === null) {
-        showToast('មិនទាន់មាន Signal ដែលមាន Entry/SL/TP គ្រប់គ្រាន់ទេ', 'amber');
-        return;
+    function updateOverviewStats() {
+      const gold = SYMBOLS.XAUUSD;
+      const ovGold = document.getElementById('overviewGoldPrice');
+      const ovGoldSub = document.getElementById('overviewGoldSub');
+      if (ovGold) {
+        ovGold.textContent = gold.price !== null
+          ? `$${gold.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+          : 'API Required';
+      }
+      if (ovGoldSub) {
+        ovGoldSub.textContent = gold.isLive ? gold.sourceLabel : 'Waiting for Feed API';
       }
 
-      const d = SYMBOLS[STATE.symbol].decimals;
-      const lot = recalculateLotSize() || 0.01;
-
-      const newTrade = {
-        id: 'TRD-' + Date.now().toString().slice(-5),
-        symbol: STATE.symbol,
-        tf: STATE.timeframe,
-        isDedicated1H: STATE.timeframe === '1H',
-        dir: plan.direction,
-        pattern: `${plan.pattern ? plan.pattern.type : '1H PLAN'} (${plan.score}/${plan.total})`,
-        lot: lot.toFixed(2),
-        entry: plan.entry.toFixed(d),
-        sl: plan.sl.toFixed(d),
-        tp: plan.tp.toFixed(d),
-        tpPct: plan.tpPct,
-        slPct: plan.slPct,
-        status: 'OPEN',
-        pnl: null
-      };
-
-      STATE.trades.unshift(newTrade);
-      renderTradesTable();
-      updateOverviewStats();
-      showToast(`Logged ${newTrade.dir} ${newTrade.symbol} (${newTrade.lot} Lot) • TP1 +${newTrade.tpPct.toFixed(2)}% / SL -${newTrade.slPct.toFixed(2)}%`, 'emerald');
-    }
-
-    function settleTrade(id, outcome) {
-      const idx = STATE.trades.findIndex(t => t.id === id);
-      if (idx === -1) return;
-      const t = STATE.trades[idx];
-      const entryNum = parseFloat(t.entry);
-      const slNum = parseFloat(t.sl);
-      const tpNum = parseFloat(t.tp);
-      const lotNum = parseFloat(t.lot) || 0.01;
-      const cfg = SYMBOLS[t.symbol] || SYMBOLS.XAUUSD;
-
-      const move = outcome === 'WIN' ? Math.abs(tpNum - entryNum) : Math.abs(entryNum - slNum);
-      const pctMove = Math.abs(computeMovePercent(entryNum, outcome === 'WIN' ? tpNum : slNum, t.dir));
-      const signedPct = outcome === 'WIN' ? +pctMove.toFixed(2) : -pctMove.toFixed(2);
-      const pnlVal = +(outcome === 'WIN' ? move * lotNum * cfg.contractSize : -(move * lotNum * cfg.contractSize)).toFixed(2);
-
-      // Remove from active trades and persist in Live AI Signals (localStorage)
-      STATE.trades.splice(idx, 1);
-      archiveSignalToLiveFeed(t, outcome, signedPct, pnlVal);
-
-      STATE.freshSetupNonce++;
-      STATE.lastHourlySignalAt = 0;
-      if (STATE.candles.length > 0) {
-        analyzeRealMarketStructure(STATE.candles, true, { ...STATE.mtfCache, [STATE.timeframe]: STATE.candles });
-        updateDeskUI();
-        drawChart();
+      const ovSmc = document.getElementById('overviewSmcStat');
+      const ovSmcSub = document.getElementById('overviewSmcSub');
+      if (ovSmc) {
+        ovSmc.textContent = `${STATE.smcMarkers.length} SMC / ${STATE.fvgZones.length} FVG`;
       }
-      flashAuraDeskPlanCard();
-
-      renderTradesTable();
-      updateOverviewStats();
-      showToast(
-        `${t.symbol} ${t.dir} ដល់ ${outcome === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals (localStorage) & ប្តូរ Signal ថ្មី!`,
-        outcome === 'WIN' ? 'emerald' : 'amber'
-      );
+      if (ovSmcSub) {
+        ovSmcSub.textContent = `${STATE.symbol} (${STATE.timeframe}) • Sweeps: ${STATE.liquiditySweeps.length}`;
+      }
     }
 
-    function removeTrade(id) {
-      STATE.trades = STATE.trades.filter(t => t.id !== id);
-      renderTradesTable();
-      updateOverviewStats();
-    }
+    function renderAllSecondaryViews() {
+      renderQualifiedSignalsGrids();
+      renderWatchlistGrid();
+      renderEconomicNewsUI();
+      updateBacktestUI();
 
-    function clearTradeHistory() {
-      STATE.trades = [];
+      const patternsEdu = [
+        {
+          name: '1. Doji (ទម្រង់ស្ទាក់ស្ទើរ)',
+          tag: 'CLOSED CANDLE INDECISION',
+          color: 'amber',
+          kh: 'គណនាពីទៀនដែលបិទរួចនៅពេល Open និង Close ជិតគ្នាបំផុត (Body ≤ 12% នៃ Range)។ បង្ហាញពីការស្ទាក់ស្ទើររវាង Buyers និង Sellers។',
+          svg: `<svg viewBox="0 0 80 80" class="w-16 h-16"><line x1="40" y1="10" x2="40" y2="70" stroke="#f59e0b" stroke-width="2.5"/><rect x="28" y="38" width="24" height="4" fill="#f59e0b"/></svg>`
+        },
+        {
+          name: '2. Hammer (ញញួរបដិសេធតម្លៃទាប)',
+          tag: 'BULLISH WICK REJECTION',
+          color: 'emerald',
+          kh: 'គណនាពីទៀនដែលបិទរួចដែលមាន Lower Wick ≥ 2x Body និងត្រូវផ្ទៀងផ្ទាត់ការបិទរបស់ទៀនបន្ទាប់ដែលបិទរួច (Closed Next Candle) ព្រមទាំង Volume & SMC/FVG។',
+          svg: `<svg viewBox="0 0 80 80" class="w-16 h-16"><line x1="40" y1="15" x2="40" y2="72" stroke="#10b981" stroke-width="2.5"/><rect x="29" y="16" width="22" height="16" rx="2" fill="#10b981"/></svg>`
+        },
+        {
+          name: '3. Shooting Star & Bearish FVG',
+          tag: 'BEARISH REJECTION / FVG',
+          color: 'rose',
+          kh: 'គណនាពី Upper Wick វែងលើទៀនដែលបិទរួច រួមជាមួយការត្រួតពិនិត្យ Bearish FVG (ចន្លោះ Low ទៀនទី១ និង High ទៀនទី៣)។',
+          svg: `<svg viewBox="0 0 80 80" class="w-16 h-16"><line x1="40" y1="8" x2="40" y2="65" stroke="#ef4444" stroke-width="2.5"/><rect x="29" y="48" width="22" height="16" rx="2" fill="#ef4444"/></svg>`
+        },
+        {
+          name: '4. Bullish Engulfing & Bullish FVG',
+          tag: 'CLOSED ENGULFING + FVG',
+          color: 'emerald',
+          kh: 'ទៀនបៃតងគ្របដណ្តប់ទៀនក្រហមមុនទាំងស្រុងលើទៀនដែលបិទរួច រួមជាមួយ Bullish FVG, Real Volume Spike និង Closed Next Candle។',
+          svg: `<svg viewBox="0 0 80 80" class="w-16 h-16"><line x1="25" y1="25" x2="25" y2="55" stroke="#ef4444" stroke-width="2"/><rect x="18" y="30" width="14" height="18" fill="#ef4444"/><line x1="52" y1="12" x2="52" y2="68" stroke="#10b981" stroke-width="2.5"/><rect x="43" y="18" width="18" height="42" rx="2" fill="#10b981"/></svg>`
+        },
+        {
+          name: '5. Bearish Engulfing',
+          tag: 'CLOSED BEARISH ENGULFING',
+          color: 'rose',
+          kh: 'ទៀនក្រហមគ្របដណ្តប់ទៀនបៃតងមុនទាំងស្រុងលើទៀនដែលបិទរួច ហើយផ្ទៀងផ្ទាត់ការបិទទាបជាងនៃទៀនបន្ទាប់ដែលបិទរួច។',
+          svg: `<svg viewBox="0 0 80 80" class="w-16 h-16"><line x1="25" y1="25" x2="25" y2="55" stroke="#10b981" stroke-width="2"/><rect x="18" y="32" width="14" height="18" fill="#10b981"/><line x1="52" y1="12" x2="52" y2="68" stroke="#ef4444" stroke-width="2.5"/><rect x="43" y="18" width="18" height="42" rx="2" fill="#ef4444"/></svg>`
+        },
+        {
+          name: '6. SMC Sweep, BOS & CHoCH',
+          tag: 'REAL STRUCTURE ENGINE',
+          color: 'amber',
+          kh: 'ស្វែងរក Swing High/Low ពិត, Liquidity Sweep, BOS និង CHoCH លើទៀនដែលបិទរួច និងវាស់លទ្ធផលតាម Historical Backtest។',
+          svg: `<svg viewBox="0 0 80 80" class="w-16 h-16"><line x1="26" y1="15" x2="26" y2="62" stroke="#10b981" stroke-width="2"/><rect x="19" y="25" width="14" height="30" fill="#10b981"/><line x1="52" y1="15" x2="52" y2="65" stroke="#ef4444" stroke-width="2"/><rect x="45" y="25" width="14" height="32" fill="#ef4444"/><line x1="12" y1="15" x2="66" y2="15" stroke="#f59e0b" stroke-dasharray="3 2" stroke-width="1.5"/></svg>`
+        }
+      ];
+
+      document.getElementById('patternsGuideGrid').innerHTML = patternsEdu.map(p => `
+        <div class="bg-aura-card border border-aura-border rounded-xl p-4 flex gap-4 items-start">
+          <div class="shrink-0 bg-aura-bg border border-aura-border rounded-xl p-2 flex items-center justify-center">
+            ${p.svg}
+          </div>
+          <div>
+            <span class="text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded bg-${p.color}-500/15 text-${p.color}-400">${p.tag}</span>
+            <h4 class="text-sm font-bold text-white mt-1.5 font-khmer">${p.name}</h4>
+            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed font-khmer">${p.kh}</p>
+          </div>
+        </div>
+      `).join('');
+
       renderTradesTable();
-      updateOverviewStats();
-      showToast('Cleared active open trades', 'amber');
     }
 
     function renderTradesTable() {
       const tbody = document.getElementById('tradesTableBody');
       if (!tbody) return;
 
-      const openCount = STATE.trades.length;
-      const completedFromSignals = STATE.archivedCompletedSignals.filter(s => s.score === 'WIN' || s.score === 'LOSS');
-      const wins = completedFromSignals.filter(s => s.score === 'WIN').length;
-      const losses = completedFromSignals.filter(s => s.score === 'LOSS').length;
-      const closedCount = wins + losses;
-
-      const realizedPnl = completedFromSignals.reduce((acc, s) => acc + (Number(s.realizedPnl) || 0), 0);
-      const realizedPctSum = completedFromSignals.reduce((acc, s) => acc + (Number(s.realizedPct) || 0), 0);
-
-      document.getElementById('statTotalTrades').textContent = openCount;
-      document.getElementById('statWinRate').textContent = closedCount > 0 ? `${((wins / closedCount) * 100).toFixed(1)}%` : 'N/A';
-      const pnlEl = document.getElementById('statNetPnl');
-      pnlEl.textContent = `${realizedPnl >= 0 ? '+' : ''}$${realizedPnl.toFixed(2)} (${realizedPctSum >= 0 ? '+' : ''}${realizedPctSum.toFixed(2)}%)`;
-      pnlEl.className = `text-xl font-extrabold font-mono mt-1 ${realizedPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`;
-      document.getElementById('statClosedRecord').textContent = `${wins}W / ${losses}L`;
-
-      if (openCount === 0) {
-        tbody.innerHTML = `<tr><td colspan="11" class="py-8 text-center text-slate-500 font-khmer">មិនមាន Active Open Trade ទេ។ កាលណា Trade ប៉ះ TP1 ឬ SL វានឹងផ្លាស់ទៅ Live AI Signals ក្នុង localStorage ជារៀងរហូត។</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = STATE.trades.map(t => {
-        const cfg = SYMBOLS[t.symbol] || SYMBOLS.XAUUSD;
-        const entryNum = parseFloat(t.entry);
-        const slNum = parseFloat(t.sl);
-        const tpNum = parseFloat(t.tp);
-        const slPct = (t.slPct !== undefined ? t.slPct : Math.abs(computeMovePercent(entryNum, slNum, t.dir))).toFixed(2);
-        const tpPct = (t.tpPct !== undefined ? t.tpPct : Math.abs(computeMovePercent(entryNum, tpNum, t.dir))).toFixed(2);
-
-        let floatingCell = `<span class="text-slate-400">--</span>`;
-        if (cfg.price !== null && cfg.price !== undefined) {
-          const livePct = computeMovePercent(entryNum, cfg.price, t.dir);
-          floatingCell = `<span class="${livePct >= 0 ? 'text-emerald-400' : 'text-rose-400'} font-bold">${livePct >= 0 ? '+' : ''}${livePct.toFixed(2)}%</span>`;
-        }
-
-        return `
-          <tr class="hover:bg-aura-hover/60">
-            <td class="py-3 px-4 font-bold text-white">${t.symbol}</td>
-            <td class="py-3 px-4 text-amber-300">${t.tf}</td>
-            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.dir === 'BUY' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${t.dir}</span></td>
-            <td class="py-3 px-4 text-slate-300 text-[11px]">${t.pattern}</td>
-            <td class="py-3 px-4 text-amber-300">${t.lot}</td>
-            <td class="py-3 px-4">${t.entry}</td>
-            <td class="py-3 px-4 text-rose-400">${t.sl} <span class="text-[10px]">(-${slPct}%)</span></td>
-            <td class="py-3 px-4 text-emerald-400">${t.tp} <span class="text-[10px]">(+${tpPct}%)</span></td>
-            <td class="py-3 px-4">${floatingCell}</td>
-            <td class="py-3 px-4"><span class="text-amber-400 font-bold">OPEN</span></td>
-            <td class="py-3 px-4 text-right space-x-1">
-              <button onclick="settleTrade('${t.id}', 'WIN')" class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 text-[10px] font-bold">TP1 +${tpPct}%</button>
-              <button onclick="settleTrade('${t.id}', 'LOSS')" class="px-2 py-1 rounded bg-rose-500/20 text-rose-400 hover:bg-rose-500/30 text-[10px] font-bold">SL -${slPct}%</button>
-              <button onclick="removeTrade('${t.id}')" class="px-1.5 py-1 rounded bg-aura-bg text-slate-400 hover:text-white text-[10px]">✕</button>
+      if (STATE.trades.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="11" class="py-6 px-4 text-center text-slate-400 font-khmer">
+              មិនមាន Open Trade សកម្មទេ។ កាលណា Trade ប៉ះ TP ឬ SL វានឹងបាត់ពីទីនេះ ហើយផ្លាស់ទៅរក្សាទុកក្នុង Live AI Signals វិញ។
             </td>
           </tr>
         `;
-      }).join('');
-    }
+      } else {
+        tbody.innerHTML = STATE.trades.map((t, idx) => {
+          const cfg = SYMBOLS[t.symbol] || SYMBOLS.XAUUSD;
+          const entryNum = parseFloat(t.entry);
+          const slNum = parseFloat(t.sl);
+          const tpNum = parseFloat(t.tp);
 
-    function updateOverviewStats() {
-      const gold = SYMBOLS.XAUUSD;
-      const gEl = document.getElementById('overviewGoldPrice');
-      const gSub = document.getElementById('overviewGoldSub');
-      if (gEl) {
-        gEl.textContent = gold.price !== null ? `$${gold.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}` : 'NO FEED';
-      }
-      if (gSub) {
-        gSub.textContent = gold.isLive ? gold.sourceLabel : 'API Key required for real feed';
-      }
+          const tpPctVal = Math.abs(computeMovePercent(entryNum, tpNum, t.dir)).toFixed(2);
+          const slPctVal = Math.abs(computeMovePercent(entryNum, slNum, t.dir)).toFixed(2);
+          const curP = cfg.price !== null ? cfg.price : entryNum;
+          const livePct = computeMovePercent(entryNum, curP, t.dir);
+          const livePctText = `${livePct >= 0 ? '+' : ''}${livePct.toFixed(2)}%`;
 
-      const completedFromSignals = STATE.archivedCompletedSignals.filter(s => s.score === 'WIN' || s.score === 'LOSS');
-      const wins = completedFromSignals.filter(s => s.score === 'WIN').length;
-      const closedCount = completedFromSignals.length;
-      const wrEl = document.getElementById('overviewWinRate');
-      const wrSub = document.getElementById('overviewWinRateSub');
-      if (wrEl) {
-        wrEl.textContent = closedCount > 0 ? `${((wins / closedCount) * 100).toFixed(1)}%` : 'N/A';
-      }
-      if (wrSub) {
-        wrSub.textContent = closedCount > 0 ? `${wins} TP1 / ${closedCount - wins} SL saved in localStorage` : 'No completed TP1/SL trades yet';
-      }
-
-      const smcEl = document.getElementById('overviewSmcStat');
-      if (smcEl) {
-        smcEl.textContent = `${STATE.smcMarkers.length} SMC • ${STATE.keyLevels.length} KL`;
-      }
-    }
-
-    function updateLiveTicker() {
-      const strip = document.getElementById('liveTickerStrip');
-      if (!strip) return;
-      strip.innerHTML = Object.entries(SYMBOLS).map(([k, cfg]) => {
-        const pStr = cfg.price !== null ? cfg.price.toFixed(cfg.decimals) : 'NO FEED';
-        return `
-          <div onclick="loadSignalToTerminal('${k}', '${STATE.timeframe}')" class="flex items-center gap-1.5 cursor-pointer hover:text-amber-400 transition shrink-0">
-            <span class="text-slate-400 font-bold">${k}</span>
-            <span class="${cfg.isLive ? 'text-emerald-400' : 'text-slate-500'} font-semibold">${pStr}</span>
-          </div>
-        `;
-      }).join('<span class="text-aura-border">|</span>');
-    }
-
-    // =========================================================================
-    // 11. AI TRADING COACH CHAT
-    // =========================================================================
-    function appendChatMessage(sender, text, isUser = false) {
-      const box = document.getElementById('aiChatMessages');
-      const div = document.createElement('div');
-      div.className = isUser
-        ? 'bg-amber-500/15 border border-amber-500/30 rounded-xl p-3 max-w-[80%] ml-auto text-right'
-        : 'bg-aura-panel border border-aura-border rounded-xl p-3.5 max-w-[85%]';
-      div.innerHTML = `
-        <div class="text-[10px] font-bold ${isUser ? 'text-amber-300' : 'text-amber-400'} mb-1">${sender}</div>
-        <div class="text-slate-200 leading-relaxed font-khmer">${text}</div>
-      `;
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function generateAIResponse(prompt) {
-      const plan = STATE.tradePlan;
-      const cfg = SYMBOLS[STATE.symbol];
-      const d = cfg.decimals;
-      const lcr = plan ? plan.lastCloseReport : null;
-      const mtf = plan ? plan.mtfConfluence : null;
-
-      if (!plan || !plan.isValidSignal || !STATE.candles.length) {
-        return `សម្រាប់ <b>${STATE.symbol} (${STATE.timeframe})</b>៖ ${plan ? plan.storyKh : 'កំពុងរង់ចាំទិន្នន័យ Real OHLCV'}។`;
+          return `
+            <tr class="hover:bg-aura-hover/50">
+              <td class="py-3 px-4 font-bold text-white">${t.symbol}</td>
+              <td class="py-3 px-4 text-slate-400">${t.tf}</td>
+              <td class="py-3 px-4">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.dir === 'BUY' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}">${t.dir}</span>
+              </td>
+              <td class="py-3 px-4 text-amber-300">${t.pattern}</td>
+              <td class="py-3 px-4 text-slate-200">${t.lot}</td>
+              <td class="py-3 px-4 text-white">${t.entry}</td>
+              <td class="py-3 px-4 text-rose-400">${t.sl} <span class="text-[10px]">(-${slPctVal}%)</span></td>
+              <td class="py-3 px-4 text-emerald-400">${t.tp} <span class="text-[10px]">(+${tpPctVal}%)</span></td>
+              <td class="py-3 px-4 font-bold ${livePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${livePctText}</td>
+              <td class="py-3 px-4">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">OPEN</span>
+              </td>
+              <td class="py-3 px-4 text-right space-x-1.5 whitespace-nowrap">
+                <button onclick="setTradeResult(${idx}, 'WIN')" class="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[10px] hover:bg-emerald-500/25">TP HIT</button>
+                <button onclick="setTradeResult(${idx}, 'LOSS')" class="px-1.5 py-0.5 rounded bg-rose-500/15 text-rose-400 text-[10px] hover:bg-rose-500/25">SL HIT</button>
+                <button onclick="deleteTrade(${idx})" class="text-slate-500 hover:text-rose-400 text-[10px]">✕</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
       }
 
-      return `
-        វិភាគ <b>${STATE.symbol} (${STATE.timeframe})</b> ពីទៀនបិទទាំងអស់ (${cfg.sourceLabel})：<br/>
-        • <b>1H PLAN & Signal:</b> <b>${plan.direction}</b> • Entry <b>${plan.entry.toFixed(d)}</b> | SL <b>${plan.sl.toFixed(d)}</b> (-${plan.slPct.toFixed(2)}%) | TP1 <b>${plan.tp.toFixed(d)}</b> (+${plan.tpPct.toFixed(2)}%) | R:R <b>${plan.rr}</b><br/>
-        • <b>Multi-Timeframe (5m/15m/1H/4H):</b> ${mtf ? mtf.khSummary : '--'}<br/>
-        • <b>Key Level & ផ្សារបិទចុងក្រោយ:</b> ${lcr ? `${lcr.keyLevelInfo.kh} ${lcr.entryAdviceKh}` : '--'}<br/>
-        • <b>Persistent SL/TP Log:</b> ប៉ះ SL ឬ TP1 នឹងរក្សាទុកក្នុង <b>Live AI Signals</b> (localStorage) ជារៀងរហូត ទោះ Refresh ទំព័រក៏មិនបាត់ដែរ។
-      `;
+      const completed = STATE.archivedCompletedSignals;
+      const wins = completed.filter(s => Number(s.realizedPct) >= 0).length;
+      const losses = completed.filter(s => Number(s.realizedPct) < 0).length;
+      const winRateText = completed.length > 0
+        ? `${((wins / completed.length) * 100).toFixed(1)}%`
+        : 'N/A';
+
+      const netPnl = completed.reduce((sum, s) => sum + (Number(s.realizedPnl) || 0), 0);
+      const netPct = completed.reduce((sum, s) => sum + (Number(s.realizedPct) || 0), 0);
+      const netPnlText = `${netPnl >= 0 ? '+' : ''}$${netPnl.toFixed(2)} (${netPct >= 0 ? '+' : ''}${netPct.toFixed(2)}%)`;
+
+      document.getElementById('statTotalTrades').textContent = String(STATE.trades.length);
+      document.getElementById('statWinRate').textContent = winRateText;
+      document.getElementById('statNetPnl').textContent = netPnlText;
+      document.getElementById('statClosedRecord').textContent = `${wins}W / ${losses}L`;
+
+      const ovWinRate = document.getElementById('overviewWinRate');
+      const ovWinRateSub = document.getElementById('overviewWinRateSub');
+      if (ovWinRate) ovWinRate.textContent = winRateText;
+      if (ovWinRateSub) {
+        ovWinRateSub.textContent = completed.length > 0
+          ? `${wins} TP / ${losses} SL in Live Signals (${netPct >= 0 ? '+' : ''}${netPct.toFixed(2)}%)`
+          : 'No TP/SL completed signals yet';
+      }
     }
 
-    function handleChatSubmit(e) {
-      e.preventDefault();
-      const input = document.getElementById('aiChatInput');
-      const txt = input.value.trim();
-      if (!txt) return;
-      appendChatMessage('YOU', txt, true);
-      input.value = '';
-      setTimeout(() => {
-        appendChatMessage('AURA TREND AI', generateAIResponse(txt), false);
-      }, 220);
+    function setTradeResult(idx, resultType) {
+      const trade = STATE.trades[idx];
+      if (!trade) return;
+      const cfg = SYMBOLS[trade.symbol] || SYMBOLS.XAUUSD;
+      const entryNum = parseFloat(trade.entry);
+      const slNum = parseFloat(trade.sl);
+      const tpNum = parseFloat(trade.tp);
+      const lotNum = parseFloat(trade.lot) || 0.01;
+
+      let signedPct = 0;
+      let pnlVal = 0;
+
+      if (resultType === 'WIN') {
+        const move = Math.abs(tpNum - entryNum);
+        const pct = Math.abs(computeMovePercent(entryNum, tpNum, trade.dir));
+        signedPct = +pct.toFixed(2);
+        pnlVal = +(move * lotNum * cfg.contractSize).toFixed(2);
+      } else {
+        const move = Math.abs(entryNum - slNum);
+        const pct = Math.abs(computeMovePercent(entryNum, slNum, trade.dir));
+        signedPct = -(+pct.toFixed(2));
+        pnlVal = -(move * lotNum * cfg.contractSize).toFixed(2);
+      }
+
+      // យកចេញពី Active Trades ទៅរក្សាទុកក្នុង Live AI Signals វិញ និងបង្កើត Signal ថ្មី
+      STATE.trades.splice(idx, 1);
+      archiveSignalToLiveFeed(trade, resultType, signedPct, pnlVal);
+
+      STATE.freshSetupNonce++;
+      STATE.lastHourlySignalAt = 0;
+      if (STATE.candles.length) analyzeRealMarketStructure(STATE.candles, true);
+
+      renderTradesTable();
+      updateDeskUI();
+      flashAuraDeskPlanCard();
+      showToast(
+        `${trade.symbol} ${trade.dir} ដល់ ${resultType === 'WIN' ? 'TP' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals & បង្កើត Signal ថ្មី!`,
+        resultType === 'WIN' ? 'emerald' : 'amber'
+      );
     }
 
-    function sendQuickPrompt(txt) {
-      appendChatMessage('YOU', txt, true);
-      setTimeout(() => {
-        appendChatMessage('AURA TREND AI', generateAIResponse(txt), false);
-      }, 220);
-    }
-
-    function analyzeCurrentChartWithAI() {
-      switchView('aichat');
-      sendQuickPrompt(`វិភាគ ${STATE.symbol} (${STATE.timeframe}) លម្អិតពី M5/M15/1H/4H, Key Levels, SMC, FVG និង 1H PLAN`);
-    }
-
-    // =========================================================================
-    // 12. NAVIGATION & CONTROLS
-    // =========================================================================
     function switchView(viewName) {
       STATE.activeView = viewName;
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
@@ -4336,113 +3741,256 @@
       if (target) target.classList.remove('hidden');
 
       document.querySelectorAll('.nav-btn').forEach(btn => {
-        const active = btn.dataset.nav === viewName;
-        btn.className = active
-          ? 'nav-btn w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/25 transition'
-          : 'nav-btn w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-aura-hover hover:text-white transition';
+        if (btn.dataset.nav === viewName) {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/25 transition';
+        } else {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-medium text-slate-300 hover:bg-aura-hover hover:text-white transition';
+        }
       });
+
+      document.getElementById('sidebar').classList.add('-translate-x-full');
 
       if (viewName === 'terminal') {
         setTimeout(resizeCanvas, 30);
-      } else if (viewName === 'watchlist') {
-        renderWatchlistGrid();
-      } else if (viewName === 'trades') {
-        renderTradesTable();
-      } else if (viewName === 'overview' || viewName === 'signals') {
-        updateOverviewStats();
-        renderQualifiedSignalsGrids();
       }
-
-      document.getElementById('sidebar').classList.add('-translate-x-full');
     }
 
-    function changeSymbol(sym) {
+    async function changeSymbol(sym) {
       STATE.symbol = sym;
-      STATE.viewOffset = 0;
+      STATE.lastAlertKey = '';
+      STATE.backtestReport = null;
       document.getElementById('chartSymbolSelect').value = sym;
+      renderTopSymbolBar();
       closePatternInspector();
-      refreshCurrentMarketData();
+      await refreshCurrentMarketData();
+      updateBacktestUI();
+      showToast(`Switched to ${sym} (${STATE.timeframe})`);
     }
 
-    function changeTimeframe(tf) {
+    async function loadSymbolAndAnalyze(sym) {
+      switchView('terminal');
+      await changeSymbol(sym);
+      openInstantAnalysisPlan();
+    }
+
+    async function changeTimeframe(tf) {
       STATE.timeframe = tf;
-      STATE.viewOffset = 0;
-      document.querySelectorAll('.tf-btn').forEach(btn => {
-        btn.className = btn.dataset.tf === tf
+      STATE.lastAlertKey = '';
+      STATE.backtestReport = null;
+      document.querySelectorAll('.tf-btn').forEach(b => {
+        b.className = b.dataset.tf === tf
           ? 'tf-btn px-2 py-0.5 rounded text-[11px] font-mono bg-amber-500 text-black font-bold'
           : 'tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white';
       });
-      closePatternInspector();
-      refreshCurrentMarketData();
+      await refreshCurrentMarketData();
+      updateBacktestUI();
     }
 
     function resetChartZoom() {
-      STATE.visibleCount = 72;
       STATE.viewOffset = 0;
+      STATE.visibleCount = 72;
       drawChart();
     }
 
-    function showToast(msg, color = 'amber') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      const borderCol = color === 'emerald' ? 'border-emerald-500/50 text-emerald-300' : 'border-amber-500/50 text-amber-300';
-      toast.className = `glass-panel border ${borderCol} px-4 py-2.5 rounded-xl text-xs font-semibold shadow-2xl pointer-events-auto font-khmer`;
-      toast.textContent = msg;
-      container.appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-      }, 3200);
+    function executeSignalToJournal() {
+      const p = STATE.tradePlan;
+      if (!p || !p.isValidSignal || p.entry === null || p.sl === null || p.tp === null) {
+        showToast('Cannot log: No active signal plan.', 'amber');
+        return;
+      }
+      const d = SYMBOLS[STATE.symbol].decimals;
+      const lot = recalculateLotSize();
+      if (!lot) return;
+
+      STATE.trades.unshift({
+        id: `TR-${Date.now().toString().slice(-4)}`,
+        symbol: STATE.symbol,
+        tf: STATE.timeframe,
+        dir: p.direction,
+        pattern: `${p.pattern ? p.pattern.type : '1H PLAN'} (${p.score}/${p.total})`,
+        lot: lot.toFixed(2),
+        entry: p.entry.toFixed(d),
+        sl: p.sl.toFixed(d),
+        tp: p.tp.toFixed(d),
+        result: 'OPEN'
+      });
+      renderTradesTable();
+      showToast(`1H ${STATE.symbol} ${p.direction} logged — តាមដាន % TP/SL ផ្ទាល់!`, 'emerald');
     }
 
+    function deleteTrade(idx) {
+      STATE.trades.splice(idx, 1);
+      renderTradesTable();
+    }
+
+    function clearTradeHistory() {
+      STATE.trades = [];
+      renderTradesTable();
+      showToast('All active trade records cleared.', 'amber');
+    }
+
+    function renderTopSymbolBar() {
+      const bar = document.getElementById('topSymbolBar');
+      bar.innerHTML = Object.keys(SYMBOLS).slice(0, 4).map(sym => `
+        <button onclick="changeSymbol('${sym}')" class="px-2.5 py-1 rounded text-[11px] font-mono font-bold transition ${STATE.symbol === sym ? 'bg-amber-500 text-black' : 'text-slate-400 hover:text-white'}">
+          ${sym}
+        </button>
+      `).join('');
+    }
+
+    function updateLiveTicker() {
+      const strip = document.getElementById('liveTickerStrip');
+      if (!strip) return;
+
+      strip.innerHTML = Object.entries(SYMBOLS).map(([sym, info]) => {
+        const pText = info.price !== null && info.price !== undefined
+          ? info.price.toFixed(info.decimals)
+          : 'NO FEED';
+        const statusColor = info.isLive ? 'text-emerald-400' : 'text-slate-500';
+        const tag = info.isLive ? (sym === 'XAUUSD' && !API_CONFIG.twelveDataApiKey ? 'PAXG' : 'LIVE') : 'KEY';
+        return `
+          <div onclick="loadSymbolAndAnalyze('${sym}')" class="flex items-center gap-1.5 cursor-pointer hover:opacity-80">
+            <span class="font-bold text-slate-300">${sym}</span>
+            <span class="text-white">${pText}</span>
+            <span class="${statusColor} text-[10px]">${tag}</span>
+          </div>
+        `;
+      }).join('<span class="text-aura-border">|</span>');
+    }
+
+    function showToast(msg, color = 'emerald') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      const borderClass = color === 'amber' ? 'border-amber-500/50 text-amber-300' : 'border-emerald-500/50 text-emerald-300';
+      toast.className = `pointer-events-auto px-4 py-2.5 rounded-xl bg-aura-panel border ${borderClass} shadow-2xl text-xs font-semibold flex items-center gap-2 transition-all`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full ${color === 'amber' ? 'bg-amber-400' : 'bg-emerald-400'}"></span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    // =========================================================================
+    // 11. AURA AI COACH (GROUNDED IN REAL COMPUTED STATE)
+    // =========================================================================
+    async function callGeminiAnalyst(userPrompt) {
+      const apiKey = "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+      const plan = STATE.tradePlan;
+      const lcr = plan ? plan.lastCloseReport : null;
+      const completed = STATE.archivedCompletedSignals;
+      const wins = completed.filter(s => Number(s.realizedPct) >= 0).length;
+      const winRateStr = completed.length ? `${((wins / completed.length) * 100).toFixed(1)}% (${wins}/${completed.length})` : 'N/A (0 TP/SL completed)';
+
+      const contextSummary = `Real Symbol: ${STATE.symbol} (${SYMBOLS[STATE.symbol].sourceLabel}), TF: ${STATE.timeframe}, Direction: ${plan ? plan.direction : 'NO SIGNAL'}, Entry: ${plan && plan.entry ? plan.entry : 'NONE'}, SL: ${plan && plan.sl ? plan.sl : 'NONE'} (-${plan ? plan.slPct : 0}%), TP: ${plan && plan.tp ? plan.tp : 'NONE'} (+${plan ? plan.tpPct : 0}%), Last Closed Market Zone: ${lcr ? lcr.zoneTitleKh + ' | ' + lcr.entryAdviceKh : 'N/A'}, WinRate: ${winRateStr}.`;
+
+      try {
+        if (!apiKey) throw new Error('Offline grounded engine');
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `You are AURA TREND AI. Rely ONLY on these verified metrics without inventing prices or percentages: ${contextSummary}. Answer concisely in Khmer + English trading terms: ${userPrompt}` }] }]
+          })
+        });
+        if (!response.ok) throw new Error('API fallback');
+        const data = await response.json();
+        return data.candidates?.[0]?.content?.parts?.[0]?.text || buildGroundedLocalReply();
+      } catch (e) {
+        return buildGroundedLocalReply();
+      }
+    }
+
+    function buildGroundedLocalReply() {
+      const plan = STATE.tradePlan;
+      const d = SYMBOLS[STATE.symbol].decimals;
+      const valid = Boolean(plan && plan.isValidSignal);
+      const lcr = plan ? plan.lastCloseReport : null;
+      const completed = STATE.archivedCompletedSignals;
+      const wins = completed.filter(s => Number(s.realizedPct) >= 0).length;
+
+      return `
+        <b>📊 ការវិភាគទៀនបិទទាំងអស់ (${STATE.symbol} • ${STATE.timeframe}):</b><br/>
+        • <b>តំបន់ផ្សារបិទចុងក្រោយ & ចំណុចចូល:</b> ${lcr ? lcr.entryAdviceKh : 'មិនមានទិន្នន័យ'}<br/>
+        • <b>ស្ថានភាព 1H Plan:</b> ${valid ? `<b>${plan.direction}</b> • Entry ${plan.entry.toFixed(d)} | SL ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%) | TP ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)` : 'កំពុងស្កេនរចនាសម្ព័ន្ធផ្សារ'}<br/>
+        • <b>ប្រវត្តិ Signal ដែលប៉ះ TP/SL រួច (ក្នុង Live AI Signals):</b> ${completed.length > 0 ? `${((wins / completed.length) * 100).toFixed(1)}% (${wins} TP / ${completed.length - wins} SL)` : 'មិនទាន់មាន Signal ប៉ះ TP ឬ SL នៅឡើយ'}
+      `;
+    }
+
+    async function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('aiChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      appendChatMessage('USER', text);
+
+      const typingId = 'typing-' + Date.now();
+      appendChatMessage('AI', '<span class="animate-pulse text-amber-400">កំពុងវិភាគទិន្នន័យពិត...</span>', typingId);
+
+      const reply = await callGeminiAnalyst(text);
+      const typingEl = document.getElementById(typingId);
+      if (typingEl) typingEl.innerHTML = reply;
+    }
+
+    function sendQuickPrompt(promptText) {
+      document.getElementById('aiChatInput').value = promptText;
+      document.getElementById('aiChatInput').form.dispatchEvent(new Event('submit'));
+    }
+
+    function analyzeCurrentChartWithAI() {
+      switchView('aichat');
+      sendQuickPrompt(`វិភាគទៀនបិទទាំងអស់ តំបន់ផ្សារបិទចុងក្រោយគេ និងចំណុចចូល ${STATE.symbol} នៅ Timeframe ${STATE.timeframe}`);
+    }
+
+    function appendChatMessage(sender, htmlContent, id = null) {
+      const box = document.getElementById('aiChatMessages');
+      const div = document.createElement('div');
+      if (sender === 'USER') {
+        div.className = 'bg-amber-500/15 border border-amber-500/30 rounded-xl p-3 max-w-[80%] ml-auto text-right';
+        div.innerHTML = `<div class="text-[10px] font-bold text-amber-400 mb-0.5">YOU</div><div class="text-white font-khmer">${htmlContent}</div>`;
+      } else {
+        div.className = 'bg-aura-panel border border-aura-border rounded-xl p-3.5 max-w-[88%]';
+        div.innerHTML = `<div class="text-[10px] font-bold text-amber-400 mb-1">AURA TREND AI</div><div ${id ? `id="${id}"` : ''} class="text-slate-200 leading-relaxed font-khmer">${htmlContent}</div>`;
+      }
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    // =========================================================================
+    // 12. INITIALIZATION & REAL-TIME POLLING
+    // =========================================================================
     document.getElementById('mobileMenuBtn').addEventListener('click', () => {
       document.getElementById('sidebar').classList.remove('-translate-x-full');
     });
     document.getElementById('closeSidebarBtn').addEventListener('click', () => {
       document.getElementById('sidebar').classList.add('-translate-x-full');
     });
+
     window.addEventListener('resize', resizeCanvas);
 
-    // =========================================================================
-    // 13. INITIALIZATION
-    // =========================================================================
-    function initTopSymbolBar() {
-      const bar = document.getElementById('topSymbolBar');
-      const quickSyms = ['XAUUSD', 'BTCUSD', 'EURUSD', 'GBPUSD', 'US30'];
-      bar.innerHTML = quickSyms.map(s => `
-        <button onclick="changeSymbol('${s}')" class="px-2 py-0.5 rounded text-[11px] font-mono font-bold transition ${s === STATE.symbol ? 'bg-amber-500 text-black' : 'text-slate-400 hover:text-white'}">
-          ${s}
-        </button>
-      `).join('');
-    }
+    (async function initApp() {
+      bindSocialLinks();
+      const existingSession = getSavedSession();
+      applyTraderSessionUI(existingSession);
 
-    bindSocialLinks();
-    initTopSymbolBar();
-    renderAcademyGuide();
-    renderWatchlistGrid();
-    renderTradesTable();
-    updateBacktestUI();
-    rebuildQualifiedSignalsList();
-    renderQualifiedSignalsGrids();
-    updateLiveTicker();
+      renderTopSymbolBar();
+      renderAllSecondaryViews();
+      resizeCanvas();
 
-    const existingSession = getSavedSession();
-    applyTraderSessionUI(existingSession);
+      await Promise.allSettled([
+        refreshCurrentMarketData(),
+        refreshAllWatchlistPrices(),
+        fetchRealEconomicCalendar()
+      ]);
 
-    resizeCanvas();
-    refreshCurrentMarketData();
-    refreshAllWatchlistPrices();
-    fetchRealEconomicCalendar();
+      setInterval(() => {
+        refreshCurrentMarketData();
+      }, 15000);
 
-    setInterval(() => {
-      refreshCurrentMarketData();
-      refreshAllWatchlistPrices();
-    }, 15000);
-
-    setInterval(() => {
-      fetchRealEconomicCalendar();
-    }, 300000);
+      setInterval(() => {
+        refreshAllWatchlistPrices();
+      }, 20000);
+    })();
   </script>
 </body>
 </html>

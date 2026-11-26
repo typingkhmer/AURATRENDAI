@@ -1,3 +1,110 @@
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "955031659";
+
+// រក្សាស្ថានភាពកុំឱ្យផ្ញើដដែលៗសម្រាប់ signal ដូចគ្នា
+const alertSentState = new Map();
+
+async function sendTelegramAlert(text) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return false;
+  try {
+    const res = await fetch(
+      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text,
+          parse_mode: "HTML",
+        }),
+      }
+    );
+    if (!res.ok) {
+      console.error("Telegram API error:", await res.text());
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("Failed to send Telegram alert:", err.message);
+    return false;
+  }
+}
+
+function buildSignalTelegramText({
+  stage = "PRE_ENTRY", // "PRE_ENTRY" ឬ "ENTRY_REACHED"
+  pair = "XAUUSD",
+  timeframe = "15m",
+  side = "SELL",
+  currentPrice,
+  entryPrice,
+  zoneLow,
+  zoneHigh,
+  slPrice,
+  tp1Price,
+  tp2Price,
+  rr = "1:2",
+}) {
+  const isPre = stage === "PRE_ENTRY";
+  const title = isPre
+    ? "⏳ <b>PRE-ENTRY ALERT (ជិតដល់កន្លែងចូលផ្សារ)</b>"
+    : "🚨 <b>ENTRY ZONE REACHED (ដល់កន្លែងចូលផ្សារ)</b>";
+
+  const guide = isPre
+    ? "តម្លៃកំពុងខិតជិតតំបន់ Entry — សូមត្រៀមពិនិត្យ Chart និង Confirmation មុនចូលលេង។"
+    : "តម្លៃបានចូលដល់តំបន់ Entry ហើយ — សូមពិនិត្យ SL, TP និង Lot Size ឱ្យច្បាស់។";
+
+  return [
+    title,
+    "━━━━━━━━━━━━━━━━━━━━",
+    `📊 <b>Pair / TF:</b> ${pair} (${timeframe})`,
+    `📌 <b>Plan:</b> ${isPre ? `WAIT FOR ${side}` : `${side} NOW`}`,
+    `💰 <b>Current Price:</b> ${currentPrice}`,
+    `🎯 <b>Entry:</b> ${entryPrice} <i>(${zoneLow} - ${zoneHigh})</i>`,
+    `🛑 <b>SL:</b> ${slPrice}`,
+    `✅ <b>TP1:</b> ${tp1Price}`,
+    `🚀 <b>TP2:</b> ${tp2Price}`,
+    `⚖️ <b>R:R:</b> ${rr}`,
+    "━━━━━━━━━━━━━━━━━━━━",
+    `📝 ${guide}`,
+  ].join("\n");
+}
+
+async function processSignalForTelegram(signal) {
+  const {
+    id = `${signal.pair || "XAUUSD"}_${signal.timeframe || "15m"}_${signal.entryPrice}`,
+    currentPrice,
+    zoneLow,
+    zoneHigh,
+    preBuffer = 15,
+  } = signal;
+
+  if (
+    typeof currentPrice !== "number" ||
+    typeof zoneLow !== "number" ||
+    typeof zoneHigh !== "number"
+  ) {
+    return;
+  }
+
+  const prev = alertSentState.get(id) || { preSent: false, entrySent: false };
+  const inEntryZone = currentPrice >= zoneLow && currentPrice <= zoneHigh;
+  const nearEntryZone =
+    currentPrice >= zoneLow - preBuffer && currentPrice <= zoneHigh + preBuffer;
+
+  if (inEntryZone && !prev.entrySent) {
+    const ok = await sendTelegramAlert(
+      buildSignalTelegramText({ ...signal, stage: "ENTRY_REACHED" })
+    );
+    if (ok) prev.entrySent = true;
+  } else if (nearEntryZone && !prev.preSent) {
+    const ok = await sendTelegramAlert(
+      buildSignalTelegramText({ ...signal, stage: "PRE_ENTRY" })
+    );
+    if (ok) prev.preSent = true;
+  }
+
+  alertSentState.set(id, prev);
+}
 const API_CONFIG = {
   twelveDataApiKey: '34dcfb25fbc04111a3cc9e57bd609cad',
   fmpApiKey: 'YOUR_FMP_ECONOMIC_CALENDAR_KEY',

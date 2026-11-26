@@ -1,3 +1,10 @@
+const API_CONFIG = {
+  twelveDataApiKey: '34dcfb25fbc04111a3cc9e57bd609cad',
+  fmpApiKey: 'YOUR_FMP_ECONOMIC_CALENDAR_KEY',
+  fcsApiKey: '',
+  backtestSpreadCostPerLot: 2.5,
+  hourlyCadenceMs: 3600000
+};
 import express from 'express';
 import cors from 'cors';
 import fs from 'fs';

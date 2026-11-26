@@ -93,6 +93,7 @@ async function pushRealSignalToTelegram(signal) {
     telegramSignalState.set(key, state);
   }
 }
+
 const API_CONFIG = {
   twelveDataApiKey: '34dcfb25fbc04111a3cc9e57bd609cad',
   fmpApiKey: 'YOUR_FMP_ECONOMIC_CALENDAR_KEY',
@@ -399,6 +400,23 @@ app.post('/api/tv-webhook', async (req, res) => {
   if (recentTvAlerts.length > MAX_ALERTS) recentTvAlerts.pop();
   saveAlerts(recentTvAlerts);
   await sendTelegramAlertIfConfigured(item);
+
+  const livePrice =
+    typeof lastGoodSpotGold?.price === "number" ? lastGoodSpotGold.price : price;
+
+  await pushRealSignalToTelegram({
+    id: item.id,
+    pair: item.symbol,
+    timeframe: item.timeframe,
+    side: item.side,
+    currentPrice: livePrice,
+    entry: price,
+    zoneLow: price,
+    zoneHigh: price,
+    sl: item.sl ?? undefined,
+    tp1: item.tp ?? undefined,
+    preBuffer: 0,
+  });
 
   res.status(200).json({ ok: true, id: item.id, quality });
 });

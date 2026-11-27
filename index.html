@@ -486,8 +486,8 @@
               </select>
 
               <div class="flex items-center bg-aura-card border border-aura-border rounded-md p-0.5" id="timeframeBtns">
-                <button onclick="changeTimeframe('5m')" data-tf="5m" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white">5m</button>
-                <button onclick="changeTimeframe('15m')" data-tf="15m" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono bg-amber-500 text-black font-bold">15m</button>
+                <button onclick="changeTimeframe('5m')" data-tf="5m" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono bg-amber-500 text-black font-bold">5m</button>
+                <button onclick="changeTimeframe('15m')" data-tf="15m" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white">15m</button>
                 <button onclick="changeTimeframe('1H')" data-tf="1H" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white">1H</button>
                 <button onclick="changeTimeframe('4H')" data-tf="4H" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white">4H</button>
                 <button onclick="changeTimeframe('1D')" data-tf="1D" class="tf-btn px-2 py-0.5 rounded text-[11px] font-mono text-slate-400 hover:text-white">1D</button>
@@ -529,17 +529,37 @@
 
           <div id="chartTopAlertBanner" class="bg-[#0e131c] border-b border-aura-border px-3 py-1.5 flex items-center justify-between gap-2 text-[11px]">
             <div class="flex items-center gap-2 truncate">
-              <span id="bannerPlanBadge" class="px-2 py-0.5 rounded font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">SCANNING</span>
+              <span id="bannerPlanBadge" class="px-2 py-0.5 rounded font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">WAIT</span>
               <span id="bannerConditionSummary" class="text-slate-300 truncate font-khmer">
-                កំពុងវិភាគ Multi-Timeframe (M5, M15, 1H, 4H), Key Levels, SMC + FVG និងកម្រិត SELL/BUY NOW, WAIT, CONFIRMED...
+                កំពុងវិភាគ 8-Brain Institutional Engine (M15 Direction + M5 Entry + H1/H4 Context, Bid/Ask/Spread, Data Quality)...
               </span>
             </div>
-            <button onclick="openInstantAnalysisPlan()" class="shrink-0 text-amber-400 hover:underline font-bold">
-              Open Plan Setup →
-            </button>
+            <div class="flex items-center gap-2 shrink-0">
+              <span id="mt5FeedWarningPill" class="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/15 border border-amber-500/35 text-[10px] font-mono text-amber-300">
+                PAXG PROXY ≠ MT5 SPOT
+              </span>
+              <button onclick="openInstantAnalysisPlan()" class="text-amber-400 hover:underline font-bold">
+                Open Plan Setup →
+              </button>
+            </div>
           </div>
 
           <div id="chartWrapper" class="flex-1 relative bg-[#07090e] overflow-hidden cursor-crosshair">
+       
+            <div id="mt5QuoteHud" class="absolute top-2.5 left-2.5 z-10 flex flex-wrap items-center gap-1.5 pointer-events-auto select-none">
+              <div class="bg-[#0b0e14]/90 backdrop-blur-md border border-aura-border rounded-lg px-2.5 py-1 flex items-center gap-2 text-[10px] font-mono shadow-lg">
+                <span id="mt5SymbolTag" class="font-extrabold text-amber-400">XAUUSD</span>
+                <span class="text-slate-500">|</span>
+                <span class="text-rose-400">BID: <b id="mt5BidPrice">--</b></span>
+                <span class="px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 text-[9px]" id="mt5SpreadVal">SPR: --</span>
+                <span class="text-emerald-400">ASK: <b id="mt5AskPrice">--</b></span>
+                <span class="text-slate-500">|</span>
+                <span id="mt5DataFreshnessBadge" class="text-emerald-400 font-bold">FRESH</span>
+              </div>
+              <button onclick="toggleChartThemeMT5()" id="mt5StyleToggleBtn" class="bg-[#0b0e14]/90 hover:bg-aura-hover border border-amber-500/35 rounded-lg px-2 py-1 text-[10px] font-mono font-bold text-amber-300 shadow">
+                MT5 PRO VIEW: ON
+              </button>
+            </div>
             <canvas id="tradingCanvas" class="w-full h-full block"></canvas>
 
             <div id="patternInspectorCard" class="hidden absolute top-3 left-3 z-20 w-80 sm:w-96 glass-panel rounded-xl p-3.5 shadow-2xl border border-amber-500/40">
@@ -629,17 +649,61 @@
                 <span id="deskRRBadge" class="text-xs font-mono font-bold text-amber-400">R:R --</span>
               </div>
 
-              <!-- 3-Stage Signal Execution Guide Box (NOW / WAIT / CONFIRMED) -->
-              <div id="deskSignalStageBox" class="rounded-lg p-2.5 border bg-amber-500/15 border-amber-500/35 text-[11px] font-khmer leading-snug">
-                <div class="flex items-center justify-between font-mono text-[10px] font-extrabold mb-0.5">
-                  <span>SIGNAL EXECUTION MODE</span>
-                  <span id="deskStageCode">SCANNING</span>
+              <div class="bg-aura-bg/95 border border-aura-border rounded-lg p-2.5 space-y-1.5">
+                <div class="flex items-center justify-between text-[10px] font-mono">
+                  <span class="text-amber-400 font-bold">🧠 CONFLUENCE SCORE (0–100)</span>
+                  <span id="deskConfluence100Badge" class="font-extrabold text-white">0 / 100 • WAIT</span>
                 </div>
-                <div id="deskStageTitle" class="font-bold text-white">កំពុងកំណត់ស្ថានភាព Signal...</div>
-                <div id="deskStageDesc" class="text-slate-200 mt-0.5">បែងចែក SELL/BUY NOW (ចូលភ្លាម), WAIT (រង់ចាំ Entry), និង CONFIRMED (បញ្ជាក់ទៀនបិទ)។</div>
+                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div id="deskConfluence100Bar" class="bg-amber-500 h-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-[9.5px] font-mono text-center pt-0.5">
+                  <div class="bg-aura-card border border-aura-border rounded px-1.5 py-1">
+                    <span class="text-slate-400 block">DATA QUALITY</span>
+                    <b id="deskDataQualityTag" class="text-emerald-400">CHECKING</b>
+                  </div>
+                  <div class="bg-aura-card border border-aura-border rounded px-1.5 py-1">
+                    <span class="text-slate-400 block">SESSION / NEWS</span>
+                    <b id="deskSessionTag" class="text-blue-400">--</b>
+                  </div>
+                  <div class="bg-aura-card border border-aura-border rounded px-1.5 py-1">
+                    <span class="text-slate-400 block">MOMENTUM / ATR</span>
+                    <b id="deskMomentumTag" class="text-amber-300">--</b>
+                  </div>
+                </div>
               </div>
 
-              <!-- Multi-Timeframe Confluence Strip (5m, 15m, 1H, 4H) -->
+              <div id="deskSignalStageBox" class="rounded-lg p-2.5 border bg-amber-500/15 border-amber-500/35 text-[11px] font-khmer leading-snug">
+                <div class="flex items-center justify-between font-mono text-[10px] font-extrabold mb-0.5">
+                  <span>NO-GUESSING CONFIRMATION ENGINE</span>
+                  <span id="deskStageCode">WAIT</span>
+                </div>
+                <div id="deskStageTitle" class="font-bold text-white">STAGE 1 — WAIT (រង់ចាំការបញ្ជាក់)</div>
+                <div id="deskStageDesc" class="text-slate-200 mt-0.5">M15 កំណត់ទិសដៅ និង M5 រង់ចាំ Liquidity Sweep + CHoCH/BOS + Candle Close។</div>
+              </div>
+
+         
+              <div class="bg-aura-bg/95 border border-purple-500/30 rounded-lg p-2.5 space-y-1.5 text-[11px] font-khmer">
+                <div class="flex items-center justify-between font-mono text-[10px]">
+                  <span class="text-purple-400 font-bold">🔮 PREDICTIVE PATH (M15 BIAS → M5 ENTRY)</span>
+                  <span id="deskPredictiveBiasTag" class="text-slate-300 font-bold">--</span>
+                </div>
+                <div class="grid grid-cols-2 gap-1.5 text-[10.5px]">
+                  <div class="bg-aura-card border border-aura-border rounded p-1.5">
+                    <div class="font-mono text-[9px] text-amber-400 font-bold">M15 DIRECTION BRAIN</div>
+                    <div id="deskM15BrainSummary" class="text-slate-200 mt-0.5 leading-snug">--</div>
+                  </div>
+                  <div class="bg-aura-card border border-aura-border rounded p-1.5">
+                    <div class="font-mono text-[9px] text-emerald-400 font-bold">M5 ENTRY BRAIN</div>
+                    <div id="deskM5BrainSummary" class="text-slate-200 mt-0.5 leading-snug">--</div>
+                  </div>
+                </div>
+                <div id="deskPredictiveScenarioKh" class="text-[10.5px] text-slate-300 leading-relaxed pt-0.5">
+                  កំពុងវិភាគសេណារីយ៉ូតម្លៃបន្ទាប់ និងចំណុច Invalidation...
+                </div>
+              </div>
+
+        
               <div class="bg-aura-bg/95 border border-aura-border rounded-lg p-2 space-y-1.5">
                 <div class="flex items-center justify-between text-[10px] font-mono">
                   <span class="text-amber-400 font-bold">MTF CONFLUENCE (5m • 15m • 1H • 4H)</span>
@@ -653,7 +717,7 @@
                 </div>
               </div>
 
-              <!-- Key Level Proximity & Last Closed Zone -->
+     
               <div id="deskLastCloseZoneBox" class="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2.5 space-y-1">
                 <div class="flex items-center justify-between text-[10px] font-mono">
                   <span class="text-blue-400 font-bold">🔑 KEY LEVEL & LAST CLOSED ZONE</span>
@@ -1420,15 +1484,13 @@
       }
     }
 
-    // =========================================================================
-    // 1. REAL API CONFIGURATION (ADD twelveDataApiKey FOR SPOT XAU/USD CLOSER TO MT5)
-    // =========================================================================
+
     const API_CONFIG = {
-      twelveDataApiKey: '',
+      twelveDataApiKey: '', 
       fmpApiKey: '',
       fcsApiKey: '',
       backtestSpreadCostPerLot: 2.5,
-      hourlyCadenceMs: 3600000
+      maxAllowedDataAgeMs: 90000 // 
     };
 
     const SYMBOLS = {
@@ -1438,10 +1500,16 @@
         twelveSymbol: 'XAU/USD',
         decimals: 2,
         step: 0.1,
+        typicalSpread: 0.25,
         contractSize: 100,
         price: null,
+        bid: null,
+        ask: null,
+        spread: null,
+        lastTimestamp: null,
         isLive: false,
-        sourceLabel: 'Binance PAXGUSDT (Token Proxy)'
+        isProxy: true,
+        sourceLabel: 'Binance PAXGUSDT (Token Proxy ≠ Spot XAUUSD)'
       },
       BTCUSD: {
         name: 'Bitcoin / USD (Binance BTC/USDT Real)',
@@ -1449,9 +1517,15 @@
         twelveSymbol: 'BTC/USD',
         decimals: 1,
         step: 1.0,
+        typicalSpread: 1.5,
         contractSize: 1,
         price: null,
+        bid: null,
+        ask: null,
+        spread: null,
+        lastTimestamp: null,
         isLive: false,
+        isProxy: false,
         sourceLabel: 'Binance BTCUSDT'
       },
       EURUSD: {
@@ -1460,9 +1534,15 @@
         twelveSymbol: 'EUR/USD',
         decimals: 4,
         step: 0.0001,
+        typicalSpread: 0.0001,
         contractSize: 100000,
         price: null,
+        bid: null,
+        ask: null,
+        spread: null,
+        lastTimestamp: null,
         isLive: false,
+        isProxy: false,
         sourceLabel: 'TwelveData EUR/USD'
       },
       GBPUSD: {
@@ -1471,9 +1551,15 @@
         twelveSymbol: 'GBP/USD',
         decimals: 4,
         step: 0.0001,
+        typicalSpread: 0.0002,
         contractSize: 100000,
         price: null,
+        bid: null,
+        ask: null,
+        spread: null,
+        lastTimestamp: null,
         isLive: false,
+        isProxy: false,
         sourceLabel: 'TwelveData GBP/USD'
       },
       US30: {
@@ -1482,41 +1568,40 @@
         twelveSymbol: 'DJI',
         decimals: 1,
         step: 1.0,
+        typicalSpread: 2.0,
         contractSize: 1,
         price: null,
+        bid: null,
+        ask: null,
+        spread: null,
+        lastTimestamp: null,
         isLive: false,
+        isProxy: false,
         sourceLabel: 'TwelveData DJI'
       }
     };
 
-    const TF_TO_BINANCE = {
-      '5m': '5m',
-      '15m': '15m',
-      '1H': '1h',
-      '4H': '4h',
-      '1D': '1d'
-    };
-
-    const TF_TO_TWELVE = {
-      '5m': '5min',
-      '15m': '15min',
-      '1H': '1h',
-      '4H': '4h',
-      '1D': '1day'
-    };
+    const TF_TO_BINANCE = { '5m': '5m', '15m': '15m', '1H': '1h', '4H': '4h', '1D': '1d' };
+    const TF_TO_TWELVE = { '5m': '5min', '15m': '15min', '1H': '1h', '4H': '4h', '1D': '1day' };
 
     const STATE = {
       activeView: 'terminal',
       symbol: 'XAUUSD',
-      timeframe: '15m',
+      timeframe: '5m', 
       candles: [],
       mtfCache: {},
+      mtfTimestamps: {},
       mtfConfluence: null,
+      m15DirectionBrain: null,
+      m5EntryBrain: null,
       dedicated1HPlan: null,
+      dataQuality: { ok: false, status: 'CHECKING', reasonKh: 'កំពុងត្រួតពិនិត្យទិន្នន័យ...', ageSec: 0 },
+      sessionContext: { sessionName: 'CHECKING', isHighLiquidity: false, newsRisk: 'CLEAR', detailKh: '' },
       feedError: null,
       patterns: [],
       smcMarkers: [],
       fvgZones: [],
+      orderBlocks: [],
       liquiditySweeps: [],
       swingLevels: [],
       keyLevels: [],
@@ -1526,10 +1611,9 @@
       economicEvents: [],
       newsStatus: 'LOADING',
       soundAlertEnabled: true,
+      mt5ProView: true,
       lastAlertKey: '',
-      lastHourlySignalAt: 0,
       lastDedicated1HAutoId: '',
-      freshSetupNonce: 0,
       overlays: {
         levels: true,
         keylevels: true,
@@ -1539,7 +1623,7 @@
         plan: true
       },
       viewOffset: 0,
-      visibleCount: 72,
+      visibleCount: 78,
       mouseX: null,
       mouseY: null,
       isDragging: false,
@@ -1550,50 +1634,142 @@
       backtestReport: null
     };
 
-    // =========================================================================
-    // 3-STAGE SIGNAL EXECUTION CLASSIFIER (NOW / WAIT / CONFIRMED)
-    // =========================================================================
-    function classifySignalExecutionStage(direction, currentPrice, entryPrice, slPrice, patternObj, avgRange, stepVal) {
-      if (!direction || direction === 'NO SIGNAL' || currentPrice == null || entryPrice == null) {
+    function toggleChartThemeMT5() {
+      STATE.mt5ProView = !STATE.mt5ProView;
+      const btn = document.getElementById('mt5StyleToggleBtn');
+      if (btn) {
+        btn.textContent = STATE.mt5ProView ? 'MT5 PRO VIEW: ON' : 'MT5 PRO VIEW: OFF';
+      }
+      drawChart();
+    }
+
+
+    function evaluateDataQualityBrain(symbolKey, candles, mtfPack) {
+      const cfg = SYMBOLS[symbolKey];
+      if (!candles || candles.length < 30 || cfg.price === null || !cfg.isLive) {
         return {
-          stage: 'SCANNING',
-          badgeText: 'SCANNING • រង់ចាំវិភាគ',
-          actionKh: 'កំពុងស្កេនរចនាសម្ព័ន្ធផ្សារ — មិនទាន់មាន Signal ច្បាស់លាស់។',
+          ok: false,
+          status: 'STALE / NO FEED',
+          ageSec: null,
+          reasonKh: 'ទិន្នន័យ OHLCV មិនគ្រប់គ្រាន់ ឬ API មិនទាន់តភ្ជាប់ — បិទការចេញ BUY/SELL ដោយស្វ័យប្រវត្តិ។'
+        };
+      }
+
+      const now = Date.now();
+      const ageMs = cfg.lastTimestamp ? Math.max(0, now - cfg.lastTimestamp) : 0;
+      const ageSec = Math.round(ageMs / 1000);
+      if (ageMs > API_CONFIG.maxAllowedDataAgeMs) {
+        return {
+          ok: false,
+          status: `DELAY ${ageSec}s`,
+          ageSec,
+          reasonKh: `ទិន្នន័យ API យឺត (${ageSec} វិនាទី) — Data Quality Brain បង្ខំឱ្យ WAIT ដើម្បីការពារការចូលខុសតម្លៃ។`
+        };
+      }
+
+      const hasM15 = Array.isArray(mtfPack?.['15m']) && mtfPack['15m'].length >= 25;
+      const hasM5 = Array.isArray(mtfPack?.['5m']) && mtfPack['5m'].length >= 25;
+      if (!hasM15 || !hasM5) {
+        return {
+          ok: false,
+          status: 'MTF INCOMPLETE',
+          ageSec,
+          reasonKh: 'ទិន្នន័យ M5 ឬ M15 មិនទាន់គ្រប់គ្រាន់ — មិនប្រើ Cache ចាស់ជំនួសទិន្នន័យថ្មីដោយគ្មានការផ្ទៀងផ្ទាត់ទេ។'
+        };
+      }
+
+      return {
+        ok: true,
+        status: cfg.isProxy ? `FRESH (${ageSec}s) • PROXY` : `FRESH (${ageSec}s) • SPOT`,
+        ageSec,
+        reasonKh: cfg.isProxy
+          ? `ទិន្នន័យថ្មី (${ageSec}s) ពី ${cfg.sourceLabel} (ចំណាំ៖ PAXGUSDT ជា Token Proxy អាចខុសពី Spot XAUUSD របស់ MT5 Broker បន្តិច)។`
+          : `ទិន្នន័យ Spot ពិតថ្មី (${ageSec}s) ពី ${cfg.sourceLabel}។`
+      };
+    }
+
+    function evaluateSessionAndNewsBrain() {
+      const now = new Date();
+      const utcHour = now.getUTCHours();
+      let sessionName = 'ASIA / SYDNEY';
+      let isHighLiquidity = false;
+
+      if (utcHour >= 7 && utcHour < 12) {
+        sessionName = 'LONDON OPEN';
+        isHighLiquidity = true;
+      } else if (utcHour >= 12 && utcHour < 16) {
+        sessionName = 'LDN + NY OVERLAP';
+        isHighLiquidity = true;
+      } else if (utcHour >= 16 && utcHour < 21) {
+        sessionName = 'NEW YORK SESSION';
+        isHighLiquidity = true;
+      }
+
+      let newsRisk = 'CLEAR';
+      let newsTitle = 'គ្មានព័ត៌មាន USD កម្រិតខ្ពស់ភ្លាមៗ';
+      if (STATE.economicEvents && STATE.economicEvents.length > 0) {
+        const highEv = STATE.economicEvents.find(ev =>
+          String(ev.impact).toLowerCase().includes('high') &&
+          ['USD', 'EUR', 'GBP', 'XAU'].includes(String(ev.currency).toUpperCase())
+        );
+        if (highEv && highEv.time) {
+          const evMs = Date.parse(highEv.time);
+          if (!isNaN(evMs) && Math.abs(evMs - Date.now()) <= 45 * 60000) {
+            newsRisk = 'HIGH NEWS WINDOW';
+            newsTitle = `ប្រយ័ត្នព័ត៌មានខ្លាំង: ${highEv.title} (${highEv.currency})`;
+          }
+        }
+      }
+
+      return {
+        sessionName,
+        isHighLiquidity,
+        newsRisk,
+        detailKh: `${sessionName} (${isHighLiquidity ? 'សាច់ប្រាក់ច្រើន' : 'ទីផ្សារយឺត'}) • ${newsTitle}`
+      };
+    }
+
+
+    function classifySignalExecutionStage(direction, currentPrice, entryPrice, slPrice, patternObj, avgRange, stepVal, hardFiltersOk, confluenceScore100) {
+      if (!hardFiltersOk || !direction || direction === 'WAIT' || direction === 'NO SIGNAL' || currentPrice == null || entryPrice == null || confluenceScore100 < 70) {
+        return {
+          stage: 'STAGE 1 — WAIT',
+          shortStage: 'WAIT',
+          badgeText: 'WAIT • រង់ចាំការបញ្ជាក់',
+          actionKh: `WAIT (ពិន្ទុ ${confluenceScore100}/100)៖ មិនទាន់មានភស្តុតាងគ្រប់គ្រាន់ ឬ M5 មិនទាន់បិទទៀនបញ្ជាក់ — ប្រព័ន្ធមិនបង្ខំចេញ BUY/SELL ទេ។`,
           badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/35'
         };
       }
 
-      const tol = Math.max((avgRange || stepVal * 5) * 0.65, stepVal * 3);
+      const tol = Math.max((avgRange || stepVal * 5) * 0.75, stepVal * 3);
       const distToEntry = Math.abs(currentPrice - entryPrice);
       const isConfirmedCandle = Boolean(patternObj && patternObj.rules && patternObj.rules.confirmOk && patternObj.bias === direction);
 
       let inEntryZone = false;
-      let priceAlreadyPassedEntry = false;
-
       if (direction === 'SELL') {
-        inEntryZone = distToEntry <= tol || (currentPrice >= entryPrice - tol * 0.4 && currentPrice <= entryPrice + tol * 1.4);
-        priceAlreadyPassedEntry = currentPrice < entryPrice - tol * 1.2;
+        inEntryZone = distToEntry <= tol || (currentPrice >= entryPrice - tol * 0.5 && currentPrice <= entryPrice + tol * 1.5);
       } else if (direction === 'BUY') {
-        inEntryZone = distToEntry <= tol || (currentPrice <= entryPrice + tol * 0.4 && currentPrice >= entryPrice - tol * 1.4);
-        priceAlreadyPassedEntry = currentPrice > entryPrice + tol * 1.2;
+        inEntryZone = distToEntry <= tol || (currentPrice <= entryPrice + tol * 0.5 && currentPrice >= entryPrice - tol * 1.5);
       }
 
-      if (isConfirmedCandle && (inEntryZone || priceAlreadyPassedEntry)) {
+      if (confluenceScore100 >= 80 && isConfirmedCandle && inEntryZone) {
         return {
-          stage: 'CONFIRMED',
-          badgeText: `${direction} CONFIRMED • បញ្ជាក់ទៀនបិទរួច`,
-          actionKh: `សញ្ញា ${direction} CONFIRMED៖ ទៀនបិទបន្ទាប់បានបញ្ជាក់ទិសដៅរួចរាល់ — អាចពិចារណាចូលតាម Plan (គណនា Lot & SL ឱ្យច្បាស់)។`,
+          stage: 'STAGE 3 — SETUP VALID',
+          shortStage: 'SETUP VALID',
+          badgeText: `${direction} SETUP VALID • បញ្ជាក់ពេញលេញ`,
+          actionKh: `STAGE 3 — ${direction} SETUP VALID (${confluenceScore100}/100)៖ មាន M15 Bias + M5 Sweep/CHoCH + Closed Candle + Entry Zone @ ${entryPrice} ត្រឹមត្រូវ។`,
           badgeClass: direction === 'SELL'
-            ? 'bg-rose-500/25 text-rose-300 border-rose-400/50'
-            : 'bg-emerald-500/25 text-emerald-300 border-emerald-400/50'
+            ? 'bg-rose-500/25 text-rose-300 border-rose-400/55'
+            : 'bg-emerald-500/25 text-emerald-300 border-emerald-400/55'
         };
       }
 
-      if (inEntryZone) {
+      if (isConfirmedCandle || inEntryZone) {
         return {
-          stage: 'NOW',
-          badgeText: `${direction} NOW • ចូលបានភ្លាម`,
-          actionKh: `សញ្ញា ${direction} NOW៖ តម្លៃបានមកដល់តំបន់ Entry (${entryPrice}) ហើយ — អាចចូល ${direction} បានដោយកំណត់ SL ច្បាស់លាស់។`,
+          stage: 'STAGE 2 — CONFIRMED',
+          shortStage: 'CONFIRMED',
+          badgeText: `${direction} CONFIRMED • មានការបញ្ជាក់`,
+          actionKh: `STAGE 2 — ${direction} CONFIRMED (${confluenceScore100}/100)៖ រកឃើញ Sweep + Structure Break + ទៀនបិទបញ្ជាក់នៅក្បែរ Entry ${entryPrice}។`,
           badgeClass: direction === 'SELL'
             ? 'bg-rose-500/20 text-rose-400 border-rose-500/40'
             : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40'
@@ -1601,9 +1777,10 @@
       }
 
       return {
-        stage: 'WAIT',
-        badgeText: `WAIT FOR ${direction} • រង់ចាំតម្លៃមកដល់ Entry`,
-        actionKh: `WAIT FOR ${direction}៖ កុំទាន់ចូលភ្លាមៗ! តម្លៃបច្ចុប្បន្ន (${currentPrice}) មិនទាន់មកដល់តំបន់ Entry (${entryPrice}) — រង់ចាំតម្លៃត្រឡប់មករក Entry Zone សិន។`,
+        stage: 'STAGE 1 — WAIT',
+        shortStage: 'WAIT PULLBACK',
+        badgeText: `WAIT FOR ${direction} ENTRY @ ${entryPrice}`,
+        actionKh: `STAGE 1 — WAIT (${confluenceScore100}/100)៖ M15 មានទិសដៅ ${direction} ប៉ុន្តែតម្លៃ (${currentPrice}) មិនទាន់ត្រឡប់មកដល់ Entry Zone (${entryPrice}) នៅឡើយ។`,
         badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/45'
       };
     }
@@ -1660,22 +1837,20 @@
         const key = `${STATE.symbol}-${STATE.timeframe}-${matchedFvg ? matchedFvg.type : 'ENTRY'}-${lastClosed.time}`;
         if (STATE.lastAlertKey !== key) {
           STATE.lastAlertKey = key;
-          const label = matchedFvg ? matchedFvg.label : `1H PLAN ${STATE.tradePlan.direction} ENTRY`;
-          showToast(`REAL ALERT: ${STATE.symbol} at ${label} (${lastClosed.close.toFixed(cfg.decimals)})`, 'amber');
+          const label = matchedFvg ? matchedFvg.label : `${STATE.tradePlan.direction} ENTRY ZONE`;
+          showToast(`ALERT: ${STATE.symbol} at ${label} (${lastClosed.close.toFixed(cfg.decimals)})`, 'amber');
           playAlertBeep();
         }
       }
     }
 
-    // =========================================================================
-    // 2. REAL OHLCV & MARKET API FETCHERS
-    // =========================================================================
+
     async function fetchRealCandlesForSymbol(symbolKey, tf) {
       const cfg = SYMBOLS[symbolKey];
       const d = cfg.decimals;
 
       if (cfg.binanceSymbol && !(symbolKey === 'XAUUSD' && API_CONFIG.twelveDataApiKey)) {
-        const interval = TF_TO_BINANCE[tf] || '15m';
+        const interval = TF_TO_BINANCE[tf] || '5m';
         const url = `https://api.binance.com/api/v3/klines?symbol=${cfg.binanceSymbol}&interval=${interval}&limit=180`;
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error(`Binance API HTTP ${res.status}`);
@@ -1693,16 +1868,39 @@
           volume: +parseFloat(k[5]).toFixed(2)
         }));
 
-        if (tf === STATE.timeframe || cfg.price === null) {
-          cfg.price = candles[candles.length - 1].close;
+        try {
+          const btRes = await fetch(`https://api.binance.com/api/v3/ticker/bookTicker?symbol=${cfg.binanceSymbol}`, { cache: 'no-store' });
+          if (btRes.ok) {
+            const bt = await btRes.json();
+            const bid = parseFloat(bt.bidPrice);
+            const ask = parseFloat(bt.askPrice);
+            if (!isNaN(bid) && !isNaN(ask) && bid > 0 && ask > 0) {
+              cfg.bid = +bid.toFixed(d);
+              cfg.ask = +ask.toFixed(d);
+              cfg.spread = +(ask - bid).toFixed(d);
+              cfg.price = +((bid + ask) / 2).toFixed(d);
+            }
+          }
+        } catch (e) {}
+
+        if (cfg.price === null || tf === STATE.timeframe) {
+          if (cfg.bid === null) {
+            const lastClose = candles[candles.length - 1].close;
+            cfg.price = lastClose;
+            cfg.bid = +(lastClose - cfg.typicalSpread / 2).toFixed(d);
+            cfg.ask = +(lastClose + cfg.typicalSpread / 2).toFixed(d);
+            cfg.spread = +cfg.typicalSpread.toFixed(d);
+          }
           cfg.isLive = true;
-          cfg.sourceLabel = symbolKey === 'XAUUSD' ? 'Binance PAXGUSDT (Token Proxy)' : `Binance ${cfg.binanceSymbol}`;
+          cfg.isProxy = symbolKey === 'XAUUSD';
+          cfg.lastTimestamp = Date.now();
+          cfg.sourceLabel = symbolKey === 'XAUUSD' ? 'Binance PAXGUSDT (Token Proxy ≠ Spot XAUUSD)' : `Binance ${cfg.binanceSymbol}`;
         }
         return candles;
       }
 
       if (API_CONFIG.twelveDataApiKey) {
-        const interval = TF_TO_TWELVE[tf] || '15min';
+        const interval = TF_TO_TWELVE[tf] || '5min';
         const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(cfg.twelveSymbol)}&interval=${interval}&outputsize=180&apikey=${encodeURIComponent(API_CONFIG.twelveDataApiKey)}`;
         const res = await fetch(url, { cache: 'no-store' });
         if (!res.ok) throw new Error(`TwelveData HTTP ${res.status}`);
@@ -1714,7 +1912,7 @@
         const ordered = [...json.values].reverse();
         const candles = ordered.map((v, idx) => ({
           index: idx,
-          time: Date.parse(v.datetime.replace(' ', 'T') + 'Z') || (Date.now() - (ordered.length - idx) * 900000),
+          time: Date.parse(v.datetime.replace(' ', 'T') + 'Z') || (Date.now() - (ordered.length - idx) * 300000),
           closeTime: (Date.parse(v.datetime.replace(' ', 'T') + 'Z') || Date.now()) + 60000,
           open: +parseFloat(v.open).toFixed(d),
           high: +parseFloat(v.high).toFixed(d),
@@ -1723,9 +1921,15 @@
           volume: +(parseFloat(v.volume) || 0)
         }));
 
-        cfg.price = candles[candles.length - 1].close;
+        const lastClose = candles[candles.length - 1].close;
+        cfg.price = lastClose;
+        cfg.bid = +(lastClose - cfg.typicalSpread / 2).toFixed(d);
+        cfg.ask = +(lastClose + cfg.typicalSpread / 2).toFixed(d);
+        cfg.spread = +cfg.typicalSpread.toFixed(d);
         cfg.isLive = true;
-        cfg.sourceLabel = `TwelveData ${cfg.twelveSymbol} (Spot)`;
+        cfg.isProxy = false;
+        cfg.lastTimestamp = Date.now();
+        cfg.sourceLabel = `TwelveData ${cfg.twelveSymbol} (Spot Feed)`;
         return candles;
       }
 
@@ -1736,24 +1940,26 @@
     async function fetchMultiTimeframePack(symbolKey, primaryCandles, primaryTf) {
       const tfs = ['5m', '15m', '1H', '4H'];
       const pack = {};
+      const now = Date.now();
       pack[primaryTf] = primaryCandles;
+      STATE.mtfTimestamps[`${symbolKey}_${primaryTf}`] = now;
 
       await Promise.allSettled(
         tfs.filter(tf => tf !== primaryTf).map(async (tf) => {
           try {
             const cList = await fetchRealCandlesForSymbol(symbolKey, tf);
             pack[tf] = cList;
+            STATE.mtfCache[`${symbolKey}_${tf}`] = cList;
+            STATE.mtfTimestamps[`${symbolKey}_${tf}`] = Date.now();
           } catch (e) {
-            if (STATE.mtfCache[`${symbolKey}_${tf}`]) {
+            const cachedTs = STATE.mtfTimestamps[`${symbolKey}_${tf}`] || 0;
+            // Only allow cache if younger than 60s
+            if (STATE.mtfCache[`${symbolKey}_${tf}`] && (now - cachedTs) <= 60000) {
               pack[tf] = STATE.mtfCache[`${symbolKey}_${tf}`];
             }
           }
         })
       );
-
-      tfs.forEach(tf => {
-        if (pack[tf]) STATE.mtfCache[`${symbolKey}_${tf}`] = pack[tf];
-      });
 
       return pack;
     }
@@ -1768,19 +1974,30 @@
         const candles = await fetchRealCandlesForSymbol(sym, tf);
         STATE.candles = candles;
         const mtfPack = await fetchMultiTimeframePack(sym, candles, tf);
+        STATE.dataQuality = evaluateDataQualityBrain(sym, candles, mtfPack);
+        STATE.sessionContext = evaluateSessionAndNewsBrain();
         STATE.feedError = null;
+
         monitorLiveTpSlAndCycle();
-        analyzeRealMarketStructure(STATE.candles, false, mtfPack);
-        updateFeedStatusUI('LIVE', `${sym} ${SYMBOLS[sym].price.toFixed(SYMBOLS[sym].decimals)}`, 'emerald');
+        analyzeRealMarketStructure(STATE.candles, mtfPack);
+        updateFeedStatusUI(
+          STATE.dataQuality.ok ? 'LIVE' : 'STALE',
+          `${sym} ${SYMBOLS[sym].price.toFixed(SYMBOLS[sym].decimals)}`,
+          STATE.dataQuality.ok ? 'emerald' : 'amber'
+        );
       } catch (err) {
         STATE.candles = [];
         STATE.mtfConfluence = null;
+        STATE.m15DirectionBrain = null;
+        STATE.m5EntryBrain = null;
         STATE.dedicated1HPlan = null;
         STATE.keyLevels = [];
+        STATE.dataQuality = { ok: false, status: 'API ERROR', ageSec: null, reasonKh: err.message || 'Failed to load market feed' };
         STATE.feedError = err.message || 'Failed to load real market data';
         STATE.patterns = [];
         STATE.smcMarkers = [];
         STATE.fvgZones = [];
+        STATE.orderBlocks = [];
         STATE.liquiditySweeps = [];
         STATE.swingLevels = [];
         STATE.tradePlan = buildNoSignalPlan(STATE.feedError);
@@ -1789,6 +2006,7 @@
       }
 
       syncLoginScreenMarketPreview();
+      updateMt5QuoteHud();
       updateDeskUI();
       updateOverviewStats();
       renderTradesTable();
@@ -1796,18 +2014,51 @@
       drawChart();
     }
 
+    function updateMt5QuoteHud() {
+      const cfg = SYMBOLS[STATE.symbol];
+      const d = cfg.decimals;
+      const symTag = document.getElementById('mt5SymbolTag');
+      const bidEl = document.getElementById('mt5BidPrice');
+      const askEl = document.getElementById('mt5AskPrice');
+      const sprEl = document.getElementById('mt5SpreadVal');
+      const freshEl = document.getElementById('mt5DataFreshnessBadge');
+      const warnPill = document.getElementById('mt5FeedWarningPill');
+
+      if (symTag) symTag.textContent = STATE.symbol;
+      if (bidEl) bidEl.textContent = cfg.bid !== null ? cfg.bid.toFixed(d) : '--';
+      if (askEl) askEl.textContent = cfg.ask !== null ? cfg.ask.toFixed(d) : '--';
+      if (sprEl) sprEl.textContent = cfg.spread !== null ? `SPR: ${cfg.spread.toFixed(d)}` : 'SPR: --';
+      if (freshEl) {
+        freshEl.textContent = STATE.dataQuality.status;
+        freshEl.className = STATE.dataQuality.ok ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold';
+      }
+      if (warnPill) {
+        if (STATE.symbol === 'XAUUSD' && cfg.isProxy) {
+          warnPill.classList.remove('hidden');
+          warnPill.textContent = 'PAXG PROXY ≠ MT5 SPOT XAUUSD';
+        } else {
+          warnPill.classList.add('hidden');
+        }
+      }
+    }
+
     async function refreshAllWatchlistPrices() {
       await Promise.allSettled(
         Object.entries(SYMBOLS).map(async ([k, cfg]) => {
           try {
             if (cfg.binanceSymbol && !(k === 'XAUUSD' && API_CONFIG.twelveDataApiKey)) {
-              const r = await fetch(`https://api.binance.com/api/v3/ticker/price?symbol=${cfg.binanceSymbol}`, { cache: 'no-store' });
+              const r = await fetch(`https://api.binance.com/api/v3/ticker/bookTicker?symbol=${cfg.binanceSymbol}`, { cache: 'no-store' });
               if (r.ok) {
                 const j = await r.json();
-                const p = parseFloat(j.price);
-                if (!isNaN(p) && p > 0) {
-                  cfg.price = +p.toFixed(cfg.decimals);
+                const bid = parseFloat(j.bidPrice);
+                const ask = parseFloat(j.askPrice);
+                if (!isNaN(bid) && !isNaN(ask) && bid > 0) {
+                  cfg.bid = +bid.toFixed(cfg.decimals);
+                  cfg.ask = +ask.toFixed(cfg.decimals);
+                  cfg.spread = +(ask - bid).toFixed(cfg.decimals);
+                  cfg.price = +((bid + ask) / 2).toFixed(cfg.decimals);
                   cfg.isLive = true;
+                  cfg.lastTimestamp = Date.now();
                 }
               }
             } else if (API_CONFIG.twelveDataApiKey) {
@@ -1817,7 +2068,11 @@
                 const p = parseFloat(j.price);
                 if (!isNaN(p) && p > 0) {
                   cfg.price = +p.toFixed(cfg.decimals);
+                  cfg.bid = +(p - cfg.typicalSpread / 2).toFixed(cfg.decimals);
+                  cfg.ask = +(p + cfg.typicalSpread / 2).toFixed(cfg.decimals);
+                  cfg.spread = +cfg.typicalSpread.toFixed(cfg.decimals);
                   cfg.isLive = true;
+                  cfg.lastTimestamp = Date.now();
                 }
               }
             }
@@ -1826,14 +2081,13 @@
       );
 
       syncLoginScreenMarketPreview();
+      updateMt5QuoteHud();
       updateLiveTicker();
       renderWatchlistGrid();
       updateOverviewStats();
     }
 
-    // =========================================================================
-    // 3. ECONOMIC CALENDAR REAL API FETCHER
-    // =========================================================================
+
     async function fetchRealEconomicCalendar() {
       const now = new Date();
       const fromStr = now.toISOString().slice(0, 10);
@@ -1922,8 +2176,8 @@
           }).join('');
         }
       } else {
-        if (sideTime) sideTime.textContent = '1H LIVE';
-        if (sideText) sideText.textContent = 'បែងចែក SELL/BUY NOW, WAIT និង CONFIRMED • 1H PLAN • SL/TP រក្សាក្នុង localStorage។';
+        if (sideTime) sideTime.textContent = '8-BRAIN';
+        if (sideText) sideText.textContent = 'No-Guessing Engine: M15 Direction + M5 Entry + H1/H4 Context • បិទ Signal ពេលគ្មានភស្តុតាង។';
         if (ovStat) ovStat.textContent = 'API KEY NEEDED';
         if (ovSub) ovSub.textContent = 'Configure fmpApiKey or fcsApiKey for live calendar';
         if (ovList) {
@@ -1936,14 +2190,66 @@
       }
     }
 
-    // =========================================================================
-    // 4. KEY LEVELS (MAJOR S/R) + MTF CONFLUENCE (5m, 15m, 1H, 4H) + 1H PLAN
-    // =========================================================================
+
     function getAverageCandleRange(candles) {
       if (!candles || candles.length === 0) return 1;
       const sample = candles.slice(-30);
       const sum = sample.reduce((acc, c) => acc + Math.max(c.high - c.low, 0.0001), 0);
       return sum / sample.length;
+    }
+
+    function computeATR(candles, period = 14) {
+      if (!candles || candles.length < period + 1) return getAverageCandleRange(candles);
+      const trs = [];
+      for (let i = 1; i < candles.length; i++) {
+        const c = candles[i];
+        const prevClose = candles[i - 1].close;
+        const tr = Math.max(c.high - c.low, Math.abs(c.high - prevClose), Math.abs(c.low - prevClose));
+        trs.push(tr);
+      }
+      const recent = trs.slice(-period);
+      return recent.reduce((a, b) => a + b, 0) / recent.length;
+    }
+
+    function computeADX(candles, period = 14) {
+      if (!candles || candles.length < period * 2) return 18;
+      let plusDmSum = 0;
+      let minusDmSum = 0;
+      let trSum = 0;
+      for (let i = candles.length - period; i < candles.length; i++) {
+        const upMove = candles[i].high - candles[i - 1].high;
+        const downMove = candles[i - 1].low - candles[i].low;
+        const plusDm = (upMove > downMove && upMove > 0) ? upMove : 0;
+        const minusDm = (downMove > upMove && downMove > 0) ? downMove : 0;
+        const tr = Math.max(
+          candles[i].high - candles[i].low,
+          Math.abs(candles[i].high - candles[i - 1].close),
+          Math.abs(candles[i].low - candles[i - 1].close)
+        );
+        plusDmSum += plusDm;
+        minusDmSum += minusDm;
+        trSum += tr;
+      }
+      if (trSum <= 0) return 15;
+      const plusDi = (plusDmSum / trSum) * 100;
+      const minusDi = (minusDmSum / trSum) * 100;
+      const denom = plusDi + minusDi;
+      if (denom <= 0) return 15;
+      return +((Math.abs(plusDi - minusDi) / denom) * 100).toFixed(1);
+    }
+
+    function computeMACD(values) {
+      if (!values || values.length < 26) return { macd: 0, signal: 0, hist: 0 };
+      const ema12 = computeEMA(values, 12);
+      const ema26 = computeEMA(values, 26);
+      const macdLine = ema12.map((v, i) => v - ema26[i]);
+      const signalLine = computeEMA(macdLine, 9);
+      const lastIdx = macdLine.length - 1;
+      return {
+        macd: macdLine[lastIdx],
+        signal: signalLine[lastIdx],
+        hist: macdLine[lastIdx] - signalLine[lastIdx]
+      };
     }
 
     function computeEMA(values, period) {
@@ -1992,7 +2298,6 @@
       const avgRange = getAverageCandleRange(sliceCandles);
       const lastClose = sliceCandles[n - 1].close;
       const minBandGap = Math.max(avgRange * 1.1, cfg.step * 8);
-
       const rawLevels = [];
 
       const prevWindow = sliceCandles.slice(Math.max(0, n - 48), Math.max(1, n - 24));
@@ -2017,7 +2322,7 @@
           rawLevels.push({
             price: +h.toFixed(d),
             kind: 'KEY_RES',
-            label: touches >= 2 ? `KEY RES (${touches}x)` : 'KEY RESISTANCE',
+            label: touches >= 2 ? `EQH / KEY RES (${touches}x)` : 'KEY RESISTANCE',
             color: '#fb923c',
             strength: 70 + touches * 8
           });
@@ -2031,7 +2336,7 @@
           rawLevels.push({
             price: +l.toFixed(d),
             kind: 'KEY_SUP',
-            label: touches >= 2 ? `KEY SUP (${touches}x)` : 'KEY SUPPORT',
+            label: touches >= 2 ? `EQL / KEY SUP (${touches}x)` : 'KEY SUPPORT',
             color: '#22d3ee',
             strength: 70 + touches * 8
           });
@@ -2053,8 +2358,7 @@
       rawLevels.sort((a, b) => b.strength - a.strength);
       const selected = [];
       for (const lvl of rawLevels) {
-        const tooClose = selected.some(s => Math.abs(s.price - lvl.price) < minBandGap);
-        if (!tooClose) {
+        if (!selected.some(s => Math.abs(s.price - lvl.price) < minBandGap)) {
           selected.push(lvl);
         }
         if (selected.length >= 5) break;
@@ -2083,6 +2387,175 @@
         nearest: best,
         text: `${best.label} @ ${best.price.toFixed(decimals)}`,
         kh: `Key Level ជិតបំផុតគឺ ${best.label} នៅតម្លៃ ${best.price.toFixed(decimals)} (${sideKh} • គម្លាត ${best.dist.toFixed(decimals)})។`
+      };
+    }
+
+ 
+    function runM15DirectionBrain(m15Candles, symbolKey) {
+      const closed = getClosedCandles(m15Candles);
+      if (!closed || closed.length < 20) {
+        return { bias: 'WAIT', dir: null, structure: 'INSUFFICIENT DATA', premiumDiscount: '--', zoneTarget: null, summaryKh: 'ទិន្នន័យ M15 មិនគ្រប់គ្រាន់' };
+      }
+      const d = SYMBOLS[symbolKey].decimals;
+      const n = closed.length;
+      const closes = closed.map(c => c.close);
+      const ema20 = computeEMA(closes, 20);
+      const ema50 = computeEMA(closes, 50);
+      const rsi = computeRSI(closes, 14);
+      const adx = computeADX(closed, 14);
+      const atr = computeATR(closed, 14);
+      const lastC = closed[n - 1];
+
+      const recent40 = closed.slice(-40);
+      const swingHigh = Math.max(...recent40.map(c => c.high));
+      const swingLow = Math.min(...recent40.map(c => c.low));
+      const eq = (swingHigh + swingLow) / 2;
+      const inDiscount = lastC.close <= eq;
+      const pdLabel = inDiscount ? 'DISCOUNT (ទាប)' : 'PREMIUM (ខ្ពស់)';
+
+      let bullVotes = 0;
+      let bearVotes = 0;
+      if (ema20[n - 1] > ema50[n - 1]) bullVotes += 2;
+      else if (ema20[n - 1] < ema50[n - 1]) bearVotes += 2;
+
+      const prevHigh = Math.max(...closed.slice(-15, -3).map(c => c.high));
+      const prevLow = Math.min(...closed.slice(-15, -3).map(c => c.low));
+      let structLabel = 'RANGE';
+      if (lastC.close > prevHigh) {
+        bullVotes += 3;
+        structLabel = 'HH / BULL BOS';
+      } else if (lastC.close < prevLow) {
+        bearVotes += 3;
+        structLabel = 'LL / BEAR BOS';
+      } else {
+        structLabel = bullVotes > bearVotes ? 'HL / BULL TREND' : 'LH / BEAR TREND';
+      }
+
+      if (rsi > 53) bullVotes += 1;
+      else if (rsi < 47) bearVotes += 1;
+
+      // Sideways / Low ADX protection
+      if (adx < 16 && Math.abs(bullVotes - bearVotes) <= 1) {
+        return {
+          bias: 'WAIT',
+          dir: null,
+          structure: `SIDEWAYS (ADX ${adx})`,
+          premiumDiscount: pdLabel,
+          atr,
+          adx,
+          rsi,
+          zoneTarget: +eq.toFixed(d),
+          summaryKh: `SIDEWAYS (ADX ${adx}) • ទីផ្សារគ្មានកម្លាំងច្បាស់ — រង់ចាំ M15 បំបែក Structure`
+        };
+      }
+
+      const dir = bullVotes > bearVotes ? 'BUY' : 'SELL';
+      const bias = dir === 'BUY' ? 'BULLISH BIAS' : 'BEARISH BIAS';
+      const zoneTarget = dir === 'BUY'
+        ? +(Math.max(ema20[n - 1], swingLow + atr * 0.8)).toFixed(d)
+        : +(Math.min(ema20[n - 1], swingHigh - atr * 0.8)).toFixed(d);
+
+      return {
+        bias,
+        dir,
+        structure: structLabel,
+        premiumDiscount: pdLabel,
+        atr,
+        adx,
+        rsi,
+        zoneTarget,
+        swingHigh: +swingHigh.toFixed(d),
+        swingLow: +swingLow.toFixed(d),
+        summaryKh: `${bias} (${structLabel}) • ${pdLabel} • ADX ${adx} / RSI ${rsi}`
+      };
+    }
+
+    function runM5EntryBrain(m5Candles, symbolKey, m15Brain) {
+      const closed = getClosedCandles(m5Candles);
+      if (!closed || closed.length < 20) {
+        return { confirmed: false, dir: null, hasSweep: false, hasStructureBreak: false, hasClosedCandle: false, entryPrice: null, slPrice: null, summaryKh: 'ទិន្នន័យ M5 មិនគ្រប់គ្រាន់' };
+      }
+
+      const d = SYMBOLS[symbolKey].decimals;
+      const n = closed.length;
+      const lastC = closed[n - 1];
+      const prevC = closed[n - 2];
+      const atrM5 = computeATR(closed, 14);
+      const targetDir = m15Brain?.dir || null;
+
+      const lookback = closed.slice(-15, -2);
+      const localHigh = Math.max(...lookback.map(c => c.high));
+      const localLow = Math.min(...lookback.map(c => c.low));
+
+      // Check Liquidity Sweep + Wick rejection on closed M5 candles
+      const bearSweep = closed.slice(-4).some(c => c.high > localHigh && c.close < localHigh);
+      const bullSweep = closed.slice(-4).some(c => c.low < localLow && c.close > localLow);
+
+      // Check M5 CHoCH / BOS on closed candle
+      const shortHigh = Math.max(...closed.slice(-7, -1).map(c => c.high));
+      const shortLow = Math.min(...closed.slice(-7, -1).map(c => c.low));
+      const bearBreak = lastC.close < shortLow || (lastC.close < prevC.low && lastC.close < lastC.open);
+      const bullBreak = lastC.close > shortHigh || (lastC.close > prevC.high && lastC.close > lastC.open);
+
+      // Order Block identification (last opposite candle before displacement)
+      let obZone = null;
+      for (let i = n - 2; i >= Math.max(2, n - 12); i--) {
+        if (targetDir === 'SELL' && closed[i].close > closed[i].open && closed[i + 1].close < closed[i].low) {
+          obZone = { top: +closed[i].high.toFixed(d), bottom: +closed[i].open.toFixed(d), label: 'BEAR OB' };
+          break;
+        }
+        if (targetDir === 'BUY' && closed[i].close < closed[i].open && closed[i + 1].close > closed[i].high) {
+          obZone = { top: +closed[i].open.toFixed(d), bottom: +closed[i].low.toFixed(d), label: 'BULL OB' };
+          break;
+        }
+      }
+
+      if (!targetDir) {
+        return {
+          confirmed: false,
+          dir: null,
+          hasSweep: bearSweep || bullSweep,
+          hasStructureBreak: bearBreak || bullBreak,
+          hasClosedCandle: false,
+          obZone,
+          entryPrice: +lastC.close.toFixed(d),
+          slPrice: null,
+          summaryKh: 'M15 មិនទាន់មានទិសដៅច្បាស់ — M5 រង់ចាំ M15 Bias សិន'
+        };
+      }
+
+      const hasSweep = targetDir === 'SELL' ? bearSweep : bullSweep;
+      const hasStructureBreak = targetDir === 'SELL' ? bearBreak : bullBreak;
+      const hasClosedCandle = targetDir === 'SELL'
+        ? (lastC.close < lastC.open && lastC.close <= prevC.close)
+        : (lastC.close > lastC.open && lastC.close >= prevC.close);
+
+      const entryPrice = obZone
+        ? +((obZone.top + obZone.bottom) / 2).toFixed(d)
+        : +lastC.close.toFixed(d);
+
+      const slPrice = targetDir === 'SELL'
+        ? +(Math.max(localHigh, entryPrice + atrM5 * 1.6) + atrM5 * 0.25).toFixed(d)
+        : +(Math.min(localLow, entryPrice - atrM5 * 1.6) - atrM5 * 0.25).toFixed(d);
+
+      const confirmed = hasStructureBreak && hasClosedCandle;
+      const checksText = [
+        hasSweep ? '✓ Sweep' : '✕ Sweep',
+        hasStructureBreak ? '✓ CHoCH/BOS' : '✕ CHoCH/BOS',
+        hasClosedCandle ? '✓ Candle Close' : '✕ Candle Close'
+      ].join(' • ');
+
+      return {
+        confirmed,
+        dir: targetDir,
+        hasSweep,
+        hasStructureBreak,
+        hasClosedCandle,
+        obZone,
+        entryPrice,
+        slPrice,
+        atrM5,
+        summaryKh: `${confirmed ? 'CONFIRMED' : 'WAITING M5'} (${checksText})`
       };
     }
 
@@ -2125,10 +2598,12 @@
         locationDescKh += `ផ្សារបិទចុងក្រោយនៅតម្លៃ ${lastClosed.close.toFixed(d)} (${zoneSideKh}) ធៀបនឹង EMA20 (${lastEma20.toFixed(d)}) / EMA50 (${lastEma50.toFixed(d)})។`;
       }
 
-      const entryZoneLow = +(Math.min(entryPrice, lastClosed.close) - avgRange * 0.18).toFixed(d);
-      const entryZoneHigh = +(Math.max(entryPrice, lastClosed.close) + avgRange * 0.18).toFixed(d);
+      const safeEntry = entryPrice !== null ? entryPrice : lastClosed.close;
+      const entryZoneLow = +(Math.min(safeEntry, lastClosed.close) - avgRange * 0.18).toFixed(d);
+      const entryZoneHigh = +(Math.max(safeEntry, lastClosed.close) + avgRange * 0.18).toFixed(d);
+      const dirLabel = candidateDir && candidateDir !== 'WAIT' ? candidateDir : 'WAIT';
 
-      const entryAdviceKh = `វិភាគទៀនបិទទាំង ${n} ដើម (${bullCount} ទៀនបៃតង / ${bearCount} ទៀនក្រហម)៖ ផ្សារបិទចុងក្រោយនៅ ${lastClosed.close.toFixed(d)} → ផែនការ ${candidateDir} នៅ Entry ${entryPrice.toFixed(d)} (ចន្លោះ ${entryZoneLow.toFixed(d)} - ${entryZoneHigh.toFixed(d)})។`;
+      const entryAdviceKh = `វិភាគទៀនបិទទាំង ${n} ដើម (${bullCount} ទៀនបៃតង / ${bearCount} ទៀនក្រហម)៖ ផ្សារបិទចុងក្រោយនៅ ${lastClosed.close.toFixed(d)} → ស្ថានភាព ${dirLabel} នៅតំបន់ ${safeEntry.toFixed(d)} (${entryZoneLow.toFixed(d)} - ${entryZoneHigh.toFixed(d)})។`;
 
       return {
         closedCount: n,
@@ -2152,7 +2627,8 @@
       return {
         isValidSignal: false,
         isHourlyPlan: false,
-        direction: 'NO SIGNAL',
+        direction: 'WAIT',
+        confluenceScore100: 0,
         reasonKh,
         entry: null,
         sl: null,
@@ -2162,19 +2638,20 @@
         slPct: 0,
         rr: '--',
         structureBias: 'NEUTRAL',
-        liqTarget: '--',
+        liqTarget: 'WAIT FOR CONFIRMATION',
         storyKh: reasonKh,
+        predictiveScenarioKh: reasonKh,
         lastCloseReport: null,
         score: 0,
         total: 6,
         pattern: null,
         factors: [
-          { name: 'SMC Sweep/BOS/CHoCH', pass: false },
-          { name: 'Active FVG / Key Level', pass: false },
-          { name: 'Candle Pattern', pass: false },
-          { name: 'Closed Next Candle', pass: false },
-          { name: 'Real Volume ≥ 1.15x', pass: false },
-          { name: 'Risk:Reward ≥ 1.5', pass: false }
+          { name: 'Data Quality & Freshness', pass: false },
+          { name: 'M15 Market Structure', pass: false },
+          { name: 'Liquidity Sweep + M5 Break', pass: false },
+          { name: 'FVG / OB / Key Level', pass: false },
+          { name: 'Momentum (ATR/ADX/RSI)', pass: false },
+          { name: 'H1/H4 Context & R:R ≥ 1.5', pass: false }
         ]
       };
     }
@@ -2182,13 +2659,14 @@
     function summarizeSingleTimeframeBias(candles, symbolKey) {
       const closed = getClosedCandles(candles);
       if (!closed || closed.length < 15) {
-        return { bias: 'WAIT', dir: null, rsi: 50, structure: 'NEUTRAL', detailKh: 'ទៀនមិនគ្រប់គ្រាន់' };
+        return { bias: 'WAIT', dir: null, rsi: 50, adx: 15, structure: 'NO DATA', detailKh: 'ទៀនមិនគ្រប់គ្រាន់' };
       }
       const d = SYMBOLS[symbolKey].decimals;
       const closes = closed.map(c => c.close);
       const ema20 = computeEMA(closes, 20);
       const ema50 = computeEMA(closes, 50);
       const rsi = computeRSI(closes, 14);
+      const adx = computeADX(closed, 14);
       const n = closed.length;
       const e20 = ema20[n - 1];
       const e50 = ema50[n - 1];
@@ -2205,7 +2683,7 @@
         structDir = 'SELL';
         structTag = 'BOS DN';
       } else {
-        structTag = structDir === 'BUY' ? 'EMA BULL' : 'EMA BEAR';
+        structTag = structDir === 'BUY' ? 'HH/HL' : 'LH/LL';
       }
 
       const biasLabel = structDir === 'BUY' ? 'BULLISH' : 'BEARISH';
@@ -2213,8 +2691,9 @@
         bias: biasLabel,
         dir: structDir,
         rsi,
+        adx,
         structure: structTag,
-        detailKh: `${structTag} • EMA20 ${e20.toFixed(d)} / RSI ${rsi}`
+        detailKh: `${structTag} • ADX ${adx} / RSI ${rsi}`
       };
     }
 
@@ -2235,7 +2714,6 @@
       });
 
       const consensusDir = bullVotes >= bearVotes ? 'BUY' : 'SELL';
-      const consensusCount = Math.max(bullVotes, bearVotes);
       const htfAligned = breakdown['1H']?.dir === breakdown['4H']?.dir && breakdown['1H']?.dir !== null;
       const strictConfluencePass = alignedCount >= 3 && htfAligned;
 
@@ -2244,41 +2722,48 @@
         alignedCount,
         totalTfs: 4,
         consensusDir,
-        consensusCount,
         htfAligned,
         strictConfluencePass,
         summaryText: `${alignedCount}/4 TF (${primaryDir || consensusDir}) • 1H:${breakdown['1H']?.bias || '--'} / 4H:${breakdown['4H']?.bias || '--'}`,
-        khSummary: `ផ្ទៀងផ្ទាត់ 5m, 15m, 1H, 4H៖ ត្រូវទិស ${primaryDir || consensusDir} ចំនួន ${alignedCount}/4 Timeframes (1H: ${breakdown['1H']?.structure || '--'}, 4H: ${breakdown['4H']?.structure || '--'}) — ${strictConfluencePass ? 'Confluence រឹងមាំ!' : 'កំពុងផ្ទៀងផ្ទាត់ទិសដៅ MTF'}`
+        khSummary: `M15 Direction + M5 Entry + H1/H4 Context៖ ស្របទិស ${primaryDir || consensusDir} ចំនួន ${alignedCount}/4 TF (1H: ${breakdown['1H']?.structure || '--'}, 4H: ${breakdown['4H']?.structure || '--'})`
       };
     }
 
-    function evaluateStructureOnSlice(sliceCandles, symbolKey, deepMode = false, mtfPack = null) {
+ 
+    function evaluateStructureOnSlice(sliceCandles, symbolKey, mtfPack = null) {
       const cfg = SYMBOLS[symbolKey];
       const d = cfg.decimals;
       const n = sliceCandles.length;
-      if (n < 15) {
+      if (n < 20) {
         return {
           plan: buildNoSignalPlan('ទៀនដែលបិទរួចមិនគ្រប់គ្រាន់សម្រាប់វិភាគ។'),
           patterns: [],
           smcMarkers: [],
           fvgZones: [],
+          orderBlocks: [],
           liquiditySweeps: [],
           swingLevels: [],
           keyLevels: [],
-          mtfConfluence: null
+          mtfConfluence: null,
+          m15Brain: null,
+          m5Brain: null
         };
       }
 
       const avgRange = getAverageCandleRange(sliceCandles);
+      const atr14 = computeATR(sliceCandles, 14);
+      const adx14 = computeADX(sliceCandles, 14);
       const closes = sliceCandles.map(c => c.close);
       const ema20 = computeEMA(closes, 20);
       const ema50 = computeEMA(closes, 50);
       const rsi14 = computeRSI(closes, 14);
+      const macdObj = computeMACD(closes);
       const lastEma20 = ema20[n - 1];
       const lastEma50 = ema50[n - 1];
       const emaBias = lastEma20 > lastEma50 ? 'BULLISH' : (lastEma20 < lastEma50 ? 'BEARISH' : 'NEUTRAL');
 
       const keyLevels = computeKeyLevels(sliceCandles, symbolKey);
+
 
       const swingHighs = [];
       const swingLows = [];
@@ -2291,14 +2776,23 @@
                       sliceCandles[i].low < sliceCandles[i - 2].low &&
                       sliceCandles[i].low <= sliceCandles[i + 1].low &&
                       sliceCandles[i].low <= sliceCandles[i + 2].low;
-        if (isHigh) swingHighs.push({ index: i, price: sliceCandles[i].high });
-        if (isLow) swingLows.push({ index: i, price: sliceCandles[i].low });
+        if (isHigh) {
+          const prevH = swingHighs.length ? swingHighs[swingHighs.length - 1].price : null;
+          const tag = prevH === null ? 'SH' : (sliceCandles[i].high > prevH ? 'HH' : 'LH');
+          swingHighs.push({ index: i, price: sliceCandles[i].high, structTag: tag });
+        }
+        if (isLow) {
+          const prevL = swingLows.length ? swingLows[swingLows.length - 1].price : null;
+          const tag = prevL === null ? 'SL' : (sliceCandles[i].low < prevL ? 'LL' : 'HL');
+          swingLows.push({ index: i, price: sliceCandles[i].low, structTag: tag });
+        }
       }
 
       const swingLevels = [
-        ...swingHighs.slice(-3).map(s => ({ ...s, type: 'SH', label: 'SWING HIGH', color: '#f59e0b' })),
-        ...swingLows.slice(-3).map(s => ({ ...s, type: 'SL', label: 'SWING LOW', color: '#10b981' }))
+        ...swingHighs.slice(-3).map(s => ({ ...s, type: 'SH', label: `${s.structTag}`, color: '#f59e0b' })),
+        ...swingLows.slice(-3).map(s => ({ ...s, type: 'SL', label: `${s.structTag}`, color: '#10b981' }))
       ];
+
 
       const smcMarkers = [];
       const sweeps = [];
@@ -2312,12 +2806,12 @@
         const lastSL = prevLows.length ? prevLows[prevLows.length - 1] : null;
 
         if (lastSH && c.high > lastSH.price && c.close < lastSH.price) {
-          sweeps.push({ index: i, price: c.high, dir: 'BEAR', level: lastSH.price, label: 'SWEEP HIGH' });
+          sweeps.push({ index: i, price: c.high, dir: 'BEAR', level: lastSH.price, label: 'BSL SWEEP' });
           smcMarkers.push({ index: i, price: c.high, type: 'SWEEP', dir: 'BEAR' });
         }
 
         if (lastSL && c.low < lastSL.price && c.close > lastSL.price) {
-          sweeps.push({ index: i, price: c.low, dir: 'BULL', level: lastSL.price, label: 'SWEEP LOW' });
+          sweeps.push({ index: i, price: c.low, dir: 'BULL', level: lastSL.price, label: 'SSL SWEEP' });
           smcMarkers.push({ index: i, price: c.low, type: 'SWEEP', dir: 'BULL' });
         }
 
@@ -2334,9 +2828,12 @@
         }
       }
 
+ 
       const fvgList = [];
+      const orderBlocks = [];
       for (let i = 2; i < n; i++) {
         const c1 = sliceCandles[i - 2];
+        const c2 = sliceCandles[i - 1];
         const c3 = sliceCandles[i];
 
         if (c3.low > c1.high && (c3.low - c1.high) >= avgRange * 0.25) {
@@ -2344,19 +2841,12 @@
           const bottom = +c1.high.toFixed(d);
           let mitigated = false;
           for (let j = i + 1; j < n; j++) {
-            if (sliceCandles[j].low <= bottom) {
-              mitigated = true;
-              break;
-            }
+            if (sliceCandles[j].low <= bottom) { mitigated = true; break; }
           }
-          fvgList.push({
-            type: 'BULL_FVG',
-            startIndex: i - 2,
-            top,
-            bottom,
-            mitigated,
-            label: mitigated ? 'BULL FVG (FILLED)' : 'BULLISH FVG'
-          });
+          fvgList.push({ type: 'BULL_FVG', startIndex: i - 2, top, bottom, mitigated, label: mitigated ? 'BULL FVG (FILLED)' : 'BULLISH FVG' });
+          if (c1.close < c1.open) {
+            orderBlocks.push({ type: 'BULL_OB', startIndex: i - 2, top: +c1.high.toFixed(d), bottom: +c1.low.toFixed(d), label: 'DEMAND OB' });
+          }
         }
 
         if (c3.high < c1.low && (c1.low - c3.high) >= avgRange * 0.25) {
@@ -2364,29 +2854,21 @@
           const bottom = +c3.high.toFixed(d);
           let mitigated = false;
           for (let j = i + 1; j < n; j++) {
-            if (sliceCandles[j].high >= top) {
-              mitigated = true;
-              break;
-            }
+            if (sliceCandles[j].high >= top) { mitigated = true; break; }
           }
-          fvgList.push({
-            type: 'BEAR_FVG',
-            startIndex: i - 2,
-            top,
-            bottom,
-            mitigated,
-            label: mitigated ? 'BEAR FVG (FILLED)' : 'BEARISH FVG'
-          });
+          fvgList.push({ type: 'BEAR_FVG', startIndex: i - 2, top, bottom, mitigated, label: mitigated ? 'BEAR FVG (FILLED)' : 'BEARISH FVG' });
+          if (c1.close > c1.open) {
+            orderBlocks.push({ type: 'BEAR_OB', startIndex: i - 2, top: +c1.high.toFixed(d), bottom: +c1.low.toFixed(d), label: 'SUPPLY OB' });
+          }
         }
       }
 
       const activeFvgs = fvgList.filter(f => !f.mitigated).slice(-3);
       const fvgZones = activeFvgs.length ? activeFvgs : fvgList.slice(-2);
+      const recentObs = orderBlocks.slice(-2);
 
       const volCandles = sliceCandles.filter(c => c.volume > 0);
-      const avgVol = volCandles.length > 0
-        ? volCandles.reduce((acc, c) => acc + c.volume, 0) / volCandles.length
-        : 0;
+      const avgVol = volCandles.length > 0 ? volCandles.reduce((acc, c) => acc + c.volume, 0) / volCandles.length : 0;
 
       const detected = [];
       for (let i = 2; i < n - 1; i++) {
@@ -2414,7 +2896,6 @@
         const volumeOk = hasVolData ? curr.volume >= avgVol * 1.15 : false;
 
         let p = null;
-
         if (prevBear && isBull && curr.open <= prev.close && curr.close >= prev.open && body > prevBody * 1.1) {
           const confirmOk = next.close > curr.close;
           p = {
@@ -2423,17 +2904,10 @@
             shortLabel: 'ENGULF+',
             bias: 'BUY',
             price: curr.low,
-            titleKh: 'Bullish Engulfing (ផ្អែកលើទៀនបិទរួច)',
-            storyKh: `ទៀនបៃតងគ្របដណ្តប់ទៀនក្រហមមុន។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបានបិទខ្ពស់ជាង (Confirmed)។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទខ្ពស់ជាង។'}`,
-            storyEn: 'Real bullish engulfing evaluated on closed next candle.',
-            rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'NO ZONE NEARBY',
-              locationOk,
-              volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
-              volumeOk,
-              confirm: confirmOk ? 'CLOSED HIGHER' : 'NOT CONFIRMED',
-              confirmOk
-            }
+            titleKh: 'Bullish Engulfing (ទៀនបិទរួច)',
+            storyKh: `ទៀនបៃតងគ្របដណ្តប់ទៀនក្រហមមុន។ ${confirmOk ? 'ទៀនបន្ទាប់បិទខ្ពស់ជាង (Confirmed)។' : 'មិនទាន់មានទៀនបន្ទាប់បិទបញ្ជាក់។'}`,
+            storyEn: 'Bullish engulfing on closed candle.',
+            rules: { location: locationOk ? 'AT FVG / KEY / SWEEP' : 'MID RANGE', locationOk, volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA', volumeOk, confirm: confirmOk ? 'CLOSED HIGHER' : 'WAIT CLOSE', confirmOk }
           };
         } else if (prevBull && isBear && curr.open >= prev.close && curr.close <= prev.open && body > prevBody * 1.1) {
           const confirmOk = next.close < curr.close;
@@ -2443,17 +2917,10 @@
             shortLabel: 'ENGULF-',
             bias: 'SELL',
             price: curr.high,
-            titleKh: 'Bearish Engulfing (ផ្អែកលើទៀនបិទរួច)',
-            storyKh: `ទៀនក្រហមគ្របដណ្តប់ទៀនបៃតងមុន។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបានបិទទាបជាង (Confirmed)។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទទាបជាង។'}`,
-            storyEn: 'Real bearish engulfing evaluated on closed next candle.',
-            rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'NO ZONE NEARBY',
-              locationOk,
-              volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
-              volumeOk,
-              confirm: confirmOk ? 'CLOSED LOWER' : 'NOT CONFIRMED',
-              confirmOk
-            }
+            titleKh: 'Bearish Engulfing (ទៀនបិទរួច)',
+            storyKh: `ទៀនក្រហមគ្របដណ្តប់ទៀនបៃតងមុន។ ${confirmOk ? 'ទៀនបន្ទាប់បិទទាបជាង (Confirmed)។' : 'មិនទាន់មានទៀនបន្ទាប់បិទបញ្ជាក់។'}`,
+            storyEn: 'Bearish engulfing on closed candle.',
+            rules: { location: locationOk ? 'AT FVG / KEY / SWEEP' : 'MID RANGE', locationOk, volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA', volumeOk, confirm: confirmOk ? 'CLOSED LOWER' : 'WAIT CLOSE', confirmOk }
           };
         } else if (lowerWick >= body * 2.0 && upperWick <= body * 0.6 && body / range < 0.4) {
           const confirmOk = next.close > curr.close;
@@ -2463,17 +2930,10 @@
             shortLabel: 'HAMMER',
             bias: 'BUY',
             price: curr.low,
-            titleKh: 'Hammer Wick Rejection (ផ្អែកលើទៀនបិទរួច)',
-            storyKh: `Wick ខាងក្រោមវែង (${(lowerWick / range * 100).toFixed(0)}% នៃ range)។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបិទឡើងលើ។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទឡើងលើ។'}`,
-            storyEn: 'Lower wick rejection evaluated on closed next candle.',
-            rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'SWING / NO FVG',
-              locationOk,
-              volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
-              volumeOk,
-              confirm: confirmOk ? 'CLOSED HIGHER' : 'NOT CONFIRMED',
-              confirmOk
-            }
+            titleKh: 'Hammer Wick Rejection (ទៀនបិទរួច)',
+            storyKh: `Wick ខាងក្រោមវែងបដិសេធតម្លៃទាប។ ${confirmOk ? 'ទៀនបន្ទាប់បិទឡើងលើ។' : 'រង់ចាំទៀនបន្ទាប់បិទបញ្ជាក់។'}`,
+            storyEn: 'Hammer rejection on closed candle.',
+            rules: { location: locationOk ? 'AT FVG / KEY / SWEEP' : 'SWING LOW', locationOk, volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA', volumeOk, confirm: confirmOk ? 'CLOSED HIGHER' : 'WAIT CLOSE', confirmOk }
           };
         } else if (upperWick >= body * 2.0 && lowerWick <= body * 0.6 && body / range < 0.4) {
           const confirmOk = next.close < curr.close;
@@ -2483,39 +2943,12 @@
             shortLabel: 'S.STAR',
             bias: 'SELL',
             price: curr.high,
-            titleKh: 'Shooting Star Wick Rejection (ផ្អែកលើទៀនបិទរួច)',
-            storyKh: `Wick ខាងលើវែង (${(upperWick / range * 100).toFixed(0)}% នៃ range)។ ${confirmOk ? 'ទៀនបន្ទាប់ដែលបិទរួចបិទចុះក្រោម។' : 'ទៀនបន្ទាប់ដែលបិទរួចមិនទាន់បិទចុះក្រោម។'}`,
-            storyEn: 'Upper wick rejection evaluated on closed next candle.',
-            rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'SWING / NO FVG',
-              locationOk,
-              volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
-              volumeOk,
-              confirm: confirmOk ? 'CLOSED LOWER' : 'NOT CONFIRMED',
-              confirmOk
-            }
-          };
-        } else if (body <= range * 0.12 && range >= avgRange * 0.6) {
-          p = {
-            index: i,
-            type: 'DOJI',
-            shortLabel: 'DOJI',
-            bias: 'NEUTRAL',
-            price: curr.high,
-            titleKh: 'Doji Indecision (ទៀនបិទរួច)',
-            storyKh: 'Open និង Close ស្ទើរស្មើគ្នា បង្ហាញពីការស្ទាក់ស្ទើររវាង Buyers និង Sellers។',
-            storyEn: 'Indecision candle on closed OHLC data.',
-            rules: {
-              location: locationOk ? 'AT FVG / KEY / SWEEP' : 'MID RANGE',
-              locationOk,
-              volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA',
-              volumeOk,
-              confirm: 'NEUTRAL DOJI',
-              confirmOk: false
-            }
+            titleKh: 'Shooting Star Wick Rejection (ទៀនបិទរួច)',
+            storyKh: `Wick ខាងលើវែងបដិសេធតម្លៃខ្ពស់។ ${confirmOk ? 'ទៀនបន្ទាប់បិទចុះក្រោម។' : 'រង់ចាំទៀនបន្ទាប់បិទបញ្ជាក់។'}`,
+            storyEn: 'Shooting star rejection on closed candle.',
+            rules: { location: locationOk ? 'AT FVG / KEY / SWEEP' : 'SWING HIGH', locationOk, volume: hasVolData ? `${volRatio}x REAL VOL` : 'NO VOL DATA', volumeOk, confirm: confirmOk ? 'CLOSED LOWER' : 'WAIT CLOSE', confirmOk }
           };
         }
-
         if (p) detected.push(p);
       }
 
@@ -2526,86 +2959,103 @@
         }
       }
 
+ 
+      const m15Candles = mtfPack?.['15m'] || sliceCandles;
+      const m5Candles = mtfPack?.['5m'] || sliceCandles;
+      const m15Brain = runM15DirectionBrain(m15Candles, symbolKey);
+      const m5Brain = runM5EntryBrain(m5Candles, symbolKey, m15Brain);
+
+      const candidateDir = m15Brain.dir; 
+      const mtfFinal = evaluateMultiTimeframeConfluence(mtfPack, symbolKey, candidateDir);
+
       const lastClosed = sliceCandles[n - 1];
       const latestSmc = smcMarkers.length ? smcMarkers[smcMarkers.length - 1] : null;
       const latestSweep = sweeps.length ? sweeps[sweeps.length - 1] : null;
-      const directionalPatterns = [...cleanPatterns].reverse().filter(pt => pt.bias === 'BUY' || pt.bias === 'SELL');
-      const latestPattern = deepMode && directionalPatterns.length > 1
-        ? directionalPatterns[STATE.freshSetupNonce % directionalPatterns.length]
-        : (directionalPatterns[0] || null);
-
-      const mtfConfluence = evaluateMultiTimeframeConfluence(mtfPack, symbolKey, null);
-      const rsiBias = rsi14 < 42 ? 'BUY' : (rsi14 > 58 ? 'SELL' : null);
-
-      const htfDir = mtfConfluence.breakdown['1H']?.dir || mtfConfluence.breakdown['4H']?.dir || null;
-      const candidateDir = (latestPattern && (!htfDir || latestPattern.bias === htfDir || deepMode))
-        ? latestPattern.bias
-        : (htfDir || (latestSmc ? (latestSmc.dir === 'BULL' ? 'BUY' : 'SELL') : (rsiBias || (emaBias === 'BULLISH' ? 'BUY' : 'SELL'))));
-
-      const mtfFinal = evaluateMultiTimeframeConfluence(mtfPack, symbolKey, candidateDir);
+      const directionalPatterns = [...cleanPatterns].reverse().filter(pt => !candidateDir || pt.bias === candidateDir);
+      const latestPattern = directionalPatterns[0] || null;
 
       const activeBullFvg = activeFvgs.find(f => f.type === 'BULL_FVG');
       const activeBearFvg = activeFvgs.find(f => f.type === 'BEAR_FVG');
 
-      const hasSmc = Boolean(latestSmc || latestSweep);
-      const hasFvgOrKey = (candidateDir === 'BUY' ? Boolean(activeBullFvg) : Boolean(activeBearFvg)) ||
-        keyLevels.some(kl => Math.abs(lastClosed.close - kl.price) <= avgRange * 2.2);
-      const hasPattern = Boolean(latestPattern);
-      const hasConfirm = Boolean(latestPattern && latestPattern.rules.confirmOk);
-      const hasVolume = Boolean(latestPattern && latestPattern.rules.volumeOk);
 
-      const depthFactor = deepMode ? (1 + ((STATE.freshSetupNonce % 3) * 0.08)) : 1.0;
-
-      let entry = lastClosed.close;
-      let sl = candidateDir === 'BUY' ? lastClosed.close - avgRange * 1.7 * depthFactor : lastClosed.close + avgRange * 1.7 * depthFactor;
-      let tp = candidateDir === 'BUY' ? lastClosed.close + avgRange * 3.2 * depthFactor : lastClosed.close - avgRange * 3.2 * depthFactor;
+      let entry = m5Brain.entryPrice !== null ? m5Brain.entryPrice : lastClosed.close;
+      let sl = null;
+      let tp = null;
+      let rrNum = 0;
 
       if (candidateDir === 'BUY') {
-        if (activeBullFvg) entry = +((activeBullFvg.top + activeBullFvg.bottom) / 2).toFixed(d);
-        else if (deepMode) entry = +(lastClosed.close - avgRange * 0.25).toFixed(d);
-        const recentLow = Math.min(...sliceCandles.slice(-8).map(c => c.low));
-        sl = +(Math.min(recentLow, entry - avgRange * 1.35 * depthFactor) - avgRange * 0.2).toFixed(d);
-        const recentHigh = Math.max(...sliceCandles.slice(-25).map(c => c.high));
-        tp = +(Math.max(recentHigh, entry + Math.abs(entry - sl) * 1.85)).toFixed(d);
-      } else {
-        if (activeBearFvg) entry = +((activeBearFvg.top + activeBearFvg.bottom) / 2).toFixed(d);
-        else if (deepMode) entry = +(lastClosed.close + avgRange * 0.25).toFixed(d);
-        const recentHigh = Math.max(...sliceCandles.slice(-8).map(c => c.high));
-        sl = +(Math.max(recentHigh, entry + avgRange * 1.35 * depthFactor) + avgRange * 0.2).toFixed(d);
-        const recentLow = Math.min(...sliceCandles.slice(-25).map(c => c.low));
-        tp = +(Math.min(recentLow, entry - Math.abs(sl - entry) * 1.85)).toFixed(d);
+        if (activeBullFvg && activeBullFvg.top >= lastClosed.close - atr14 * 2) {
+          entry = +((activeBullFvg.top + activeBullFvg.bottom) / 2).toFixed(d);
+        }
+        const swingLowAnchor = swingLows.length ? swingLows[swingLows.length - 1].price : Math.min(...sliceCandles.slice(-10).map(c => c.low));
+        sl = +(Math.min(swingLowAnchor, entry - atr14 * 1.4) - atr14 * 0.25).toFixed(d);
+        const swingHighTarget = swingHighs.length ? Math.max(...swingHighs.slice(-2).map(s => s.price)) : (entry + Math.abs(entry - sl) * 2.0);
+        tp = +(Math.max(swingHighTarget, entry + Math.abs(entry - sl) * 1.8)).toFixed(d);
+      } else if (candidateDir === 'SELL') {
+        if (activeBearFvg && activeBearFvg.bottom <= lastClosed.close + atr14 * 2) {
+          entry = +((activeBearFvg.top + activeBearFvg.bottom) / 2).toFixed(d);
+        }
+        const swingHighAnchor = swingHighs.length ? swingHighs[swingHighs.length - 1].price : Math.max(...sliceCandles.slice(-10).map(c => c.high));
+        sl = +(Math.max(swingHighAnchor, entry + atr14 * 1.4) + atr14 * 0.25).toFixed(d);
+        const swingLowTarget = swingLows.length ? Math.min(...swingLows.slice(-2).map(s => s.price)) : (entry - Math.abs(sl - entry) * 2.0);
+        tp = +(Math.min(swingLowTarget, entry - Math.abs(sl - entry) * 1.8)).toFixed(d);
       }
 
-      const riskDist = Math.abs(entry - sl);
-      const rewardDist = Math.abs(tp - entry);
-      const rrNum = riskDist > 0 ? +(rewardDist / riskDist).toFixed(1) : 1.5;
-      const rrOk = rrNum >= 1.5;
-
-      const factors = [
-        { name: 'SMC Sweep/BOS/CHoCH', pass: hasSmc },
-        { name: 'Active FVG / Key Level', pass: hasFvgOrKey },
-        { name: 'Candle Pattern', pass: hasPattern },
-        { name: 'Closed Next Candle', pass: hasConfirm },
-        { name: 'Real Volume ≥ 1.15x', pass: hasVolume },
-        { name: 'MTF (5m/15m/1H/4H)', pass: mtfFinal.alignedCount >= 2 && rrOk }
-      ];
-
-      const passedCount = factors.filter(f => f.pass).length;
-      const strictAllPassed = Boolean(candidateDir) && hasSmc && hasFvgOrKey && hasPattern && hasConfirm && hasVolume && rrOk && mtfFinal.strictConfluencePass;
-
-      const nowMs = Date.now();
-      const withinHourWindow = (nowMs - STATE.lastHourlySignalAt) <= API_CONFIG.hourlyCadenceMs;
-      const isHourlyPlan = Boolean(candidateDir) && rrOk && mtfFinal.alignedCount >= 2 && (strictAllPassed || withinHourWindow || STATE.lastHourlySignalAt === 0 || deepMode);
-
-      if (isHourlyPlan && (!STATE.lastHourlySignalAt || (nowMs - STATE.lastHourlySignalAt) > API_CONFIG.hourlyCadenceMs)) {
-        STATE.lastHourlySignalAt = nowMs;
+      if (candidateDir && sl !== null && tp !== null) {
+        const riskDist = Math.abs(entry - sl);
+        const rewardDist = Math.abs(tp - entry);
+        rrNum = riskDist > 0 ? +(rewardDist / riskDist).toFixed(1) : 0;
       }
 
-      const tpPct = Math.abs(computeMovePercent(entry, tp, candidateDir));
-      const slPct = Math.abs(computeMovePercent(entry, sl, candidateDir));
-      const tp2 = isHourlyPlan
-        ? +(candidateDir === 'BUY' ? tp + rewardDist * 0.5 : tp - rewardDist * 0.5).toFixed(d)
-        : null;
+
+
+      let score100 = 0;
+      const hasM15Struct = Boolean(m15Brain.dir);
+      const hasM15Momentum = Boolean(m15Brain.dir && m15Brain.adx >= 18);
+      const hasLiqSweep = Boolean(m5Brain.hasSweep || latestSweep);
+      const hasM5Break = Boolean(m5Brain.hasStructureBreak || (latestSmc && (latestSmc.type === 'CHoCH' || latestSmc.type === 'BOS')));
+      const hasFvgOb = Boolean((candidateDir === 'BUY' && activeBullFvg) || (candidateDir === 'SELL' && activeBearFvg) || m5Brain.obZone);
+      const hasCandleConf = Boolean(m5Brain.hasClosedCandle || (latestPattern && latestPattern.rules.confirmOk));
+      const hasVolConf = Boolean(latestPattern && latestPattern.rules.volumeOk);
+      const hasAtrVol = adx14 >= 17 && atr14 > 0;
+      const hasHtfAlign = Boolean(mtfFinal.htfAligned && candidateDir && mtfFinal.breakdown['1H']?.dir === candidateDir);
+      const hasGoodRR = rrNum >= 1.5;
+
+      if (hasM15Struct) score100 += 15;
+      if (hasM15Momentum) score100 += 10;
+      if (hasLiqSweep) score100 += 15;
+      if (hasM5Break) score100 += 15;
+      if (hasFvgOb) score100 += 10;
+      if (hasCandleConf) score100 += 10;
+      if (hasVolConf) score100 += 5;
+      if (hasAtrVol) score100 += 5;
+      if (hasHtfAlign) score100 += 10;
+      if (hasGoodRR) score100 += 5;
+
+  
+      const dataOk = STATE.dataQuality.ok;
+      const newsSafe = STATE.sessionContext.newsRisk !== 'HIGH NEWS WINDOW';
+      const hardFiltersOk = dataOk && newsSafe && hasM15Struct && hasGoodRR && score100 >= 70 && m5Brain.confirmed;
+
+      const curPx = cfg.price != null ? cfg.price : lastClosed.close;
+      const stageInfo = classifySignalExecutionStage(
+        hardFiltersOk ? candidateDir : 'WAIT',
+        curPx,
+        entry,
+        sl,
+        latestPattern,
+        atr14,
+        cfg.step,
+        hardFiltersOk,
+        score100
+      );
+
+      const isSignalActive = hardFiltersOk && stageInfo.shortStage !== 'WAIT';
+      const finalDirection = isSignalActive ? candidateDir : 'WAIT';
+
+      const tpPct = isSignalActive ? Math.abs(computeMovePercent(entry, tp, candidateDir)) : 0;
+      const slPct = isSignalActive ? Math.abs(computeMovePercent(entry, sl, candidateDir)) : 0;
+      const tp2 = isSignalActive ? +(candidateDir === 'BUY' ? tp + Math.abs(tp - entry) * 0.5 : tp - Math.abs(entry - tp) * 0.5).toFixed(d) : null;
 
       const lastCloseReport = analyzeLastClosedMarketZone(
         sliceCandles,
@@ -2615,50 +3065,62 @@
         keyLevels,
         lastEma20,
         lastEma50,
-        candidateDir,
-        +entry.toFixed(d)
+        candidateDir || 'WAIT',
+        entry
       );
 
-      const stageInfo = classifySignalExecutionStage(
-        isHourlyPlan ? candidateDir : 'NO SIGNAL',
-        cfg.price != null ? cfg.price : lastClosed.close,
-        +entry.toFixed(d),
-        +sl.toFixed(d),
-        latestPattern,
-        avgRange,
-        cfg.step
-      );
+      
+      const invalidationPrice = candidateDir === 'BUY' ? sl : (candidateDir === 'SELL' ? sl : null);
+      let predictiveScenarioKh = '';
+      if (!dataOk) {
+        predictiveScenarioKh = STATE.dataQuality.reasonKh;
+      } else if (!candidateDir) {
+        predictiveScenarioKh = `ទីផ្សារ M15 កំពុងស្ថិតក្នុង ${m15Brain.structure} — រង់ចាំ M15 បំបែក Swing High (${m15Brain.swingHigh || '--'}) ដើម្បីបើក BUY ឬបំបែក Swing Low (${m15Brain.swingLow || '--'}) ដើម្បីបើក SELL។`;
+      } else if (candidateDir === 'SELL') {
+        predictiveScenarioKh = `សេណារីយ៉ូ SELL៖ M15 មានទិសដៅចុះ (${m15Brain.structure})។ ប្រសិនបើតម្លៃឡើងតេស្តតំបន់ Supply / Bearish FVG ក្បែរ ${entry.toFixed(d)} ហើយ M5 បិទទៀនបញ្ជាក់ចុះ គោលដៅបន្ទាប់គឺ ${tp.toFixed(d)}។ Invalidation៖ បើទៀនបិទលើស ${sl.toFixed(d)} ផែនការ SELL នេះត្រូវចាត់ទុកថាមោឃៈ (INVALIDATED)។`;
+      } else {
+        predictiveScenarioKh = `សេណារីយ៉ូ BUY៖ M15 មានទិសដៅឡើង (${m15Brain.structure})។ ប្រសិនបើតម្លៃចុះតេស្តតំបន់ Demand / Bullish FVG ក្បែរ ${entry.toFixed(d)} ហើយ M5 បិទទៀនបញ្ជាក់ឡើង គោលដៅបន្ទាប់គឺ ${tp.toFixed(d)}។ Invalidation៖ បើទៀនបិទក្រោម ${sl.toFixed(d)} ផែនការ BUY នេះត្រូវចាត់ទុកថាមោឃៈ (INVALIDATED)។`;
+      }
 
-      const fvgSummary = hasFvgOrKey
-        ? (activeBullFvg && candidateDir === 'BUY'
-            ? `Bull FVG ${activeBullFvg.bottom.toFixed(d)}-${activeBullFvg.top.toFixed(d)}`
-            : (activeBearFvg && candidateDir === 'SELL'
-                ? `Bear FVG ${activeBearFvg.bottom.toFixed(d)}-${activeBearFvg.top.toFixed(d)}`
-                : lastCloseReport.keyLevelInfo.text))
-        : `RSI ${rsi14} / EMA Zone`;
+      const factors = [
+        { name: 'Data Quality Fresh', pass: dataOk },
+        { name: 'M15 Structure Bias', pass: hasM15Struct },
+        { name: 'M5 Sweep + Break', pass: hasLiqSweep && hasM5Break },
+        { name: 'FVG / OB / Key S/R', pass: hasFvgOb },
+        { name: 'ATR/ADX Momentum', pass: hasAtrVol },
+        { name: 'H1/H4 & R:R ≥ 1.5', pass: hasHtfAlign && hasGoodRR }
+      ];
+      const passedCount = factors.filter(f => f.pass).length;
 
-      const storyKh = isHourlyPlan
-        ? `[${stageInfo.badgeText}] ${candidateDir} • Entry @ ${entry.toFixed(d)} (Close @ ${lastClosed.close.toFixed(d)}) | SL ${sl.toFixed(d)} (-${slPct.toFixed(2)}%) | TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%) • ${mtfFinal.summaryText} • ${fvgSummary} (${passedCount}/6)។`
-        : `កំពុងស្កេន Multi-Timeframe (5m/15m/1H/4H) និង Key Levels (${passedCount}/6)៖ ${mtfFinal.summaryText}។`;
+      const storyKh = isSignalActive
+        ? `[${stageInfo.stage}] ${candidateDir} • Confluence ${score100}/100 • Entry @ ${entry.toFixed(d)} | SL ${sl.toFixed(d)} (-${slPct.toFixed(2)}%) | TP1 ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%) • ${mtfFinal.summaryText}`
+        : `WAIT (ពិន្ទុ ${score100}/100)៖ ${m15Brain.summaryKh} | ${m5Brain.summaryKh}`;
 
       const plan = {
-        isValidSignal: isHourlyPlan,
-        isStrictFull: strictAllPassed,
-        isHourlyPlan,
+        isValidSignal: isSignalActive,
+        isStrictFull: score100 >= 85 && hardFiltersOk,
+        isHourlyPlan: false,
+        confluenceScore100: score100,
         executionStage: stageInfo,
-        direction: isHourlyPlan ? candidateDir : 'NO SIGNAL',
-        entry: isHourlyPlan ? +entry.toFixed(d) : null,
-        sl: isHourlyPlan ? +sl.toFixed(d) : null,
-        tp: isHourlyPlan ? +tp.toFixed(d) : null,
+        direction: finalDirection,
+        candidateDirection: candidateDir || 'WAIT',
+        entry: candidateDir ? +entry.toFixed(d) : null,
+        sl: candidateDir && sl !== null ? +sl.toFixed(d) : null,
+        tp: candidateDir && tp !== null ? +tp.toFixed(d) : null,
         tp2,
-        tpPct: isHourlyPlan ? tpPct : 0,
-        slPct: isHourlyPlan ? slPct : 0,
+        tpPct,
+        slPct,
         rr: rrNum > 0 ? `1:${rrNum}` : '--',
-        structureBias: trendDir ? (trendDir === 'BULL' ? 'BULLISH' : 'BEARISH') : emaBias,
+        structureBias: m15Brain.bias,
         rsi14,
+        atr14: +atr14.toFixed(d),
+        adx14,
+        macdHist: +macdObj.hist.toFixed(d),
+        invalidationPrice,
+        predictiveScenarioKh,
         lastCloseReport,
         mtfConfluence: mtfFinal,
-        liqTarget: isHourlyPlan ? `${stageInfo.stage} • TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%)` : 'NO QUALIFIED TARGET',
+        liqTarget: isSignalActive ? `${stageInfo.shortStage} • TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%)` : `WAIT (${score100}/100)`,
         storyKh,
         score: passedCount,
         total: 6,
@@ -2671,131 +3133,107 @@
         patterns: cleanPatterns,
         smcMarkers: smcMarkers.slice(-8),
         fvgZones,
+        orderBlocks: recentObs,
         liquiditySweeps: sweeps.slice(-5),
         swingLevels,
         keyLevels,
-        mtfConfluence: mtfFinal
+        mtfConfluence: mtfFinal,
+        m15Brain,
+        m5Brain
       };
     }
 
-    function buildDedicated1HPlan(mtfPack, symbolKey, fallbackPlan) {
+    function buildDedicated1HPlan(mtfPack, symbolKey) {
       const c1h = mtfPack && mtfPack['1H'] ? mtfPack['1H'] : null;
       const c4h = mtfPack && mtfPack['4H'] ? mtfPack['4H'] : null;
-      if (!c1h || c1h.length < 15) return null;
+      if (!c1h || c1h.length < 20 || !STATE.dataQuality.ok) return null;
 
       const closed1H = getClosedCandles(c1h);
-      const res1H = evaluateStructureOnSlice(closed1H, symbolKey, false, mtfPack);
       const info1H = summarizeSingleTimeframeBias(c1h, symbolKey);
       const info4H = c4h ? summarizeSingleTimeframeBias(c4h, symbolKey) : info1H;
 
+      if (!info1H.dir || info1H.dir !== info4H.dir || info1H.adx < 18) return null;
+
       const d = SYMBOLS[symbolKey].decimals;
       const lastClosed1H = closed1H[closed1H.length - 1];
-      const avgRange1H = getAverageCandleRange(closed1H);
-
-      const aligned1H4H = info1H.dir && (info1H.dir === info4H.dir || res1H.plan.isValidSignal);
-      if (!aligned1H4H || !info1H.dir) return null;
-
+      const atr1H = computeATR(closed1H, 14);
       const dir = info1H.dir;
-      const entry = res1H.plan.isValidSignal && res1H.plan.direction === dir && res1H.plan.entry !== null
-        ? res1H.plan.entry
-        : +lastClosed1H.close.toFixed(d);
-
-      const sl = res1H.plan.isValidSignal && res1H.plan.direction === dir && res1H.plan.sl !== null
-        ? res1H.plan.sl
-        : +(dir === 'BUY' ? entry - avgRange1H * 1.45 : entry + avgRange1H * 1.45).toFixed(d);
-
+      const entry = +lastClosed1H.close.toFixed(d);
+      const sl = +(dir === 'BUY' ? entry - atr1H * 1.5 : entry + atr1H * 1.5).toFixed(d);
       const riskDist = Math.max(Math.abs(entry - sl), SYMBOLS[symbolKey].step);
-      const tp = res1H.plan.isValidSignal && res1H.plan.direction === dir && res1H.plan.tp !== null
-        ? res1H.plan.tp
-        : +(dir === 'BUY' ? entry + riskDist * 1.9 : entry - riskDist * 1.9).toFixed(d);
-
-      const rrVal = +(Math.abs(tp - entry) / riskDist).toFixed(1);
-      if (rrVal < 1.5) return null;
+      const tp = +(dir === 'BUY' ? entry + riskDist * 2.0 : entry - riskDist * 2.0).toFixed(d);
 
       const tpPct = Math.abs(computeMovePercent(entry, tp, dir));
       const slPct = Math.abs(computeMovePercent(entry, sl, dir));
-      const klInfo = getNearestKeyLevelInfo(res1H.keyLevels, lastClosed1H.close, d);
-      const curPx = SYMBOLS[symbolKey].price != null ? SYMBOLS[symbolKey].price : lastClosed1H.close;
-      const stg = classifySignalExecutionStage(dir, curPx, entry, sl, res1H.plan.pattern, avgRange1H, SYMBOLS[symbolKey].step);
 
       return {
-        id: `1HPLAN-${symbolKey}-${dir}-${entry.toFixed(d)}-${sl.toFixed(d)}`,
+        id: `1HCONTEXT-${symbolKey}-${dir}-${entry.toFixed(d)}`,
         symbol: symbolKey,
-        timeframe: '1H',
+        timeframe: '1H+4H',
         isDedicated1H: true,
-        stage: stg.stage,
+        stage: 'HTF BIAS',
         dir,
-        pattern: `1H PLAN (${stg.stage}) • ${info1H.structure} + 4H ${info4H.structure}`,
+        pattern: `H1/H4 CONTEXT (${dir}) • 1H ${info1H.structure} + 4H ${info4H.structure}`,
         entry: entry.toFixed(d),
         sl: sl.toFixed(d),
         tp: tp.toFixed(d),
         tpPct,
         slPct,
-        rr: `1:${rrVal}`,
+        rr: '1:2.0',
         score: `1H+4H`,
-        kh: `⭐ [${stg.badgeText}] 1H PLAN (${dir})៖ ${stg.actionKh} • Entry @ ${entry.toFixed(d)} | SL ${sl.toFixed(d)} (-${slPct.toFixed(2)}%) | TP ${tp.toFixed(d)} (+${tpPct.toFixed(2)}%) • ${klInfo.text}។`,
+        kh: `បរិបទធំ H1 និង H4 ស្របទិស ${dir} (ADX ${info1H.adx}) — ប្រើជាតម្រងទិសដៅធំសម្រាប់ M15 និង M5។`,
         isCompleted: false
       };
     }
 
     function rebuildQualifiedSignalsList() {
       const combined = [];
-
-      if (STATE.dedicated1HPlan) {
-        combined.push(STATE.dedicated1HPlan);
-      }
+      if (STATE.dedicated1HPlan) combined.push(STATE.dedicated1HPlan);
 
       if (STATE.tradePlan && STATE.tradePlan.isValidSignal && STATE.tradePlan.entry !== null) {
         const d = SYMBOLS[STATE.symbol].decimals;
-        const stgCode = STATE.tradePlan.executionStage ? STATE.tradePlan.executionStage.stage : 'PLAN';
+        const stgCode = STATE.tradePlan.executionStage ? STATE.tradePlan.executionStage.shortStage : 'CONFIRMED';
         const activePlanSig = {
           id: `SIG-${STATE.symbol}-${STATE.timeframe}-${STATE.tradePlan.direction}-${STATE.tradePlan.entry.toFixed(d)}`,
           symbol: STATE.symbol,
           timeframe: STATE.timeframe,
-          isDedicated1H: STATE.timeframe === '1H',
-          stage: stgCode,
+          isDedicated1H: false,
+          stage: `${stgCode} (${STATE.tradePlan.confluenceScore100}/100)`,
           dir: STATE.tradePlan.direction,
-          pattern: `${stgCode} • ${STATE.tradePlan.pattern ? STATE.tradePlan.pattern.type : 'MTF+SMC+FVG'} (+${STATE.tradePlan.tpPct.toFixed(2)}% / -${STATE.tradePlan.slPct.toFixed(2)}%)`,
+          pattern: `${stgCode} • Score ${STATE.tradePlan.confluenceScore100}/100 (+${STATE.tradePlan.tpPct.toFixed(2)}% / -${STATE.tradePlan.slPct.toFixed(2)}%)`,
           entry: STATE.tradePlan.entry.toFixed(d),
           sl: STATE.tradePlan.sl.toFixed(d),
           tp: STATE.tradePlan.tp.toFixed(d),
           tpPct: STATE.tradePlan.tpPct,
           slPct: STATE.tradePlan.slPct,
           rr: STATE.tradePlan.rr,
-          score: `${STATE.tradePlan.score}/${STATE.tradePlan.total}`,
+          score: `${STATE.tradePlan.confluenceScore100}/100`,
           kh: STATE.tradePlan.storyKh,
           isCompleted: false
         };
-        if (!combined.some(x => x.id === activePlanSig.id)) {
-          combined.push(activePlanSig);
-        }
+        if (!combined.some(x => x.id === activePlanSig.id)) combined.push(activePlanSig);
       }
 
-      const persistentList = STATE.archivedCompletedSignals.slice(0, 20);
-      STATE.qualifiedSignals = [...combined, ...persistentList];
+      STATE.qualifiedSignals = [...combined, ...STATE.archivedCompletedSignals.slice(0, 20)];
     }
 
-    function analyzeRealMarketStructure(candles, deepMode = false, mtfPack = null) {
+    function analyzeRealMarketStructure(candles, mtfPack = null) {
       const closedCandles = getClosedCandles(candles);
       const effectiveMtf = mtfPack || { [STATE.timeframe]: candles };
-      const res = evaluateStructureOnSlice(closedCandles, STATE.symbol, deepMode, effectiveMtf);
+      const res = evaluateStructureOnSlice(closedCandles, STATE.symbol, effectiveMtf);
       STATE.patterns = res.patterns;
       STATE.smcMarkers = res.smcMarkers;
       STATE.fvgZones = res.fvgZones;
+      STATE.orderBlocks = res.orderBlocks;
       STATE.liquiditySweeps = res.liquiditySweeps;
       STATE.swingLevels = res.swingLevels;
       STATE.keyLevels = res.keyLevels;
       STATE.mtfConfluence = res.mtfConfluence;
+      STATE.m15DirectionBrain = res.m15Brain;
+      STATE.m5EntryBrain = res.m5Brain;
       STATE.tradePlan = res.plan;
 
-      const plan1H = buildDedicated1HPlan(effectiveMtf, STATE.symbol, res.plan);
-      STATE.dedicated1HPlan = plan1H;
-      if (plan1H && STATE.lastDedicated1HAutoId !== plan1H.id) {
-        STATE.lastDedicated1HAutoId = plan1H.id;
-        showToast(`1H PLAN AUTO-SIGNAL (${plan1H.symbol} ${plan1H.dir} • ${plan1H.stage}) ទម្លាក់ចូល Live AI Signals រួចរាល់!`, 'amber');
-        playAlertBeep();
-      }
-
+      STATE.dedicated1HPlan = buildDedicated1HPlan(effectiveMtf, STATE.symbol);
       rebuildQualifiedSignalsList();
     }
 
@@ -2808,7 +3246,7 @@
         id: `ARCH-${Date.now().toString().slice(-5)}-${Math.floor(Math.random() * 90 + 10)}`,
         symbol: tradeObj.symbol,
         timeframe: tradeObj.tf,
-        isDedicated1H: tradeObj.tf === '1H' || Boolean(tradeObj.isDedicated1H),
+        isDedicated1H: Boolean(tradeObj.isDedicated1H),
         dir: tradeObj.dir,
         pattern: `${hitTag} • ${tradeObj.pattern}`,
         entry: tradeObj.entry,
@@ -2820,7 +3258,7 @@
         score: outcomeType,
         realizedPct: signedPct,
         realizedPnl,
-        kh: `Signal ${tradeObj.symbol} ${tradeObj.dir} បានដល់ ${outcomeType === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) ហើយត្រូវបានរក្សាទុកក្នុង Signals & Price Action -> Live AI Signals ក្នុង localStorage ជារៀងរហូត។`,
+        kh: `Signal ${tradeObj.symbol} ${tradeObj.dir} បានដល់ ${outcomeType === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) ហើយត្រូវបានរក្សាទុកក្នុង localStorage។`,
         isCompleted: true,
         completedAt: new Date().toLocaleString()
       };
@@ -2837,40 +3275,6 @@
       const latestCandle = closedCandles[closedCandles.length - 1];
       let anyHitNow = false;
       const remainingOpenTrades = [];
-
-      const activeDeskPlan = STATE.tradePlan;
-      if (activeDeskPlan && activeDeskPlan.isValidSignal && activeDeskPlan.entry !== null) {
-        const d = SYMBOLS[STATE.symbol].decimals;
-        let deskHit = null;
-        if (activeDeskPlan.direction === 'BUY') {
-          if (latestCandle.low <= activeDeskPlan.sl) deskHit = 'LOSS';
-          else if (latestCandle.high >= activeDeskPlan.tp) deskHit = 'WIN';
-        } else if (activeDeskPlan.direction === 'SELL') {
-          if (latestCandle.high >= activeDeskPlan.sl) deskHit = 'LOSS';
-          else if (latestCandle.low <= activeDeskPlan.tp) deskHit = 'WIN';
-        }
-
-        if (deskHit) {
-          anyHitNow = true;
-          const signedDeskPct = deskHit === 'WIN' ? +activeDeskPlan.tpPct.toFixed(2) : -activeDeskPlan.slPct.toFixed(2);
-          archiveSignalToLiveFeed({
-            symbol: STATE.symbol,
-            tf: STATE.timeframe,
-            isDedicated1H: STATE.timeframe === '1H',
-            dir: activeDeskPlan.direction,
-            pattern: activeDeskPlan.pattern ? activeDeskPlan.pattern.type : '1H DESK PLAN',
-            entry: activeDeskPlan.entry.toFixed(d),
-            sl: activeDeskPlan.sl.toFixed(d),
-            tp: activeDeskPlan.tp.toFixed(d)
-          }, deskHit, signedDeskPct, 0);
-
-          showToast(
-            `${STATE.symbol} ${activeDeskPlan.direction} ដល់ ${deskHit === 'WIN' ? 'TP1' : 'SL'} — រក្សាក្នុង Live AI Signals (localStorage) & ប្តូរ Signal ថ្មី!`,
-            deskHit === 'WIN' ? 'emerald' : 'amber'
-          );
-          playAlertBeep();
-        }
-      }
 
       STATE.trades.forEach(t => {
         if (t.symbol !== STATE.symbol) {
@@ -2901,7 +3305,7 @@
 
           archiveSignalToLiveFeed(t, hitType, signedPct, pnlVal);
           showToast(
-            `${t.symbol} ${t.dir} ដល់ ${hitType === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals ជារៀងរហូត!`,
+            `${t.symbol} ${t.dir} ដល់ ${hitType === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals!`,
             hitType === 'WIN' ? 'emerald' : 'amber'
           );
           playAlertBeep();
@@ -2911,22 +3315,14 @@
       });
 
       STATE.trades = remainingOpenTrades;
-
-      if (anyHitNow) {
-        STATE.freshSetupNonce++;
-        STATE.lastHourlySignalAt = 0;
-        analyzeRealMarketStructure(STATE.candles, true, { ...STATE.mtfCache, [STATE.timeframe]: STATE.candles });
-        flashAuraDeskPlanCard();
-      }
+      if (anyHitNow) flashAuraDeskPlanCard();
     }
 
-    // =========================================================================
-    // 4C. HISTORICAL BACKTESTING & AUTOMATIC TP/SL VERIFICATION ON REAL CANDLES
-    // =========================================================================
+
     function runHistoricalBacktest() {
       const closedCandles = getClosedCandles(STATE.candles);
-      if (!closedCandles || closedCandles.length < 35) {
-        showToast('ត្រូវការទៀនដែលបិទរួចយ៉ាងហោច 35 candles ដើម្បី Backtest', 'amber');
+      if (!closedCandles || closedCandles.length < 40) {
+        showToast('ត្រូវការទៀនដែលបិទរួចយ៉ាងហោច 40 candles ដើម្បី Backtest', 'amber');
         return;
       }
 
@@ -2947,9 +3343,9 @@
       let peakEquity = balance;
       let maxDrawdownUsd = 0;
 
-      for (let i = 25; i < closedCandles.length - 1; i++) {
+      for (let i = 30; i < closedCandles.length - 1; i++) {
         const prefix = closedCandles.slice(0, i + 1);
-        const evalRes = evaluateStructureOnSlice(prefix, STATE.symbol, false, { [STATE.timeframe]: prefix });
+        const evalRes = evaluateStructureOnSlice(prefix, STATE.symbol, { [STATE.timeframe]: prefix });
         const p = evalRes.plan;
 
         if (!p || !p.isValidSignal || p.entry === null || p.sl === null || p.tp === null) continue;
@@ -2969,17 +3365,11 @@
         for (let j = i + 1; j < closedCandles.length; j++) {
           const fut = closedCandles[j];
           if (dir === 'BUY') {
-            const hitSl = fut.low <= sl;
-            const hitTp = fut.high >= tp;
-            if (hitSl && hitTp) { outcome = 'LOSS'; break; }
-            if (hitSl) { outcome = 'LOSS'; break; }
-            if (hitTp) { outcome = 'WIN'; break; }
+            if (fut.low <= sl) { outcome = 'LOSS'; break; }
+            if (fut.high >= tp) { outcome = 'WIN'; break; }
           } else if (dir === 'SELL') {
-            const hitSl = fut.high >= sl;
-            const hitTp = fut.low <= tp;
-            if (hitSl && hitTp) { outcome = 'LOSS'; break; }
-            if (hitSl) { outcome = 'LOSS'; break; }
-            if (hitTp) { outcome = 'WIN'; break; }
+            if (fut.high >= sl) { outcome = 'LOSS'; break; }
+            if (fut.low <= tp) { outcome = 'WIN'; break; }
           }
         }
 
@@ -3006,7 +3396,6 @@
         if (equity > peakEquity) peakEquity = equity;
         const dd = peakEquity - equity;
         if (dd > maxDrawdownUsd) maxDrawdownUsd = dd;
-
         i += 2;
       }
 
@@ -3038,7 +3427,7 @@
       if (!r || r.totalTrades === 0) {
         if (deskSum) {
           deskSum.textContent = r
-            ? `0 qualified trades hit TP/SL on ${r.symbol} (${r.timeframe}).`
+            ? `0 confirmed setups hit TP/SL on ${r.symbol} (${r.timeframe}) under strict No-Guessing rules.`
             : 'Not run yet — Click "Run Backtest" to verify TP/SL on real historical candles.';
         }
         const setTxt = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
@@ -3069,16 +3458,14 @@
       setTxt('btNetPnl', pnlStr);
     }
 
-    // =========================================================================
-    // 5. BUILT-IN LOT SIZE CALCULATOR
-    // =========================================================================
+
     function recalculateLotSize() {
       const plan = STATE.tradePlan;
       const lotEl = document.getElementById('calcLotResult');
       const rUsdEl = document.getElementById('calcRiskUsd');
       const wUsdEl = document.getElementById('calcRewardUsd');
 
-      if (!plan || !plan.isValidSignal || plan.entry === null || plan.sl === null) {
+      if (!plan || plan.entry === null || plan.sl === null || plan.candidateDirection === 'WAIT') {
         if (lotEl) lotEl.textContent = '--';
         if (rUsdEl) rUsdEl.textContent = '--';
         if (wUsdEl) wUsdEl.textContent = '--';
@@ -3103,9 +3490,6 @@
       return lotSize;
     }
 
-    // =========================================================================
-    // 6. INSTANT ANALYSIS & PLAN SETUP MODAL
-    // =========================================================================
     async function openInstantAnalysisPlan() {
       if (STATE.activeView !== 'terminal') {
         switchView('terminal');
@@ -3119,20 +3503,20 @@
       scanDiv.classList.remove('hidden');
       resultDiv.classList.add('hidden');
 
-      STATE.freshSetupNonce++;
-      document.getElementById('modalSubTitle').textContent = `${STATE.symbol} • ${STATE.timeframe} • M5/M15/1H/4H Deep Scan #${STATE.freshSetupNonce}`;
+      document.getElementById('modalSubTitle').textContent = `${STATE.symbol} • ${STATE.timeframe} • 3-Layer Market Intelligence & Confirmation Audit`;
 
       if (STATE.candles.length > 0) {
         const mtfPack = await fetchMultiTimeframePack(STATE.symbol, STATE.candles, STATE.timeframe);
-        analyzeRealMarketStructure(STATE.candles, true, mtfPack);
+        STATE.dataQuality = evaluateDataQualityBrain(STATE.symbol, STATE.candles, mtfPack);
+        STATE.sessionContext = evaluateSessionAndNewsBrain();
+        analyzeRealMarketStructure(STATE.candles, mtfPack);
       }
+      updateMt5QuoteHud();
       updateDeskUI();
       drawChart();
 
       const deskAside = document.getElementById('auraDeskSidebar');
-      if (deskAside) {
-        deskAside.scrollTop = 0;
-      }
+      if (deskAside) deskAside.scrollTop = 0;
       flashAuraDeskPlanCard();
 
       setTimeout(() => {
@@ -3160,24 +3544,22 @@
 
         const stageTagEl = document.getElementById('modalStageTag');
         if (stageTagEl && stg) {
-          stageTagEl.textContent = stg.badgeText;
+          stageTagEl.textContent = `${stg.badgeText} • SCORE ${plan.confluenceScore100}/100`;
           stageTagEl.className = `inline-block px-2.5 py-0.5 rounded text-[10px] font-mono font-extrabold border mb-1 ${stg.badgeClass}`;
         }
 
         const dirEl = document.getElementById('modalPlanDirection');
-        dirEl.textContent = valid ? `${stg ? stg.badgeText.split('•')[0].trim() : plan.direction} • ${STATE.symbol} (${STATE.timeframe})` : `SCANNING • ${STATE.symbol}`;
+        dirEl.textContent = valid ? `${plan.direction} CONFIRMED • ${STATE.symbol}` : `WAIT • ${STATE.symbol} (មិនទាន់បញ្ជាក់)`;
         dirEl.className = !valid
           ? 'text-xl font-extrabold font-mono text-amber-400 mt-0.5'
           : (isBuy ? 'text-xl font-extrabold font-mono text-emerald-400 mt-0.5' : 'text-xl font-extrabold font-mono text-rose-400 mt-0.5');
 
-        document.getElementById('modalPatternTag').textContent = valid
-          ? `Deep MTF Analysis #${STATE.freshSetupNonce}: ${plan.pattern ? plan.pattern.type : 'MTF+SMC+FVG'} • RSI ${plan.rsi14 || '--'}`
-          : 'កំពុងស្កេន Multi-Timeframe & រចនាសម្ព័ន្ធផ្សារ...';
+        document.getElementById('modalPatternTag').textContent = `M15: ${STATE.m15DirectionBrain?.bias || '--'} | M5: ${STATE.m5EntryBrain?.summaryKh || '--'}`;
 
         document.getElementById('modalRR').textContent = plan ? plan.rr : '--';
         document.getElementById('modalConfidence').textContent = valid
           ? `TP: +${plan.tpPct.toFixed(2)}% | SL: -${plan.slPct.toFixed(2)}%`
-          : `CRITERIA: ${plan ? plan.score : 0}/6`;
+          : `CONFLUENCE: ${plan ? plan.confluenceScore100 : 0}/100`;
 
         const mtfScoreEl = document.getElementById('modalMtfScore');
         const mtfListEl = document.getElementById('modalMtfList');
@@ -3200,16 +3582,15 @@
           }
         }
 
-        document.getElementById('modalLastClosePrice').textContent = lcr ? `LAST CLOSE: ${lcr.lastClosePrice.toFixed(d)} (${lcr.closedCount} Closed Candles)` : '--';
+        document.getElementById('modalLastClosePrice').textContent = lcr ? `LAST CLOSE: ${lcr.lastClosePrice.toFixed(d)} | BID/ASK: ${cfg.bid}/${cfg.ask}` : '--';
         document.getElementById('modalKeyLevelSummary').textContent = lcr && lcr.keyLevelInfo ? `🔑 ${lcr.keyLevelInfo.text} — ${lcr.keyLevelInfo.kh}` : '--';
         document.getElementById('modalLastCloseZoneTitle').textContent = lcr ? lcr.zoneTitleKh : '--';
-        document.getElementById('modalLastCloseEntryDetail').textContent = lcr
-          ? `${lcr.locationDescKh} ${lcr.entryAdviceKh}`
-          : 'មិនមានទិន្នន័យទៀនបិទ។';
+        document.getElementById('modalLastCloseEntryDetail').textContent = plan?.predictiveScenarioKh || '--';
 
-        document.getElementById('modalEntry').textContent = valid ? plan.entry.toFixed(d) : '--';
-        document.getElementById('modalSL').textContent = valid ? `${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%)` : '--';
-        document.getElementById('modalTP1').textContent = valid ? `${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)` : '--';
+        const showScenarioLevels = Boolean(plan && plan.entry !== null && plan.sl !== null && plan.candidateDirection !== 'WAIT');
+        document.getElementById('modalEntry').textContent = showScenarioLevels ? plan.entry.toFixed(d) : '--';
+        document.getElementById('modalSL').textContent = showScenarioLevels ? `${plan.sl.toFixed(d)}` : '--';
+        document.getElementById('modalTP1').textContent = showScenarioLevels ? `${plan.tp.toFixed(d)}` : '--';
         document.getElementById('modalTP2').textContent = valid && plan.tp2 !== null ? plan.tp2.toFixed(d) : '--';
 
         const fMap = {};
@@ -3217,11 +3598,11 @@
           plan.factors.forEach((f, idx) => { fMap[idx] = f.pass; });
         }
 
-        document.getElementById('modalGateStatus').textContent = valid ? `${stg ? stg.stage : plan.direction} ✓` : 'SCANNING';
-        document.getElementById('modalRuleSmc').textContent = fMap[0] ? '✓ SMC DETECTED' : `• RSI ${plan?.rsi14 || '--'} / EMA`;
-        document.getElementById('modalRuleFvg').textContent = fMap[1] ? '✓ FVG / KEY LEVEL' : '• CHECK KEY S/R';
-        document.getElementById('modalRuleVol').textContent = fMap[4] ? '✓ REAL VOL SPIKE' : '• NORMAL VOL';
-        document.getElementById('modalRuleConf').textContent = fMap[5] ? '✓ MTF & R:R OK' : '• CHECK MTF';
+        document.getElementById('modalGateStatus').textContent = valid ? `${stg.shortStage} (${plan.confluenceScore100}/100) ✓` : `WAIT (${plan?.confluenceScore100 || 0}/100)`;
+        document.getElementById('modalRuleSmc').textContent = fMap[2] ? '✓ SWEEP + BREAK' : '✕ WAIT BREAK';
+        document.getElementById('modalRuleFvg').textContent = fMap[3] ? '✓ FVG / OB / KEY' : '• CHECK ZONE';
+        document.getElementById('modalRuleVol').textContent = fMap[4] ? `✓ ADX ${plan?.adx14} / ATR ${plan?.atr14}` : `✕ LOW ADX ${plan?.adx14 || '--'}`;
+        document.getElementById('modalRuleConf').textContent = fMap[5] ? '✓ H1/H4 & R:R OK' : '✕ CHECK MTF/RR';
         document.getElementById('modalLotBadge').textContent = lot ? `${lot.toFixed(2)} Lot` : '--';
 
         const takeBtn = document.getElementById('modalTakeBtn');
@@ -3233,13 +3614,11 @@
         }
 
         document.getElementById('modalKhmerSummary').innerHTML = `
-          ផែនការ <b>${stg ? stg.badgeText : plan.direction}</b> សម្រាប់ <b>${STATE.symbol} (${STATE.timeframe})</b> ពីទៀនបិទទាំងអស់ (${cfg.sourceLabel})：<br/>
-          • <b>ការណែនាំចូល (Execution Stage):</b> ${stg ? stg.actionKh : '--'}<br/>
-          • <b>Multi-Timeframe (5m, 15m, 1H, 4H):</b> ${mtf ? mtf.khSummary : '--'}<br/>
-          • <b>Key Level & ចំណុចចូល:</b> ${lcr ? `${lcr.keyLevelInfo.kh} ${lcr.entryAdviceKh}` : '--'}<br/>
-          • <b>គោលដៅ TP / SL ផ្ទាល់:</b> ${plan ? plan.storyKh : 'មិនមានទិន្នន័យ'}
+          <b>1. Market Intelligence:</b> ${STATE.dataQuality.reasonKh} | ${STATE.sessionContext.detailKh}<br/>
+          <b>2. Predictive Analysis & Invalidation:</b> ${plan?.predictiveScenarioKh || '--'}<br/>
+          <b>3. Confirmation Engine:</b> ${stg ? stg.actionKh : '--'}
         `;
-      }, 320);
+      }, 280);
     }
 
     function closeInstantPlanModal() {
@@ -3252,23 +3631,21 @@
       const d = SYMBOLS[STATE.symbol].decimals;
       const valid = Boolean(plan && plan.isValidSignal);
       const lot = recalculateLotSize();
-      const lcr = plan ? plan.lastCloseReport : null;
       const mtf = plan ? plan.mtfConfluence : null;
       const stg = plan && plan.executionStage ? plan.executionStage : null;
 
       const text = valid
         ? `AURA TREND AI — ${stg ? stg.badgeText : plan.direction}
 Symbol: ${STATE.symbol} (${STATE.timeframe})
+Confluence Score: ${plan.confluenceScore100}/100
 MTF: ${mtf ? mtf.summaryText : '--'}
-Key Level: ${lcr && lcr.keyLevelInfo ? lcr.keyLevelInfo.text : '--'}
-Last Closed Zone: ${lcr ? lcr.zoneTitleKh : '--'}
-Entry Zone: ${plan.entry.toFixed(d)} (${lcr ? lcr.entryZoneRange : ''})
+Entry Zone: ${plan.entry.toFixed(d)}
 Stop Loss: ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%)
 TP1: ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%)
-R:R: ${plan.rr}
-Lot: ${lot ? lot.toFixed(2) : '--'}`
-        : `AURA TREND AI — SCANNING
-Symbol: ${STATE.symbol} (${STATE.timeframe})`;
+R:R: ${plan.rr} | Lot: ${lot ? lot.toFixed(2) : '--'}`
+        : `AURA TREND AI — WAIT (${plan?.confluenceScore100 || 0}/100)
+Symbol: ${STATE.symbol} (${STATE.timeframe})
+Reason: ${plan?.predictiveScenarioKh || 'Waiting for M15+M5 confirmation'}`;
 
       const textarea = document.createElement('textarea');
       textarea.value = text;
@@ -3276,12 +3653,9 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      showToast('Analysis plan copied!', 'emerald');
+      showToast('Analysis report copied!', 'emerald');
     }
 
-    // =========================================================================
-    // 7. HTML5 CANVAS REAL OHLCV CHART RENDERER
-    // =========================================================================
     const canvas = document.getElementById('tradingCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -3305,7 +3679,8 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       const H = wrapper.clientHeight;
       if (W === 0 || H === 0) return;
 
-      ctx.fillStyle = '#07090e';
+
+      ctx.fillStyle = STATE.mt5ProView ? '#05070b' : '#07090e';
       ctx.fillRect(0, 0, W, H);
 
       if (!STATE.candles || STATE.candles.length === 0) {
@@ -3319,9 +3694,9 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       const cfg = SYMBOLS[STATE.symbol];
       const d = cfg.decimals;
 
-      const rightAxisW = 72;
+      const rightAxisW = 76;
       const bottomAxisH = 24;
-      const subPaneH = Math.max(64, Math.floor(H * 0.17));
+      const subPaneH = Math.max(66, Math.floor(H * 0.17));
       const mainH = H - bottomAxisH - subPaneH;
       const plotW = W - rightAxisW;
 
@@ -3334,6 +3709,11 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       const startIdx = Math.max(0, endIdx - count);
       const visible = STATE.candles.slice(startIdx, endIdx);
       if (visible.length === 0) return;
+
+
+      const allCloses = STATE.candles.map(c => c.close);
+      const allEma20 = computeEMA(allCloses, 20);
+      const allEma50 = computeEMA(allCloses, 50);
 
       let minP = Math.min(...visible.map(c => c.low));
       let maxP = Math.max(...visible.map(c => c.high));
@@ -3352,10 +3732,12 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       const candleStep = plotW / visible.length;
       const candleW = Math.max(3, candleStep * 0.66);
 
-      ctx.strokeStyle = '#121722';
+      ctx.save();
+      ctx.strokeStyle = STATE.mt5ProView ? '#141b26' : '#121722';
+      ctx.setLineDash(STATE.mt5ProView ? [2, 4] : []);
       ctx.lineWidth = 1;
-      for (let r = 1; r < 7; r++) {
-        const y = (mainH / 7) * r;
+      for (let r = 1; r < 8; r++) {
+        const y = (mainH / 8) * r;
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(plotW, y);
@@ -3368,10 +3750,11 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
         ctx.fillText(pVal.toFixed(d), plotW + 6, y + 3);
       }
 
+
       const stepV = Math.max(1, Math.floor(visible.length / 7));
       for (let i = 0; i < visible.length; i += stepV) {
         const x = i * candleStep + candleStep / 2;
-        ctx.strokeStyle = '#121722';
+        ctx.strokeStyle = STATE.mt5ProView ? '#182232' : '#121722';
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, H - bottomAxisH);
@@ -3384,6 +3767,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
         ctx.textAlign = 'center';
         ctx.fillText(timeStr, x, H - 8);
       }
+      ctx.restore();
 
       if (STATE.overlays.keylevels && STATE.keyLevels.length > 0) {
         STATE.keyLevels.forEach(kl => {
@@ -3392,22 +3776,18 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
             ctx.save();
             ctx.strokeStyle = kl.color;
             ctx.globalAlpha = 0.72;
-            ctx.lineWidth = 1.4;
+            ctx.lineWidth = 1.3;
             ctx.setLineDash([7, 3]);
             ctx.beginPath();
             ctx.moveTo(0, y);
             ctx.lineTo(plotW, y);
             ctx.stroke();
-
-            ctx.fillStyle = kl.color;
-            ctx.globalAlpha = 0.06;
-            ctx.fillRect(0, y - 3, plotW, 6);
             ctx.restore();
 
             ctx.fillStyle = kl.color;
             ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
             ctx.textAlign = 'right';
-            ctx.fillText(`🔑 ${kl.label} (${kl.price.toFixed(d)})`, plotW - 8, y - 4);
+            ctx.fillText(`${kl.label} (${kl.price.toFixed(d)})`, plotW - 8, y - 4);
           }
         });
       }
@@ -3419,7 +3799,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
             ctx.save();
             ctx.setLineDash([4, 4]);
             ctx.strokeStyle = s.color;
-            ctx.globalAlpha = 0.55;
+            ctx.globalAlpha = 0.45;
             ctx.beginPath();
             ctx.moveTo(0, y);
             ctx.lineTo(plotW, y);
@@ -3427,12 +3807,13 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
             ctx.restore();
 
             ctx.fillStyle = s.color;
-            ctx.font = 'bold 9px "JetBrains Mono", monospace';
+            ctx.font = 'bold 9.5px "JetBrains Mono", monospace';
             ctx.textAlign = 'left';
             ctx.fillText(`${s.label} (${s.price.toFixed(d)})`, 6, y - 3);
           }
         });
       }
+
 
       if (STATE.overlays.zones) {
         STATE.liquiditySweeps.forEach(sw => {
@@ -3440,7 +3821,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
           if (rel >= 0 && rel < visible.length) {
             const x = rel * candleStep + candleStep / 2;
             const y = priceToY(sw.price);
-            ctx.fillStyle = 'rgba(245, 158, 11, 0.2)';
+            ctx.fillStyle = 'rgba(245, 158, 11, 0.24)';
             ctx.beginPath();
             ctx.arc(x, y, 7, 0, Math.PI * 2);
             ctx.fill();
@@ -3453,7 +3834,8 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
         });
       }
 
-      if (STATE.overlays.smc && STATE.fvgZones.length > 0) {
+
+      if (STATE.overlays.smc) {
         STATE.fvgZones.forEach(fvg => {
           const yTop = priceToY(fvg.top);
           const yBot = priceToY(fvg.bottom);
@@ -3462,15 +3844,32 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
           if (startRel < visible.length) {
             const xStart = startRel * candleStep;
             const isBullFvg = fvg.type === 'BULL_FVG';
-            ctx.fillStyle = isBullFvg ? 'rgba(16, 185, 129, 0.16)' : 'rgba(239, 68, 68, 0.16)';
+            ctx.fillStyle = isBullFvg ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)';
             ctx.fillRect(xStart, yTop, plotW - xStart, fvgH);
-            ctx.strokeStyle = isBullFvg ? 'rgba(16, 185, 129, 0.6)' : 'rgba(239, 68, 68, 0.6)';
+            ctx.strokeStyle = isBullFvg ? 'rgba(16, 185, 129, 0.55)' : 'rgba(239, 68, 68, 0.55)';
             ctx.strokeRect(xStart, yTop, plotW - xStart, fvgH);
 
             ctx.fillStyle = isBullFvg ? '#34d399' : '#f87171';
             ctx.font = 'bold 9px "JetBrains Mono", monospace';
             ctx.textAlign = 'left';
             ctx.fillText(fvg.label, xStart + 6, yTop - 3);
+          }
+        });
+
+        STATE.orderBlocks.forEach(ob => {
+          const yTop = priceToY(ob.top);
+          const yBot = priceToY(ob.bottom);
+          const obH = Math.max(4, yBot - yTop);
+          const startRel = Math.max(0, ob.startIndex - startIdx);
+          if (startRel < visible.length) {
+            const xStart = startRel * candleStep;
+            const isDemand = ob.type === 'BULL_OB';
+            ctx.fillStyle = isDemand ? 'rgba(59, 130, 246, 0.12)' : 'rgba(168, 85, 247, 0.12)';
+            ctx.fillRect(xStart, yTop, plotW - xStart, obH);
+            ctx.fillStyle = isDemand ? '#60a5fa' : '#c084fc';
+            ctx.font = 'bold 8.5px "JetBrains Mono", monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText(ob.label, xStart + 6, yBot + 10);
           }
         });
       }
@@ -3504,11 +3903,11 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
         ctx.fillStyle = '#f87171';
         ctx.fillText(`SL ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%)`, boxX + 6, ySL + (plan.direction === 'BUY' ? -5 : 12));
 
-        const stgCode = plan.executionStage ? plan.executionStage.stage : 'PLAN';
         ctx.fillStyle = '#fbbf24';
-        ctx.fillText(`${stgCode} ${plan.direction} @ ${plan.entry.toFixed(d)}`, boxX + 6, yEntry - 4);
+        ctx.fillText(`${plan.direction} @ ${plan.entry.toFixed(d)}`, boxX + 6, yEntry - 4);
       }
 
+  
       visible.forEach((c, i) => {
         const xCenter = i * candleStep + candleStep / 2;
         const isBull = c.close >= c.open;
@@ -3528,9 +3927,39 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
 
         const bodyTop = Math.min(yOpen, yClose);
         const bodyH = Math.max(1.8, Math.abs(yClose - yOpen));
-        ctx.fillStyle = color;
-        ctx.fillRect(xCenter - candleW / 2, bodyTop, candleW, bodyH);
+        if (STATE.mt5ProView && isBull) {
+          ctx.fillStyle = '#05070b';
+          ctx.fillRect(xCenter - candleW / 2, bodyTop, candleW, bodyH);
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 1.25;
+          ctx.strokeRect(xCenter - candleW / 2, bodyTop, candleW, bodyH);
+        } else {
+          ctx.fillStyle = color;
+          ctx.fillRect(xCenter - candleW / 2, bodyTop, candleW, bodyH);
+        }
       });
+
+
+      if (STATE.mt5ProView) {
+        const drawEmaLine = (arr, strokeCol) => {
+          ctx.save();
+          ctx.strokeStyle = strokeCol;
+          ctx.lineWidth = 1.3;
+          ctx.beginPath();
+          visible.forEach((c, i) => {
+            const globalIdx = startIdx + i;
+            const val = arr[globalIdx];
+            const x = i * candleStep + candleStep / 2;
+            const y = priceToY(val);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+          ctx.restore();
+        };
+        drawEmaLine(allEma20, '#38bdf8');
+        drawEmaLine(allEma50, '#f59e0b');
+      }
 
       if (STATE.overlays.smc) {
         STATE.smcMarkers.forEach(m => {
@@ -3546,6 +3975,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
           }
         });
       }
+
 
       STATE.patternHitboxes = [];
       if (STATE.overlays.patterns) {
@@ -3579,7 +4009,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       }
 
       const subTop = mainH + 4;
-      ctx.fillStyle = '#090c12';
+      ctx.fillStyle = '#080b10';
       ctx.fillRect(0, mainH, plotW, subPaneH);
       ctx.strokeStyle = '#1e2530';
       ctx.beginPath();
@@ -3587,19 +4017,22 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       ctx.lineTo(W, mainH);
       ctx.stroke();
 
-      ctx.fillStyle = '#64748b';
+      ctx.fillStyle = '#94a3b8';
       ctx.font = '9px "JetBrains Mono", monospace';
       ctx.textAlign = 'left';
-      ctx.fillText('REAL VOLUME', 8, subTop + 10);
+      const rsiDisplay = STATE.tradePlan?.rsi14 ?? '--';
+      const atrDisplay = STATE.tradePlan?.atr14 ?? '--';
+      ctx.fillText(`VOL • RSI(14): ${rsiDisplay} • ATR(14): ${atrDisplay} • EMA20(Blue)/EMA50(Gold)`, 8, subTop + 10);
 
       const maxVol = Math.max(...visible.map(c => c.volume), 1);
       visible.forEach((c, i) => {
         const xCenter = i * candleStep + candleStep / 2;
         const isBull = c.close >= c.open;
-        const barH = ((c.volume / maxVol) * (subPaneH - 18));
-        ctx.fillStyle = isBull ? 'rgba(16, 185, 129, 0.55)' : 'rgba(239, 68, 68, 0.55)';
+        const barH = ((c.volume / maxVol) * (subPaneH - 20));
+        ctx.fillStyle = isBull ? 'rgba(16, 185, 129, 0.48)' : 'rgba(239, 68, 68, 0.48)';
         ctx.fillRect(xCenter - candleW / 2, mainH + subPaneH - barH, candleW, barH);
       });
+
 
       ctx.strokeStyle = '#1e2530';
       ctx.beginPath();
@@ -3607,26 +4040,41 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       ctx.lineTo(plotW, H);
       ctx.stroke();
 
-      const lastC = visible[visible.length - 1];
-      const lastY = priceToY(lastC.close);
-      if (lastY >= 0 && lastY <= mainH) {
+      const bidPx = cfg.bid !== null ? cfg.bid : visible[visible.length - 1].close;
+      const askPx = cfg.ask !== null ? cfg.ask : bidPx;
+      const bidY = priceToY(bidPx);
+      const askY = priceToY(askPx);
+
+      if (STATE.mt5ProView && askY >= 0 && askY <= mainH) {
         ctx.save();
         ctx.setLineDash([2, 2]);
-        ctx.strokeStyle = lastC.close >= lastC.open ? '#10b981' : '#ef4444';
+        ctx.strokeStyle = '#10b981';
         ctx.beginPath();
-        ctx.moveTo(0, lastY);
-        ctx.lineTo(plotW, lastY);
+        ctx.moveTo(0, askY);
+        ctx.lineTo(plotW, askY);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      if (bidY >= 0 && bidY <= mainH) {
+        ctx.save();
+        ctx.setLineDash([2, 2]);
+        ctx.strokeStyle = '#ef4444';
+        ctx.beginPath();
+        ctx.moveTo(0, bidY);
+        ctx.lineTo(plotW, bidY);
         ctx.stroke();
         ctx.restore();
 
-        ctx.fillStyle = lastC.close >= lastC.open ? '#10b981' : '#ef4444';
-        ctx.fillRect(plotW + 1, lastY - 9, rightAxisW - 2, 18);
-        ctx.fillStyle = '#06080c';
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(plotW + 1, bidY - 9, rightAxisW - 2, 18);
+        ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 10px "JetBrains Mono", monospace';
         ctx.textAlign = 'left';
-        ctx.fillText(lastC.close.toFixed(d), plotW + 5, lastY + 3.5);
+        ctx.fillText(bidPx.toFixed(d), plotW + 5, bidY + 3.5);
       }
 
+      // Crosshair
       if (STATE.mouseX !== null && STATE.mouseY !== null && STATE.mouseX < plotW && STATE.mouseY < H - bottomAxisH) {
         ctx.save();
         ctx.setLineDash([3, 3]);
@@ -3660,9 +4108,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       }
     }
 
-    // =========================================================================
-    // 8. CANVAS INTERACTIONS
-    // =========================================================================
     canvas.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
       STATE.mouseX = e.clientX - rect.left;
@@ -3709,9 +4154,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       STATE.dragStartOffset = STATE.viewOffset;
     });
 
-    window.addEventListener('mouseup', () => {
-      STATE.isDragging = false;
-    });
+    window.addEventListener('mouseup', () => { STATE.isDragging = false; });
 
     canvas.addEventListener('wheel', (e) => {
       e.preventDefault();
@@ -3720,9 +4163,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       drawChart();
     }, { passive: false });
 
-    // =========================================================================
-    // 9. UI UPDATERS (WITH SELL/BUY NOW, WAIT, CONFIRMED)
-    // =========================================================================
     function updateFeedStatusUI(badgeText, labelText, color) {
       const dot = document.getElementById('liveFeedDot');
       const lbl = document.getElementById('liveFeedLabel');
@@ -3756,48 +4196,77 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       const lcr = plan.lastCloseReport;
       const mtf = plan.mtfConfluence;
       const stg = plan.executionStage || {
-        stage: valid ? 'NOW' : 'SCANNING',
-        badgeText: valid ? `${plan.direction} NOW` : 'SCANNING',
+        stage: 'STAGE 1 — WAIT',
+        shortStage: 'WAIT',
+        badgeText: 'WAIT • រង់ចាំការបញ្ជាក់',
         actionKh: plan.storyKh,
         badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/35'
       };
 
       document.getElementById('deskSymbolMeta').textContent = `${STATE.symbol} • ${STATE.timeframe} • ${cfg.sourceLabel}`;
 
+
+      const c100Badge = document.getElementById('deskConfluence100Badge');
+      const c100Bar = document.getElementById('deskConfluence100Bar');
+      const dqTag = document.getElementById('deskDataQualityTag');
+      const sesTag = document.getElementById('deskSessionTag');
+      const momTag = document.getElementById('deskMomentumTag');
+
+      const s100 = plan.confluenceScore100 || 0;
+      const scoreTier = s100 >= 85 ? 'HIGH CONFLUENCE' : (s100 >= 70 ? 'VALID ZONE' : (s100 >= 50 ? 'FORMING' : 'WAIT'));
+      if (c100Badge) c100Badge.textContent = `${s100} / 100 • ${scoreTier}`;
+      if (c100Bar) {
+        c100Bar.style.width = `${s100}%`;
+        c100Bar.className = `${s100 >= 70 ? (isBuy ? 'bg-emerald-500' : 'bg-rose-500') : 'bg-amber-500'} h-full transition-all duration-500`;
+      }
+      if (dqTag) {
+        dqTag.textContent = STATE.dataQuality.ok ? 'FRESH OK' : STATE.dataQuality.status;
+        dqTag.className = STATE.dataQuality.ok ? 'text-emerald-400' : 'text-rose-400';
+      }
+      if (sesTag) {
+        sesTag.textContent = STATE.sessionContext.newsRisk === 'HIGH NEWS WINDOW' ? 'NEWS ALERT!' : STATE.sessionContext.sessionName;
+        sesTag.className = STATE.sessionContext.newsRisk === 'HIGH NEWS WINDOW' ? 'text-rose-400' : 'text-blue-400';
+      }
+      if (momTag) {
+        momTag.textContent = `ADX ${plan.adx14 || '--'} • ATR ${plan.atr14 || '--'}`;
+      }
+
+      
+      const predTag = document.getElementById('deskPredictiveBiasTag');
+      const m15El = document.getElementById('deskM15BrainSummary');
+      const m5El = document.getElementById('deskM5BrainSummary');
+      const predKhEl = document.getElementById('deskPredictiveScenarioKh');
+
+      if (predTag) predTag.textContent = `BIAS: ${STATE.m15DirectionBrain?.bias || 'WAIT'}`;
+      if (m15El) m15El.textContent = STATE.m15DirectionBrain?.summaryKh || '--';
+      if (m5El) m5El.textContent = STATE.m5EntryBrain?.summaryKh || '--';
+      if (predKhEl) predKhEl.textContent = plan.predictiveScenarioKh || '--';
+
       const stageBox = document.getElementById('deskSignalStageBox');
       const stageCode = document.getElementById('deskStageCode');
       const stageTitle = document.getElementById('deskStageTitle');
       const stageDesc = document.getElementById('deskStageDesc');
       if (stageBox) stageBox.className = `rounded-lg p-2.5 border text-[11px] font-khmer leading-snug ${stg.badgeClass}`;
-      if (stageCode) stageCode.textContent = stg.stage;
-      if (stageTitle) stageTitle.textContent = stg.badgeText;
+      if (stageCode) stageCode.textContent = stg.shortStage;
+      if (stageTitle) stageTitle.textContent = stg.stage;
       if (stageDesc) stageDesc.textContent = stg.actionKh;
 
       const bannerBadge = document.getElementById('bannerPlanBadge');
-      if (!valid) {
-        bannerBadge.textContent = 'SCANNING';
-        bannerBadge.className = 'px-2 py-0.5 rounded font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30';
-      } else {
-        bannerBadge.textContent = stg.badgeText;
-        bannerBadge.className = `px-2 py-0.5 rounded font-bold font-mono border ${stg.badgeClass}`;
-      }
-
-      const mt5Hint = (STATE.symbol === 'XAUUSD' && !API_CONFIG.twelveDataApiKey)
-        ? ' [PAXGUSDT Proxy — ប្រើ twelveDataApiKey ដើម្បីជិត Spot XAU/USD ជាងមុន]'
-        : '';
-      document.getElementById('bannerConditionSummary').textContent = `${stg.actionKh} ${plan.storyKh}${mt5Hint}`;
+      bannerBadge.textContent = valid ? `${plan.direction} CONFIRMED (${s100}/100)` : `WAIT (${s100}/100)`;
+      bannerBadge.className = `px-2 py-0.5 rounded font-bold font-mono border ${stg.badgeClass}`;
+      document.getElementById('bannerConditionSummary').textContent = stg.actionKh;
 
       const htfText = document.getElementById('htfBiasText');
       if (htfText) {
-        htfText.textContent = mtf ? `${mtf.alignedCount}/4 TF • ${plan.structureBias}` : `${plan.structureBias} • RSI ${plan.rsi14 || '--'}`;
-        htfText.className = plan.structureBias === 'BULLISH'
+        htfText.textContent = mtf ? `${mtf.alignedCount}/4 TF • ${plan.structureBias}` : `${plan.structureBias}`;
+        htfText.className = plan.structureBias.includes('BULL')
           ? 'font-bold text-emerald-400'
-          : (plan.structureBias === 'BEARISH' ? 'font-bold text-rose-400' : 'font-bold text-slate-300');
+          : (plan.structureBias.includes('BEAR') ? 'font-bold text-rose-400' : 'font-bold text-amber-300');
       }
 
       const pathText = document.getElementById('marketPathText');
       if (pathText) {
-        pathText.textContent = `${stg.stage} • KL:${STATE.keyLevels.length} • FVG:${STATE.fvgZones.length}`;
+        pathText.textContent = `M15→M5 • SCORE ${s100}/100 • KL:${STATE.keyLevels.length}`;
       }
 
       const mtfSumBadge = document.getElementById('deskMtfSummaryBadge');
@@ -3821,8 +4290,8 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       if (storyEl) storyEl.textContent = plan.storyKh;
 
       const dirEl = document.getElementById('deskPlanDirection');
-      dirEl.textContent = valid ? stg.badgeText.split('•')[0].trim() : 'SCANNING...';
-      dirEl.className = !valid || stg.stage === 'WAIT'
+      dirEl.textContent = valid ? `${plan.direction} (${stg.shortStage})` : `WAIT • ${plan.structureBias}`;
+      dirEl.className = !valid
         ? 'text-base font-extrabold font-mono text-amber-400'
         : (isBuy ? 'text-base font-extrabold font-mono text-emerald-400' : 'text-base font-extrabold font-mono text-rose-400');
 
@@ -3835,11 +4304,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
         if (klHighlight) klHighlight.textContent = lcr.keyLevelInfo ? `🔑 ${lcr.keyLevelInfo.text}` : '🔑 KEY LEVEL: --';
         if (closeTitle) closeTitle.textContent = lcr.zoneTitleKh;
         if (closeAdvice) closeAdvice.textContent = `${lcr.locationDescKh} ${lcr.entryAdviceKh}`;
-      } else {
-        if (closeBadge) closeBadge.textContent = 'CLOSE: --';
-        if (klHighlight) klHighlight.textContent = '🔑 KEY LEVEL: --';
-        if (closeTitle) closeTitle.textContent = 'កំពុងស្កេន Key Level & តំបន់ផ្សារបិទចុងក្រោយ...';
-        if (closeAdvice) closeAdvice.textContent = 'វិភាគទៀនបិទទាំងអស់ ដើម្បីរកចំណុចចូលច្បាស់លាស់។';
       }
 
       const tpPctEl = document.getElementById('deskTpPctLabel');
@@ -3857,7 +4321,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       } else {
         if (tpPctEl) tpPctEl.textContent = 'TP: --%';
         if (slPctEl) slPctEl.textContent = 'SL: --%';
-        if (livePctEl) livePctEl.textContent = 'LIVE: --%';
+        if (livePctEl) livePctEl.textContent = 'LIVE: WAIT';
       }
 
       const scoreEl = document.getElementById('deskFactorScore');
@@ -3871,9 +4335,10 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       }
 
       document.getElementById('deskRRBadge').textContent = `R:R ${plan.rr}`;
-      document.getElementById('deskEntryVal').textContent = valid && plan.entry !== null ? plan.entry.toFixed(d) : '--';
-      document.getElementById('deskSLVal').textContent = valid && plan.sl !== null ? plan.sl.toFixed(d) : '--';
-      document.getElementById('deskTPVal').textContent = valid && plan.tp !== null ? plan.tp.toFixed(d) : '--';
+      const showLevels = Boolean(plan.entry !== null && plan.sl !== null && plan.candidateDirection !== 'WAIT');
+      document.getElementById('deskEntryVal').textContent = showLevels ? plan.entry.toFixed(d) : '--';
+      document.getElementById('deskSLVal').textContent = showLevels ? plan.sl.toFixed(d) : '--';
+      document.getElementById('deskTPVal').textContent = showLevels ? plan.tp.toFixed(d) : '--';
 
       const takeBtn = document.getElementById('takeTradeBtn');
       if (takeBtn) {
@@ -3894,14 +4359,13 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       `).join('');
 
       document.getElementById('deskReasoningKh').innerHTML = `
-        <b>ស្ថានភាព Signal (${stg.stage}):</b> ${stg.actionKh}<br/>
-        <b>លទ្ធផលវិភាគទៀនបិទទាំងអស់:</b> ${plan.storyKh}<br/>
-        <span class="text-blue-400">🔑 Key Level & ផ្សារបិទចុងក្រោយ:</span> ${lcr ? lcr.locationDescKh : '--'}<br/>
-        <span class="text-amber-400">✓ Persistent SL/TP Log:</span> ប៉ះ SL ឬ TP1 នឹងរក្សាទុកក្នុង Live AI Signals (localStorage) ជារៀងរហូត។
+        <b>1. ស្ថានភាព (Confirmation Engine):</b> ${stg.actionKh}<br/>
+        <b>2. សេណារីយ៉ូ & Invalidation:</b> ${plan.predictiveScenarioKh}<br/>
+        <b>3. Data & Session Quality:</b> ${STATE.dataQuality.reasonKh} (${STATE.sessionContext.detailKh})
       `;
       document.getElementById('deskReasoningEn').textContent = valid
-        ? `[${stg.stage}] ${plan.direction} Plan: Entry ${plan.entry.toFixed(d)}, SL ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%), TP ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%) (${plan.rr}).`
-        : `Scanning closed candle structure (${plan.score}/${plan.total} checks passed).`;
+        ? `[${stg.stage}] ${plan.direction} Confirmed (${s100}/100): Entry ${plan.entry.toFixed(d)}, SL ${plan.sl.toFixed(d)}, TP ${plan.tp.toFixed(d)} (${plan.rr}).`
+        : `WAIT (${s100}/100) — No-Guessing Engine requires M15 Bias + M5 Sweep/Break + Closed Candle confirmation.`;
 
       document.getElementById('detectedPatternCount').textContent = STATE.patterns.length;
       const listEl = document.getElementById('detectedPatternsList');
@@ -3910,8 +4374,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       } else {
         listEl.innerHTML = [...STATE.patterns].reverse().map(p => {
           const badgeColor = p.bias === 'BUY' ? 'text-emerald-400 bg-emerald-500/15 border-emerald-500/30'
-            : p.bias === 'SELL' ? 'text-rose-400 bg-rose-500/15 border-rose-500/30'
-            : 'text-amber-400 bg-amber-500/15 border-amber-500/30';
+            : 'text-rose-400 bg-rose-500/15 border-rose-500/30';
           return `
             <div onclick='openPatternInspectorByIndex(${p.index})' class="p-2 rounded-lg bg-aura-bg hover:bg-aura-hover border border-aura-border cursor-pointer transition flex items-center justify-between gap-2">
               <div>
@@ -3931,7 +4394,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
 
       const sideCount = document.getElementById('sidebarSignalCount');
       if (sideCount) sideCount.textContent = String(STATE.qualifiedSignals.length);
-
       renderQualifiedSignalsGrids();
     }
 
@@ -3943,9 +4405,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       badge.textContent = pattern.type;
       badge.className = pattern.bias === 'BUY'
         ? 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-400'
-        : pattern.bias === 'SELL'
-        ? 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-500/20 text-rose-400'
-        : 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-500/20 text-amber-400';
+        : 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-500/20 text-rose-400';
 
       const passedCount = [pattern.rules.locationOk, pattern.rules.volumeOk, pattern.rules.confirmOk].filter(Boolean).length;
       document.getElementById('inspStatus').textContent = `3-RULE: ${passedCount}/3`;
@@ -3981,18 +4441,12 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       STATE.overlays[key] = !STATE.overlays[key];
       const pill = document.getElementById(`pill-${key}`);
       if (pill) {
-        if (STATE.overlays[key]) {
-          pill.classList.remove('opacity-40');
-        } else {
-          pill.classList.add('opacity-40');
-        }
+        if (STATE.overlays[key]) pill.classList.remove('opacity-40');
+        else pill.classList.add('opacity-40');
       }
       drawChart();
     }
 
-    // =========================================================================
-    // 10. SECONDARY VIEWS, DEDICATED 1H PLAN CARD & PERSISTENT SIGNALS
-    // =========================================================================
     function renderQualifiedSignalsGrids() {
       const ovGrid = document.getElementById('overviewSignalsGrid');
       const fullGrid = document.getElementById('fullSignalsGrid');
@@ -4000,8 +4454,8 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       if (STATE.qualifiedSignals.length === 0) {
         const emptyHtml = `
           <div class="col-span-full p-5 rounded-xl bg-aura-bg border border-amber-500/25 text-center space-y-1.5">
-            <div class="text-xs font-bold text-amber-400">កំពុងស្កេនរក 1H PLAN និង Signal ច្បាស់លាស់ (NOW / WAIT / CONFIRMED)</div>
-            <div class="text-[11px] text-slate-400 font-khmer">នៅពេលមាន 1H PLAN ឬ Signal ប៉ះ TP1/SL នឹងបង្ហាញ និងរក្សាទុកក្នុង localStorage ជារៀងរហូត។</div>
+            <div class="text-xs font-bold text-amber-400">STAGE 1 — WAIT (មិនទាន់មាន Signal ឆ្លងកាត់លក្ខខណ្ឌ 100%)</div>
+            <div class="text-[11px] text-slate-400 font-khmer">ប្រព័ន្ធ No-Guessing Engine មិនបង្ខំចេញ BUY/SELL ដោយគ្មាន M15 Bias + M5 Sweep/CHoCH + Candle Close ទេ។</div>
           </div>
         `;
         if (ovGrid) ovGrid.innerHTML = emptyHtml;
@@ -4012,7 +4466,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       const cardsHtml = STATE.qualifiedSignals.map(sig => {
         const isBuy = sig.dir === 'BUY';
         const is1H = Boolean(sig.isDedicated1H);
-        const stgCode = sig.stage || 'PLAN';
+        const stgCode = sig.stage || 'CONFIRMED';
         const pctTag = sig.isCompleted && typeof sig.realizedPct === 'number'
           ? `${sig.realizedPct >= 0 ? '+' : ''}${sig.realizedPct.toFixed(2)}%`
           : `+${(sig.tpPct || 0).toFixed(2)}% / -${(sig.slPct || 0).toFixed(2)}%`;
@@ -4022,7 +4476,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
             <div class="flex items-center justify-between gap-2">
               <div class="flex items-center gap-1.5 flex-wrap">
                 <span class="text-xs font-extrabold text-white font-mono">${sig.symbol}</span>
-                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${is1H ? 'bg-amber-400 text-black font-extrabold' : 'bg-aura-card text-amber-400'}">${is1H ? '⭐ 1H PLAN' : sig.timeframe}</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${is1H ? 'bg-amber-400 text-black font-extrabold' : 'bg-aura-card text-amber-400'}">${is1H ? 'H1+H4 CONTEXT' : sig.timeframe}</span>
                 <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-amber-300 border border-amber-500/30 font-bold">${stgCode}</span>
                 ${sig.isCompleted ? '<span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/35">SAVED (SL/TP)</span>' : ''}
               </div>
@@ -4037,7 +4491,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
             <p class="text-[11px] text-slate-300 font-khmer leading-relaxed">${sig.kh}</p>
             <div class="flex items-center justify-between pt-1 border-t border-aura-border/60 text-[10px] font-mono">
               <span class="text-amber-400 font-bold">${sig.rr} • ${sig.completedAt || sig.score}</span>
-              <button onclick="openInstantAnalysisPlan()" class="text-amber-400 hover:underline font-bold">Analyze & Plan Setup →</button>
+              <button onclick="openInstantAnalysisPlan()" class="text-amber-400 hover:underline font-bold">Inspect Setup →</button>
             </div>
           </div>
         `;
@@ -4049,12 +4503,12 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
 
     function renderAcademyGuide() {
       const guides = [
-        { title: 'Bullish & Bearish Engulfing', tag: 'REVERSAL', kh: 'ទៀនបន្ទាប់គ្របដណ្តប់ body ទៀនមុន។ ត្រូវផ្ទៀងផ្ទាត់លើទៀនបិទរួច និង Key Level / FVG។', en: 'Engulfing candle evaluated strictly on closed OHLC data.' },
-        { title: 'Hammer & Shooting Star', tag: 'WICK REJECTION', kh: 'Wick វែងជាង body យ៉ាងតិច 2 ដង បញ្ជាក់ការបដិសេធតម្លៃនៅ Key Support / Resistance។', en: 'Rejection wick validated against closed candles.' },
-        { title: 'Key Levels (Major S/R)', tag: 'KEY LEVELS', kh: 'គូរបង្ហាញតំបន់ Major Support/Resistance, PDH/PDL និង Psychological Key Levels ដើម្បីកំណត់ចំណុចចូល និង SL/TP។', en: 'Key horizontal levels computed from major swings, prior range, and round numbers.' },
-        { title: 'Multi-Timeframe (5m • 15m • 1H • 4H)', tag: 'MTF CONFLUENCE', kh: 'ផ្ទៀងផ្ទាត់ទិសដៅរួមគ្នាលើ 5m, 15m, 1H និង 4H ដើម្បីបង្កើនភាពច្បាស់លាស់នៃ Entry។', en: 'Multi-timeframe trend and structure alignment across 5m, 15m, 1H, and 4H.' },
-        { title: 'SELL/BUY NOW, WAIT & CONFIRMED', tag: 'EXECUTION STAGE', kh: 'បែងចែកច្បាស់៖ NOW (ចូលបានភ្លាម), WAIT (រង់ចាំតម្លៃមកដល់ Entry), CONFIRMED (ទៀនបិទបញ្ជាក់រួច)។', en: 'Execution stage classifier separating immediate entries, waiting zones, and confirmed closes.' },
-        { title: '1H PLAN & Persistent SL/TP Log', tag: '1H PLAN + STORAGE', kh: 'បង្កើតផែនការ 1H PLAN ដោយស្វ័យប្រវត្តិ និងរក្សាប្រវត្តិ Signal ដែលប៉ះ SL/TP ក្នុង localStorage ជារៀងរហូត។', en: 'Dedicated 1H plan plus permanent localStorage archive when TP1 or SL is hit.' }
+        { title: '1. Market Structure Brain (HH/HL/LH/LL)', tag: 'STRUCTURE', kh: 'សម្គាល់ Higher High, Higher Low, Lower High, Lower Low, BOS និង CHoCH ពីទៀនបិទរួច ដើម្បីដឹងថាទីផ្សារឡើង ចុះ ឬ Sideways។', en: 'Structural swing & BOS/CHoCH detection.' },
+        { title: '2. Liquidity Brain (BSL / SSL Sweep)', tag: 'LIQUIDITY', kh: 'ស្វែងរក Equal Highs/Lows និងការបោកបញ្ឆោត Stop Hunt — ត្រូវរង់ចាំទៀនបិទបញ្ជាក់ មិនសន្និដ្ឋានពី Wick តែមួយទេ។', en: 'Liquidity sweep detection with closed-candle validation.' },
+        { title: '3. FVG & Order Block Brain', tag: 'SMC ZONES', kh: 'សម្គាល់ Fair Value Gap ដែលមិនទាន់បំពេញ និង Order Block នៅតំបន់ Premium/Discount។', en: 'Unmitigated FVG & institutional Order Blocks.' },
+        { title: '4. M15 Direction + M5 Entry Brain', tag: 'M15 → M5', kh: 'M15 សម្រេចទិសដៅ (BUY/SELL Bias) រីឯ M5 រង់ចាំតម្លៃចូលដល់តំបន់ M15 + Sweep + CHoCH + Candle Close។', en: 'Top-down M15 bias paired with M5 confirmation.' },
+        { title: '5. Momentum & Volatility (ATR / ADX / RSI)', tag: 'MOMENTUM', kh: 'វាស់កម្លាំងនិន្នាការពិតដោយ ADX, ATR និង RSI ដើម្បីចៀសវាងទីផ្សារ Sideways។', en: 'ATR volatility & ADX trend strength filter.' },
+        { title: '6. No-Guessing & Data Quality Brain', tag: 'HARD FILTERS', kh: 'បិទការចេញ BUY/SELL ពេលទិន្នន័យ API យឺត ឬពិន្ទុ Confluence ក្រោម 70/100។', en: 'Strict data freshness & 100-point confluence gate.' }
       ];
 
       document.getElementById('patternsGuideGrid').innerHTML = guides.map(g => `
@@ -4104,21 +4558,21 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
     function executeSignalToJournal() {
       const plan = STATE.tradePlan;
       if (!plan || !plan.isValidSignal || plan.entry === null) {
-        showToast('មិនទាន់មាន Signal ត្រឹមត្រូវដើម្បី Take Trade ទេ', 'amber');
+        showToast('WAIT៖ មិនទាន់មាន Signal ឆ្លងកាត់លក្ខខណ្ឌ 100% ដើម្បីចូលផ្សារទេ', 'amber');
         return;
       }
 
       const d = SYMBOLS[STATE.symbol].decimals;
       const lot = recalculateLotSize() || 0.01;
-      const stgCode = plan.executionStage ? plan.executionStage.stage : 'PLAN';
+      const stgCode = plan.executionStage ? plan.executionStage.shortStage : 'CONFIRMED';
 
       const newTrade = {
         id: Date.now(),
         symbol: STATE.symbol,
         tf: STATE.timeframe,
-        isDedicated1H: STATE.timeframe === '1H',
+        isDedicated1H: false,
         dir: plan.direction,
-        pattern: `${stgCode} • ${plan.pattern ? plan.pattern.type : 'MTF+SMC+FVG'}`,
+        pattern: `${stgCode} (${plan.confluenceScore100}/100)`,
         lot: lot.toFixed(2),
         entry: plan.entry.toFixed(d),
         sl: plan.sl.toFixed(d),
@@ -4151,22 +4605,9 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
 
       STATE.trades.splice(idx, 1);
       archiveSignalToLiveFeed(tr, outcome, signedPct, pnlVal);
-
-      STATE.freshSetupNonce++;
-      STATE.lastHourlySignalAt = 0;
-      if (STATE.candles.length > 0) {
-        analyzeRealMarketStructure(STATE.candles, true, { ...STATE.mtfCache, [STATE.timeframe]: STATE.candles });
-        updateDeskUI();
-        drawChart();
-        flashAuraDeskPlanCard();
-      }
-
       renderTradesTable();
       updateOverviewStats();
-      showToast(
-        `${tr.symbol} ${tr.dir} ប៉ះ ${outcome === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals & ប្តូរ Signal ថ្មី!`,
-        outcome === 'WIN' ? 'emerald' : 'amber'
-      );
+      showToast(`${tr.symbol} ${tr.dir} ប៉ះ ${outcome === 'WIN' ? 'TP1' : 'SL'} (${signedPct >= 0 ? '+' : ''}${signedPct.toFixed(2)}%) — រក្សាក្នុង Live AI Signals!`, outcome === 'WIN' ? 'emerald' : 'amber');
     }
 
     function deleteTrade(id) {
@@ -4200,7 +4641,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       document.getElementById('statClosedRecord').textContent = `${wins}W / ${losses}L`;
 
       if (STATE.trades.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="11" class="py-8 text-center text-slate-500 font-khmer">មិនមាន Active Trade បើកទេ — នៅពេល Signal ប៉ះ TP1 ឬ SL នឹងផ្លាស់ទៅរក្សាទុកក្នុង Live AI Signals ជារៀងរហូត។</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="11" class="py-8 text-center text-slate-500 font-khmer">មិនមាន Active Trade បើកទេ — នៅពេល Signal ប៉ះ TP1 ឬ SL នឹងផ្លាស់ទៅរក្សាទុកក្នុង Live AI Signals។</td></tr>`;
         return;
       }
 
@@ -4242,7 +4683,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
         ovGold.textContent = gold.price !== null ? `$${gold.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}` : 'API Key Needed';
       }
       if (ovGoldSub) {
-        ovGoldSub.textContent = gold.isLive ? `${gold.sourceLabel} • Live` : 'Add twelveDataApiKey for Spot XAU/USD';
+        ovGoldSub.textContent = gold.isLive ? `${gold.sourceLabel}` : 'Add twelveDataApiKey for Spot XAU/USD';
       }
 
       const closedRecords = STATE.archivedCompletedSignals.filter(item => item.isCompleted && typeof item.realizedPct === 'number');
@@ -4258,12 +4699,8 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
 
       const smcEl = document.getElementById('overviewSmcStat');
       const smcSub = document.getElementById('overviewSmcSub');
-      if (smcEl) {
-        smcEl.textContent = `${STATE.smcMarkers.length} SMC / ${STATE.keyLevels.length} KL`;
-      }
-      if (smcSub) {
-        smcSub.textContent = `${STATE.fvgZones.length} FVG • ${STATE.liquiditySweeps.length} Sweeps • ${STATE.keyLevels.length} Key S/R`;
-      }
+      if (smcEl) smcEl.textContent = `${STATE.smcMarkers.length} SMC / ${STATE.keyLevels.length} KL`;
+      if (smcSub) smcSub.textContent = `${STATE.fvgZones.length} FVG • ${STATE.orderBlocks.length} OB • ${STATE.liquiditySweeps.length} Sweeps`;
 
       updateBacktestUI();
     }
@@ -4284,9 +4721,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       }).join('<span class="text-slate-700">|</span>');
     }
 
-    // =========================================================================
-    // 11. NAVIGATION, TIMEFRAMES & AI CHAT
-    // =========================================================================
     function switchView(viewName) {
       STATE.activeView = viewName;
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
@@ -4326,8 +4760,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       if (!SYMBOLS[newSym]) return;
       STATE.symbol = newSym;
       STATE.viewOffset = 0;
-      STATE.lastHourlySignalAt = 0;
-      STATE.lastDedicated1HAutoId = '';
       document.getElementById('chartSymbolSelect').value = newSym;
       closePatternInspector();
       refreshCurrentMarketData();
@@ -4348,7 +4780,7 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
     }
 
     function resetChartZoom() {
-      STATE.visibleCount = 72;
+      STATE.visibleCount = 78;
       STATE.viewOffset = 0;
       drawChart();
     }
@@ -4367,19 +4799,17 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
       setTimeout(() => {
         const plan = STATE.tradePlan;
         const d = SYMBOLS[STATE.symbol].decimals;
-        const lcr = plan ? plan.lastCloseReport : null;
-        const mtf = plan ? plan.mtfConfluence : null;
         const stg = plan && plan.executionStage ? plan.executionStage : null;
         const reply = plan && plan.isValidSignal
-          ? `[${STATE.symbol} • ${STATE.timeframe}] <b>${stg ? stg.badgeText : plan.direction}</b><br/>• <b>ការណែនាំ:</b> ${stg ? stg.actionKh : plan.storyKh}<br/>• <b>MTF (5m/15m/1H/4H):</b> ${mtf ? mtf.summaryText : '--'}<br/>• <b>Key Level:</b> ${lcr && lcr.keyLevelInfo ? lcr.keyLevelInfo.text : '--'}<br/>• <b>Entry / SL / TP1:</b> ${plan.entry.toFixed(d)} / ${plan.sl.toFixed(d)} (-${plan.slPct.toFixed(2)}%) / ${plan.tp.toFixed(d)} (+${plan.tpPct.toFixed(2)}%) (${plan.rr})`
-          : `[${STATE.symbol} • ${STATE.timeframe}] ${plan ? plan.storyKh : 'កំពុងរង់ចាំទិន្នន័យ Real OHLCV...'}`;
+          ? `[${STATE.symbol} • ${STATE.timeframe}] <b>${stg.stage} (${plan.confluenceScore100}/100)</b><br/>• <b>M15 Direction Brain:</b> ${STATE.m15DirectionBrain?.summaryKh}<br/>• <b>M5 Entry Brain:</b> ${STATE.m5EntryBrain?.summaryKh}<br/>• <b>Entry / SL / TP1:</b> ${plan.entry.toFixed(d)} / ${plan.sl.toFixed(d)} / ${plan.tp.toFixed(d)} (${plan.rr})`
+          : `[${STATE.symbol} • ${STATE.timeframe}] <b>STAGE 1 — WAIT (${plan?.confluenceScore100 || 0}/100)</b><br/>• ${plan?.predictiveScenarioKh || 'កំពុងរង់ចាំ M15 + M5 បញ្ជាក់'}`;
         appendChatBubble('AURA TREND AI', reply, false);
-      }, 220);
+      }, 200);
     }
 
     function analyzeCurrentChartWithAI() {
       switchView('aichat');
-      sendQuickPrompt(`សូមវិភាគ ${STATE.symbol} (${STATE.timeframe}) ដោយបញ្ជាក់ NOW / WAIT / CONFIRMED, MTF, Key Levels, SMC, FVG និង 1H PLAN`);
+      sendQuickPrompt(`វិភាគ 8-Brain Engine សម្រាប់ ${STATE.symbol} (${STATE.timeframe})៖ M15 Direction + M5 Entry + Confluence 100 Score`);
     }
 
     function appendChatBubble(sender, htmlText, isUser) {
@@ -4414,9 +4844,6 @@ Symbol: ${STATE.symbol} (${STATE.timeframe})`;
     });
     window.addEventListener('resize', resizeCanvas);
 
-    // =========================================================================
-    // 12. BOOTSTRAP LIVE MARKET FEEDS
-    // =========================================================================
     bindSocialLinks();
     applyTraderSessionUI(getSavedSession());
     renderAcademyGuide();
